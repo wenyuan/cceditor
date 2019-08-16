@@ -26,15 +26,19 @@
         </div>
       </el-col>
       <!-- graph-container -->
-      <el-col :span="graphMode === 'edit' ? 18 : 21" class="graph-container" ref="graphContainer">
-        <div id="mount-topology"
-             @dragenter="dragenterHandler"
-             @dragover="dragoverHandler"
-             @drop="dropHandler">
-        </div>
+      <el-col
+        :span="graphMode === 'edit' ? 18 : 24"
+        class="graph-container"
+        ref="graphContainer">
+        <div
+          id="mount-topology"
+          @dragenter="dragenterHandler"
+          @dragover="dragoverHandler"
+          @drop="dropHandler"
+        ></div>
       </el-col>
       <!-- graph-pannel -->
-      <el-col :span="3" class="graph-pannel">
+      <el-col v-if="graphMode === 'edit'" :span="3" class="graph-pannel">
         <div class="detail-pannel">
           <div v-if="currentFocus === 'node'">
             <div class="pannel-title">节点</div>
@@ -72,47 +76,62 @@
   </div>
 </template>
 
-
 <script>
-import G6 from "@antv/g6";
+import { Loading } from 'element-ui';
+import G6 from '@antv/g6';
+// const G6 = window.G6
+const Minimap = require('@antv/g6/build/minimap');
+const Grid = require('@antv/g6/build/grid');
 
-const Minimap = require("@antv/g6/build/minimap");
-const Grid = require("@antv/g6/build/grid");
+import ToolbarPreview from './ToolbarPreview';
+import ToolbarEdit from './ToolbarEdit';
+import registerItem from './item';
+import initGraph from './graph';
 
-import ToolbarPreview from "./ToolbarPreview";
-import ToolbarEdit from "./ToolbarEdit";
+registerItem(G6);
 
 export default {
-  name: "cy-topology",
+  name: 'CCTopology',
   components: {
-    "toolbar-preview": ToolbarPreview,
-    "toolbar-edit": ToolbarEdit
+    'toolbar-preview': ToolbarPreview,
+    'toolbar-edit': ToolbarEdit
+  },
+  props: {
+    graphData: {
+      type: Object,
+      default: () => {
+        return { nodes: [], edges: [] };
+      }
+    }
   },
   data() {
     return {
+      loadingInstance: null,
       clientWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
       clientHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
       nodeTypeList: [
-        { guid: "blue", label: "蓝色", imgSrc: require('@/assets/images/blue.svg') },
-        { guid: "green", label: "绿色", imgSrc: require('@/assets/images/green.svg') },
-        { guid: "purple", label: "紫色", imgSrc: require('@/assets/images/purple.svg') }
+        { guid: 'blue', label: '蓝色', imgSrc: require('@/assets/images/blue.svg') },
+        { guid: 'green', label: '绿色', imgSrc: require('@/assets/images/green.svg') },
+        { guid: 'purple', label: '紫色', imgSrc: require('@/assets/images/purple.svg') }
       ],
       edgeTypeList: [
-        { guid: "line", label: "直线" },
-        { guid: "stepline", label: "折线（开发中）" },
-        { guid: "quadratic", label: "曲线" },
-        { guid: "cubic", label: "波浪线" }
+        { guid: 'line', label: '直线' },
+        { guid: 'stepline', label: '折线（开发中）' },
+        { guid: 'quadratic', label: '曲线' },
+        { guid: 'cubic', label: '波浪线' },
+        { guid: 'flow-polyline-round', label: 'xxx' }
       ],
-      graph: "",
-      grid: "",
-      graphMode: "preview",
+      graph: null,
+      grid: null,
+      minimap: null,
+      graphMode: 'preview',
       currentEdgeType: {
-        guid: "line",
-        label: "直线"
+        guid: 'line',
+        label: '直线'
       },
-      currentFocus: "canvas",
+      currentFocus: 'canvas',
       zoomValue: 1,
-      nodesInClipboard: "",
+      nodesInClipboard: [],
       historyIndex: 0,
       undoCount: 0
     };
@@ -135,171 +154,85 @@ export default {
     },
     selectedNodes: function() {
       let graph = this.graph;
-      if (graph) {
-        console.log('选中的节点变化了')
-        console.log(graph.findAllByState("node", "selected"));
-        return graph.findAllByState("node", "selected");
+      if (graph && !graph.destroyed) {
+        return graph.findAllByState('node', 'selected');
       } else {
         return [];
       }
     },
     selectedEdges: function() {
       let graph = this.graph;
-      if (graph) {
-        console.log('选中的连线变化了')
-        console.log(graph.findAllByState("edge", "selected"));
-        return graph.findAllByState("edge", "selected");
+      if (graph && !graph.destroyed) {
+        return graph.findAllByState('edge', 'selected');
       } else {
         return [];
       }
     }
   },
+  watch: {
+    layoutType() {
+      this.initTopo(this.graphData);
+    }
+  },
   created() {
-
   },
   mounted() {
     this.clearHistoryData();
-    this.initTopo();
+    this.initTopo(this.graphData);
   },
   beforeRouteUpdate(to, from, next) {
-    console.log("beforeRouteUpdate");
+    console.log('beforeRouteUpdate');
     this.clearHistoryData();
     next();
   },
   beforeRouteLeave(to, from, next) {
-    console.log("beforeRouteLeave");
+    console.log('beforeRouteLeave');
     this.clearHistoryData();
     next();
   },
   beforeDestroy() {
-    console.log("beforeDestroy");
+    console.log('beforeDestroy');
     this.clearHistoryData();
   },
   methods: {
+    openFullScreenLoading() {
+      this.loadingInstance = Loading.service({
+        // lock: true,
+        text: '自动布局中...',
+        spinner: 'el-icon-loading',
+        background: 'transparent'
+      });
+    },
+    closeFullScreenLoading() {
+      this.$nextTick(() => {
+        this.loadingInstance.close();
+      });
+    },
     dragstartHandler(event, nodeType) {
-      event.dataTransfer.setData("text", JSON.stringify(nodeType));
+      event.dataTransfer.setData('text', JSON.stringify(nodeType));
     },
     dragenterHandler(event) {
-      event.preventDefault()
+      event.preventDefault();
     },
     dragoverHandler(event) {
-      event.preventDefault()
+      event.preventDefault();
     },
     dropHandler(event) {
-      let nodeTypeStr = event.dataTransfer.getData("text")
-      let nodeType = JSON.parse(nodeTypeStr)
+      let nodeTypeStr = event.dataTransfer.getData('text');
+      let nodeType = JSON.parse(nodeTypeStr);
       let clientX = event.clientX;
       let clientY = event.clientY;
-      this.addNode(clientX, clientY, nodeType)
+      this.addNode(clientX, clientY, nodeType);
     },
     dragendHandler() {
     },
-    initTopo() {
-      let self = this
-      // 数据定义
-      const data = {
-        nodes: [{
-          x: 0,
-          y: 0,
-          shape: "background-animate",
-          color: "#40a9ff",
-          img: "/img/purple.23f14d56.svg",
-          size: [48, 48],
-          id: 'node1'
-        }, {
-          x: 100,
-          y: 100,
-          shape: "cy-image",
-          color: "#40a9ff",
-          img: "/img/purple.23f14d56.svg",
-          size: [48, 48],
-          alert: true,
-          id: 'node2'
-        }, {
-          x: 200,
-          y: 100,
-          shape: "cy-image",
-          color: "#40a9ff",
-          img: "/img/purple.23f14d56.svg",
-          size: [48, 48],
-          alert: false,
-          id: 'node3'
-        }, {
-          id: 'node4',
-          x: 300,
-          y: 200
-        }, {
-          id: 'node5',
-          x: 300,
-          y: 300
-        }],
-        edges: [{
-          id: 'edge1',
-          target: 'node2',
-          source: 'node4'
-        },{
-          id: 'edge2',
-          target: 'node3',
-          source: 'node5'
-        }]
-      };
-
-      // 自定义节点：带告警的图形节点
-      G6.registerNode("cy-image", {
-        afterDraw: function afterDraw(cfg, group) {
-          if (cfg.alert) {
-            let r = cfg.size[0] / 2;
-            let back1 = group.addShape('circle', {
-              zIndex: -3,
-              attrs: {
-                x: 0,
-                y: 0,
-                r: r,
-                fill: cfg.color,
-                opacity: 0.6
-              }
-            });
-            let back2 = group.addShape('circle', {
-              zIndex: -2,
-              attrs: {
-                x: 0,
-                y: 0,
-                r: r,
-                fill: cfg.color, // 为了显示清晰，随意设置了颜色
-                opacity: 0.6
-              }
-            });
-            let back3 = group.addShape('circle', {
-              zIndex: -1,
-              attrs: {
-                x: 0,
-                y: 0,
-                r: r,
-                fill: cfg.color,
-                opacity: 0.6
-              }
-            });
-            group.sort(); // 排序，根据zIndex 排序
-            back1.animate({ // 逐渐放大，并消失
-              r: r + 10,
-              opacity: 0.1,
-              repeat: true // 循环
-            }, 3000, 'easeCubic', null, 0); // 无延迟
-            back2.animate({ // 逐渐放大，并消失
-              r: r + 10,
-              opacity: 0.1,
-              repeat: true // 循环
-            }, 3000, 'easeCubic', null, 1000); // 1 秒延迟
-            back3.animate({ // 逐渐放大，并消失
-              r: r + 10,
-              opacity: 0.1,
-              repeat: true // 循环
-            }, 3000, 'easeCubic', null, 2000); // 2 秒延迟
-          }
-        }
-      }, "image");
+    initTopo(graphData) {
+      let self = this;
+      if (self.graph) {
+        self.graph.destroy();
+      }
       // 自定义边：折线
-      G6.registerEdge("stepline", {
+      G6.registerEdge('stepline', {
         draw(cfg, group) {
           let startPoint = cfg.startPoint;
           let endPoint = cfg.endPoint;
@@ -317,13 +250,56 @@ export default {
           return shape;
         }
       });
-      // 封装添加边的交互
-      G6.registerBehavior("click-add-edge", {
+      // 【预览模式】 - 封装的节点展开/收缩交互
+      G6.registerBehavior('my-collapse-expand', {
         getEvents() {
           return {
-            "node:click": "onNodeClick",
-            "canvas:mousemove": "onMousemove",
-            "edge:click": "onEdgeClick" // 点击空白处，取消边
+            'node:click': 'onNodeClick'
+          };
+        },
+        onNodeClick(event) {
+          let clickNode = event.item;
+          this.sourceNodeIds = [clickNode._cfg.id];
+          if (clickNode.hasState('collapse')) {
+            // 节点已收缩, 需要展开
+            let visible = true;
+            this.collapseOrExpand(clickNode, visible);
+            clickNode.clearStates('collapse');
+          } else {
+            // 节点未收缩, 需要收缩
+            let visible = false;
+            this.collapseOrExpand(clickNode, visible);
+            clickNode.setState('collapse', true);
+          }
+        },
+        collapseOrExpand(sourceNode, visible) {
+          let outEdges = sourceNode.getOutEdges();
+          for (let i = 0; i < outEdges.length; i++) {
+            let targetNode = outEdges[i].getTarget();
+            let targetNodeId = targetNode._cfg.id
+            if (!this.sourceNodeIds.includes(targetNodeId)) {
+              targetNode.changeVisibility(visible);
+              // 如果一个节点隐藏/显示了，那么它关联的所有边都隐藏
+              let relationEdges = targetNode.getEdges();
+              for (let i = 0; i < relationEdges.length; i++) {
+                relationEdges[i].changeVisibility(visible);
+              }
+              this.sourceNodeIds.push(targetNodeId);
+              // 递归, 该节点的下属节点继续隐藏
+              if (targetNode.getOutEdges().length > 0) {
+                this.collapseOrExpand(targetNode, visible);
+              }
+            }
+          }
+        }
+      });
+      // 【连线模式】 - 封装添加边的交互
+      G6.registerBehavior('click-add-edge', {
+        getEvents() {
+          return {
+            'node:click': 'onNodeClick',
+            'canvas:mousemove': 'onMousemove',
+            'edge:click': 'onEdgeClick' // 点击空白处，取消边
           };
         },
         onNodeClick(event) {
@@ -331,10 +307,10 @@ export default {
           let node = event.item;
           let point = { x: event.x, y: event.y };
           let model = node.getModel();
-          let edgeShape = self.currentEdgeType.guid || "line";
+          let edgeShape = self.currentEdgeType.guid || 'line';
           if (this.addingEdge && this.edge) {
             // 点击第二个节点
-            console.log('点击第二个节点')
+            console.log('点击第二个节点');
             graph.updateItem(this.edge, {
               target: model.id
             });
@@ -366,16 +342,16 @@ export default {
           } else {
             // 点击第一个节点
             this.historyData = JSON.stringify(graph.save());
-            console.log('点击第一个节点')
-            if (edgeShape === "stepline") {
-              this.edge = graph.addItem("edge", {
+            console.log('点击第一个节点');
+            if (edgeShape === 'stepline') {
+              this.edge = graph.addItem('edge', {
                 source: model.id,
                 target: point,
                 shape: edgeShape,
                 controlPoints: [{ x: 100, y: 70 }]
               });
             } else {
-              this.edge = graph.addItem("edge", {
+              this.edge = graph.addItem('edge', {
                 source: model.id,
                 target: point,
                 shape: edgeShape
@@ -403,77 +379,77 @@ export default {
           }
         }
       });
-      // 封装鼠标点击的交互
-      G6.registerBehavior("click-event", {
+      // 【编辑模式】 - 封装鼠标点击的交互
+      G6.registerBehavior('click-event', {
         getEvents() {
           return {
-            "node:click": "onNodeClick",
-            "node:contextmenu": "onNodeRightClick",
-            "edge:click": "onEdgeClick",
-            "edge:contextmenu": "onEdgeRightClick",
-            "canvas:click": "onCanvasClick"
+            'node:click': 'onNodeClick',
+            'node:contextmenu': 'onNodeRightClick',
+            'edge:click': 'onEdgeClick',
+            'edge:contextmenu': 'onEdgeRightClick',
+            'canvas:click': 'onCanvasClick'
           };
         },
         onNodeClick() {
-          self.currentFocus = "node";
+          self.currentFocus = 'node';
         },
         onNodeRightClick(event) {
           let graph = this.graph;
           let clickNode = event.item;
           let clickNodeModel = clickNode.getModel();
-          let selectedNodes = graph.findAllByState("node", "selected");
+          let selectedNodes = graph.findAllByState('node', 'selected');
           // 如果当前点击节点不是之前选中的单个节点，才进行下面的处理
           if (!(selectedNodes.length === 1 && clickNodeModel.id === selectedNodes[0].getModel().id)) {
             // 先取消所有节点的选中状态
-            graph.findAllByState("node", "selected").forEach(node => {
-              node.setState("selected", false);
+            graph.findAllByState('node', 'selected').forEach(node => {
+              node.setState('selected', false);
             });
             // 再添加该节点的选中状态
-            clickNode.setState("selected", true);
-            self.currentFocus = "node";
+            clickNode.setState('selected', true);
+            self.currentFocus = 'node';
           }
           let point = { x: event.x, y: event.y };
-          console.log("右击了节点")
+          console.log('右击了节点');
         },
         onEdgeClick(event) {
           let clickEdge = event.item;
-          console.log('点击边了')
-          clickEdge.setState("selected", !clickEdge.hasState("selected"));
-          self.currentFocus = "edge";
+          console.log('点击边了');
+          clickEdge.setState('selected', !clickEdge.hasState('selected'));
+          self.currentFocus = 'edge';
         },
         onEdgeRightClick(event) {
           let graph = this.graph;
           let clickEdge = event.item;
           let clickEdgeModel = clickEdge.getModel();
-          let selectedEdges = graph.findAllByState("edge", "selected");
+          let selectedEdges = graph.findAllByState('edge', 'selected');
           // 如果当前点击节点不是之前选中的单个节点，才进行下面的处理
           if (!(selectedEdges.length === 1 && clickEdgeModel.id === selectedEdges[0].getModel().id)) {
             // 先取消所有节点的选中状态
-            graph.findAllByState("edge", "selected").forEach(edge => {
-              edge.setState("selected", false);
+            graph.findAllByState('edge', 'selected').forEach(edge => {
+              edge.setState('selected', false);
             });
             // 再添加该节点的选中状态
-            clickEdge.setState("selected", true);
-            self.currentFocus = "edge";
+            clickEdge.setState('selected', true);
+            self.currentFocus = 'edge';
           }
           let point = { x: event.x, y: event.y };
-          console.log("右击了边")
+          console.log('右击了边');
         },
         onCanvasClick() {
-          self.currentFocus = "canvas";
+          self.currentFocus = 'canvas';
         }
       });
-      // 封装键盘事件的交互
-      G6.registerBehavior("keyup-event", {
+      // 【编辑模式】 - 封装键盘事件的交互
+      G6.registerBehavior('keyup-event', {
         getEvents() {
           return {
-            "keyup": "onKeyup"
+            'keyup': 'onKeyup'
           };
         },
         onKeyup(event) {
           let graph = this.graph;
-          let selectedNodes = graph.findAllByState("node", "selected");
-          let selectedEdges = graph.findAllByState("edge", "selected");
+          let selectedNodes = graph.findAllByState('node', 'selected');
+          let selectedEdges = graph.findAllByState('edge', 'selected');
           if (event.keyCode === 46 && (selectedNodes.length > 0 || selectedEdges.length > 0)) {
             // 记录【删除】前的数据状态
             let historyData = JSON.stringify(graph.save());
@@ -505,12 +481,12 @@ export default {
           }
         }
       });
-      // 封装记录【拖拽】操作的事件(用于【撤销】和【重做】)
-      G6.registerBehavior("record-actions", {
+      // 【编辑模式】 - 封装记录【拖拽】操作的事件(用于【撤销】和【重做】)
+      G6.registerBehavior('record-actions', {
         getEvents() {
           return {
-            "node:dragstart": "onNodeDragstart",
-            "node:dragend": "onNodeDragend"
+            'node:dragstart': 'onNodeDragstart',
+            'node:dragend': 'onNodeDragend'
           };
         },
         onNodeDragstart() {
@@ -545,106 +521,126 @@ export default {
 
       // 图画布的定义
       let graphContainer = self.$refs.graphContainer;
-      console.log(graphContainer)
       let graphWidth = graphContainer.$el.clientWidth;
       let graphHeight = graphContainer.$el.clientHeight;
       // Plugins
-      let navigator = self.$refs.navigator;
-      let minimapWidth = navigator.clientWidth;
-      let minimapHeight = navigator.clientHeight;
-      let minimap = new Minimap({
-        size: [minimapWidth, minimapHeight],
-        container: "g6-minimap",
-        type: "default"
-      });
-      self.graph = new G6.Graph({
-        plugins: [minimap],
-        container: "mount-topology",
-        width: graphWidth,
-        height: graphHeight,
-        nodeStyle: {
-          selected: {
-            shadowColor: '#626262',
-            shadowBlur: 8,
-            shadowOffsetX: -1,
-            shadowOffsetY: 3
-          }
-        },
-        edgeStyle: {
-          default: {
-            stroke: '#e2e2e2',
-            lineWidth: 3,
-            lineAppendWidth: 4
-          },
-          selected: {
-            shadowColor: '#626262',
-            shadowBlur: 3
-          }
-        },
-        modes: {
-          default: [
-            "drag-canvas",
-            "drag-node",
-            "click-select",
-            "activate-relations",
-            "debug"
-          ],
-          preview: [
-            "drag-canvas",
-            "drag-node",
-            "click-select",
-            {
-              type: "tooltip",
-              formatterText(model) {
-                return model.label;
-              }
-            },
-            {
-              type: "edge-tooltip",
-              formatterText(model) {
-                return model.label;
-              }
-            },
-            "activate-relations",
-            "collapse-expand" // todo...编写回调函数
-          ],
-          edit: [
-            "drag-node",
-            "drag-canvas",
-            "click-select",
-            "right-click-node",
-            "right-click-edge",
-            // 自定义Behavior
-            "click-event",
-            "keyup-event",
-            "record-actions"
-          ],
-          addEdge: [
-            "drag-canvas",
-            // 自定义Behavior
-            "click-add-edge"
-          ],
-          multiSelect: [
-            {
-              type: "brush-select",
-              onSelect(nodes) {
-                this.graph.setMode("edit");
-                window.document.getElementById("multi-select").style.backgroundColor = "transparent";
-              },
-              onDeselect() {
-              }
+      let plugins = [];
+      let modes = {
+        default: [
+          'drag-canvas',
+          'drag-node',
+          'click-select'
+        ],
+        preview: [
+          'drag-canvas',
+          'zoom-canvas',
+          // "drag-node",
+          // 'click-select',
+          {
+            type: 'tooltip',
+            formatterText(model) {
+              return model.label;
             }
-          ]
-        }
-      });
-      // 将 read 方法分解成 data() 和 render 方法，便于整个生命周期的管理
-      self.graph.read(data);
-      self.graph.render();
+          },
+          {
+            type: 'edge-tooltip',
+            formatterText(model) {
+              return model.label;
+            }
+          },
+          // 自定义Behavior
+          'my-collapse-expand'
+        ],
+        edit: [
+          'drag-node',
+          'drag-canvas',
+          'click-select',
+          'right-click-node',
+          'right-click-edge',
+          // 自定义Behavior
+          'click-event',
+          'keyup-event',
+          'record-actions'
+        ],
+        addEdge: [
+          'drag-canvas',
+          // 自定义Behavior
+          'click-add-edge'
+        ],
+        multiSelect: [
+          {
+            type: 'brush-select',
+            onSelect() {
+              this.graph.setMode('edit');
+              window.document.getElementById('multi-select').style.backgroundColor = 'transparent';
+            }
+          }
+        ]
+      };
+      if (self.graphMode === 'edit') {
+        let navigator = self.$refs.navigator;
+        let minimapWidth = navigator ? navigator.clientWidth : 200;
+        let minimapHeight = navigator ? navigator.clientHeight : 120;
+        let minimap = new Minimap({
+          size: [minimapWidth, minimapHeight],
+          container: 'g6-minimap',
+          type: 'default'
+        });
+        plugins.push(minimap);
+      }
+      // 生成图
+      if (self.layoutType === 'force') {
+        /* 力导布局: force-layout */
+        self.graph = initGraph.forceLayoutGraph(G6, {
+          plugins: plugins,
+          container: 'mount-topology',
+          width: graphWidth,
+          height: graphHeight,
+          modes: modes,
+          graphData: graphData
+        });
+      } else {
+        /* 默认布局: 自由布局 */
+        self.graph = initGraph.commonGraph(G6, {
+          plugins: plugins,
+          container: 'mount-topology',
+          width: graphWidth,
+          height: graphHeight,
+          modes: modes,
+          graphData: graphData
+        });
+      }
       self.graph.setMode(self.graphMode);
     },
+    autoLayout() {
+      let self = this;
+      // 数据获取
+      let graphData = self.getGraphData();
+      if (self.graph && !self.graph.destroyed) {
+        self.graph.destroy();
+      }
+      let graphContainer = self.$refs.graphContainer;
+      let graphWidth = graphContainer.$el.clientWidth;
+      let graphHeight = graphContainer.$el.clientHeight;
+      self.openFullScreenLoading();
+      let promise = new Promise((resolve) => {
+        initGraph.forceLayoutGraph(resolve, G6, {
+          container: 'mount-topology',
+          width: graphWidth,
+          height: graphHeight,
+          graphData: graphData
+        });
+      });
+      promise.then(graph => {
+        self.graph = graph;
+        self.closeFullScreenLoading();
+        self.initTopo(self.getGraphData());
+      });
+    },
     enableEdgeHandler(enableEdge) {
-      let graphMode = enableEdge ? "addEdge" : "edit";
+      let graphMode = enableEdge ? 'addEdge' : 'edit';
       this.graph.setMode(graphMode);
+      // this.graphMode = graphMode
     },
     changeEdgeType(command) {
       this.currentEdgeType = this.edgeTypeList.filter(edgeType => edgeType.guid === command)[0];
@@ -654,7 +650,6 @@ export default {
         this.undoCount += 1;
         let key = `graph_history_${this.historyIndex - this.undoCount}`;
         let historyData = this.getHistoryData(key);
-        console.log(historyData)
         this.changeGraphData(JSON.parse(historyData));
       }
     },
@@ -672,7 +667,7 @@ export default {
     pasteHandler() {
       let graph = this.graph;
       let nodesInClipboard = this.nodesInClipboard;
-      if (graph && nodesInClipboard.length > 0) {
+      if (graph && !graph.destroyed && nodesInClipboard.length > 0) {
         // 记录【粘贴】前的数据状态
         let historyData = JSON.stringify(graph.save());
         let key = `graph_history_${this.historyIndex}`;
@@ -681,8 +676,8 @@ export default {
         for (let i = 0; i < nodesInClipboard.length; i++) {
           let node = nodesInClipboard[i];
           let model = node.getModel();
-          let newModel = {...model, id:G6.Util.uniqueId(), x:model.x+10, y: model.y +10};
-          graph.addItem("node", newModel);
+          let newModel = { ...model, id: G6.Util.uniqueId(), x: model.x + 10, y: model.y + 10 };
+          graph.addItem('node', newModel);
         }
         // 记录【粘贴】后的数据状态
         // 如果当前点过【撤销】了，【粘贴】后将取消【重做】功能
@@ -704,8 +699,8 @@ export default {
     },
     deleteHandler() {
       let graph = this.graph;
-      let selectedNodes = graph.findAllByState("node", "selected");
-      let selectedEdges = graph.findAllByState("edge", "selected");
+      let selectedNodes = graph.findAllByState('node', 'selected');
+      let selectedEdges = graph.findAllByState('edge', 'selected');
       if (this.selectedNodes.length > 0 || this.selectedEdges.length > 0) {
         // 记录【删除】前的数据状态
         let historyData = JSON.stringify(graph.save());
@@ -738,32 +733,32 @@ export default {
     },
     zoomInHandler() {
       let graph = this.graph;
-      if (graph) {
+      if (graph && !graph.destroyed) {
         graph.zoom(1.2);
       }
     },
     zoomOutHandler() {
       let graph = this.graph;
-      if (graph) {
+      if (graph && !graph.destroyed) {
         graph.zoom(0.8);
       }
     },
     autoZoomHandler() {
       let graph = this.graph;
-      if (graph) {
+      if (graph && !graph.destroyed) {
         graph.fitView(10);
         // this.zoomValue = graph.getZoom();  // TODO...怎么处理changeZoomHandler的二次触发问题
       }
     },
     resetZoomHandler() {
       let graph = this.graph;
-      if (graph) {
+      if (graph && !graph.destroyed) {
         graph.zoomTo(1);
       }
     },
     multiSelectHandler(event) {
-      event.target.style.backgroundColor = "#EEEEEE";
-      this.graph.setMode("multiSelect");
+      event.target.style.backgroundColor = '#EEEEEE';
+      this.graph.setMode('multiSelect');
     },
     enableGridHandler(enableGrid) {
       if (enableGrid) {
@@ -773,34 +768,48 @@ export default {
         this.graph.removePlugin(this.grid);
       }
     },
+    enableMinimapHandler(enableMinimap) {
+      if (enableMinimap) {
+        this.minimap = new Minimap({
+          size: [200, 120],
+          type: 'default',
+          className: 'g6-minimap-preview'
+        });
+        this.graph.addPlugin(this.minimap);
+      } else {
+        this.graph.removePlugin(this.minimap);
+      }
+    },
     changeZoomHandler(zoomTo) {
       let graph = this.graph;
-      if (graph) {
+      if (graph && !graph.destroyed) {
         graph.zoomTo(zoomTo);
       }
     },
     changeModeHandler(graphMode) {
-      this.graphMode = graphMode
-      this.initTopo();
+      this.graphMode = graphMode;
+      this.$nextTick(() => {
+        this.initTopo(this.graphData);
+      });
     },
     addNode(clientX, clientY, nodeType) {
       let graph = this.graph;
-      if (graph) {
+      if (graph && !graph.destroyed) {
         // 记录【添加节点】前的数据状态
         let historyData = JSON.stringify(graph.save());
         let key = `graph_history_${this.historyIndex}`;
         this.addHistoryData(key, historyData);
         // 开始添加
-        let droppoint = graph.getPointByClient(clientX, clientY)
-        let node = graph.addItem("node", {
+        let droppoint = graph.getPointByClient(clientX, clientY);
+        let node = graph.addItem('node', {
           id: G6.Util.uniqueId(),
           x: droppoint.x,
           y: droppoint.y,
           label: nodeType.label,
           labelCfg: {
-            position: "bottom"
+            position: 'bottom'
           },
-          shape: "image",
+          shape: 'cc-image',
           img: nodeType.imgSrc,
           size: [48, 48]
         });
@@ -828,7 +837,7 @@ export default {
     },
     getGraphData() {
       let graph = this.graph;
-      if (graph) {
+      if (graph && !graph.destroyed) {
         return graph.save();
       } else {
         return { nodes: [], edges: [] };
@@ -846,14 +855,14 @@ export default {
     clearHistoryData() {
       for (let i = 0; i < sessionStorage.length; i++) {
         let key = sessionStorage.key(i);
-        if (key.startsWith("graph_history")) {
+        if (key.startsWith('graph_history')) {
           sessionStorage.removeItem(key);
         }
       }
     },
     changeGraphData(data) {
       let graph = this.graph;
-      if (graph) {
+      if (graph && !graph.destroyed) {
         graph.changeData(data);
       }
     }
@@ -873,13 +882,11 @@ export default {
 }
 
 .bottom-container {
+  /*height: calc(100% - 55px);*/
   height: 100%;
+  /*width: calc(100% - 5px);*/
 
   .item-pannel {
-    /*position: absolute;*/
-    /*left: 0;*/
-    /*z-index: 2;*/
-    /*width: 200px;*/
     height: 100%;
     padding-top: 0;
     color: #333;
@@ -917,8 +924,6 @@ export default {
   }
 
   .graph-container {
-    /*margin-left: 200px;*/
-    /*margin-right: 200px;*/
     height: 100%;
 
     #mount-topology {
@@ -928,10 +933,6 @@ export default {
   }
 
   .graph-pannel {
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*z-index: 2;*/
-    /*width: 200px;*/
     height: 100%;
     padding-top: 0;
     color: #333;
@@ -958,6 +959,7 @@ export default {
       padding: 16px 8px;
     }
   }
+
   .navigator-pannel {
     height: 40%;
 
@@ -965,24 +967,11 @@ export default {
       padding: 1px;
       height: 55%;
     }
+
     .zoom-slider {
       padding: 0 6px;
     }
-    /*display: none;*/
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*bottom: 0;*/
-    /*z-index: 3;*/
-    /*padding-top: 0;*/
-    /*width: 200px;*/
-    /*height: 180px;*/
-    /*color: #333;*/
-    /*font-size: 12px;*/
-    /*text-align: left;*/
-    /*background-color: #F7F9FB;*/
-    /*border-left: 1px solid #E6E9ED;*/
   }
-
 }
 
 </style>
@@ -999,5 +988,15 @@ export default {
 .navigator-pannel .zoom-slider .el-slider__button {
   width: 10px;
   height: 10px;
+}
+
+// 预览模式自动生成的节点
+.graph-container {
+  #mount-topology .g6-minimap-preview {
+    position: absolute;
+    right: 10px;
+    bottom: 60px;
+    border: 1px solid #e2e2e2;
+  }
 }
 </style>

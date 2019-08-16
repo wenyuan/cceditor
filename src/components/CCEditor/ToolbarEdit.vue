@@ -17,14 +17,18 @@
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
-    <el-col :span="18">
+    <el-col :span="15">
       <div class="graph-ops">
-        <i class="fas fa-reply" title="撤销" :class="$parent.disableUndo ? 'disabled':''" @click="$parent.undoHandler"></i>
-        <i class="fas fa-share" title="重做" :class="$parent.disableRedo ? 'disabled':''" @click="$parent.redoHandler"></i>
+        <i class="fas fa-reply" title="撤销" :class="$parent.disableUndo ? 'disabled':''"
+           @click="$parent.undoHandler"></i>
+        <i class="fas fa-share" title="重做" :class="$parent.disableRedo ? 'disabled':''"
+           @click="$parent.redoHandler"></i>
         <span class="separator"></span>
         <i class="fas fa-copy" title="复制" :class="$parent.disableCopy ? 'disabled':''" @click="$parent.copyHandler"></i>
-        <i class="fas fa-paste" title="粘贴" :class="$parent.disablePaste ? 'disabled':''" @click="$parent.pasteHandler"></i>
-        <i class="far fa-trash-alt" title="删除" :class="$parent.disableDelete ? 'disabled':''" @click="$parent.deleteHandler"></i>
+        <i class="fas fa-paste" title="粘贴" :class="$parent.disablePaste ? 'disabled':''"
+           @click="$parent.pasteHandler"></i>
+        <i class="far fa-trash-alt" title="删除" :class="$parent.disableDelete ? 'disabled':''"
+           @click="$parent.deleteHandler"></i>
         <span class="separator"></span>
         <i class="fas fa-search-plus" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
         <i class="fas fa-search-minus" title="缩小" @click="$parent.zoomOutHandler"></i>
@@ -35,8 +39,9 @@
       </div>
       当前模式：{{ $parent.graphMode }}
     </el-col>
-    <el-col :span="3" class="">
+    <el-col :span="6" style="text-align: right;">
       <el-button size="mini" @click="$parent.changeModeHandler('preview')">预览</el-button>
+      <el-button size="mini" @click="$parent.autoLayout">自动布局</el-button>
       <el-button size="mini" @click="$parent.getGraphData">获取json数据</el-button>
     </el-col>
   </el-row>
@@ -44,8 +49,8 @@
 
 <script>
 export default {
-  name: "ToolbarEdit"
-}
+  name: 'ToolbarEdit'
+};
 </script>
 
 <style lang="scss" scoped>
@@ -97,12 +102,12 @@ export default {
     }
 
     .disabled {
-      color: rgba(0,0,0,0.25);
+      color: rgba(0, 0, 0, 0.25);
     }
 
     .disabled:hover {
       cursor: not-allowed;
-      border: 1px solid rgba(2,2,2,0);
+      border: 1px solid rgba(2, 2, 2, 0);
     }
 
     .icon-select {

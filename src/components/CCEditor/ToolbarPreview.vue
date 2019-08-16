@@ -10,11 +10,12 @@
         <i class="fas fa-compress" title="适应画布" @click="$parent.autoZoomHandler"></i>
         <i class="fas fa-expand" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
+        <el-checkbox @change="$parent.enableMinimapHandler">导航器</el-checkbox>
         <i class="fas fa-vector-square" id="multi-select" title="多选" @click="$parent.multiSelectHandler"></i>
       </div>
       当前模式：{{ $parent.graphMode }}
     </el-col>
-    <el-col :span="3" class="">
+    <el-col :span="3" style="text-align: right;">
       <el-button size="mini" @click="$parent.changeModeHandler('edit')">编辑</el-button>
       <el-button size="mini" @click="$parent.getGraphData">获取json数据</el-button>
     </el-col>
@@ -23,15 +24,12 @@
 
 <script>
 export default {
-  name: "ToolbarEdit"
-}
+  name: 'ToolbarEdit'
+};
 </script>
 
 <style lang="scss" scoped>
 .toolbar {
-  /*z-index: 3;*/
-  /*width: 100%;*/
-  /*height: 42px;*/
   color: #333;
   text-align: left;
   vertical-align: middle;
@@ -47,10 +45,8 @@ export default {
 
   .edge-type {
     width: 60%;
-    /*margin-right: 20px;*/
     line-height: 25px;
     text-align: left;
-    /*border-right: 1px solid #E6E9ED;*/
   }
 
   .graph-ops {
@@ -76,12 +72,12 @@ export default {
     }
 
     .disabled {
-      color: rgba(0,0,0,0.25);
+      color: rgba(0, 0, 0, 0.25);
     }
 
     .disabled:hover {
       cursor: not-allowed;
-      border: 1px solid rgba(2,2,2,0);
+      border: 1px solid rgba(2, 2, 2, 0);
     }
 
     .icon-select {

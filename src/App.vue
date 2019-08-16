@@ -21,7 +21,7 @@ body, html {
   text-align: center;
   color: #2c3e50;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  /*overflow-x: hidden;*/
+  /*overflow-y: hidden;*/
 }
 </style>

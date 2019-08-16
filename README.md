@@ -1,4 +1,4 @@
-# CY Editor
+# CCEditor
 A visual graph editor based on G6 and Vue.js
 
 ## Project setup

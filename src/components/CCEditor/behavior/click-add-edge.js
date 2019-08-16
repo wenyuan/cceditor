@@ -1,4 +1,5 @@
 export default function(G6){
+  // https://github.com/guozhaolong/wfd/blob/master/src/index.js
   let self = Vue;
   // 封装添加边的交互
   G6.registerBehavior("click-add-edge", {
