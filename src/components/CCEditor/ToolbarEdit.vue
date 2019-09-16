@@ -1,41 +1,41 @@
 <template>
   <el-row class="toolbar">
     <el-col :span="3">
-      <el-checkbox class="edge-enabled" title="连线模式" @change="$parent.enableEdgeHandler"></el-checkbox>
-      <el-dropdown class="edge-type" trigger="click" @command="$parent.changeEdgeType">
+      <!--<el-checkbox class="edge-enabled" title="连线模式" @change="$parent.enableEdgeHandler"></el-checkbox>-->
+      <el-dropdown class="edge-shape" trigger="click" @command="$parent.changeEdgeShape">
         <span class="el-dropdown-link">
-          {{ $parent.currentEdgeType.label }}<i class="el-icon-arrow-down el-icon--right"></i>
+          {{ $parent.currentEdgeShape.label }}<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item
-            v-for="edgeType in $parent.edgeTypeList"
-            :key="edgeType.guid"
-            :command="edgeType.guid"
+            v-for="edgeShape in $parent.edgeShapeList"
+            :key="edgeShape.guid"
+            :command="edgeShape.guid"
           >
-            {{ edgeType.label }}
+            {{ edgeShape.label }}
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
     <el-col :span="15">
       <div class="graph-ops">
-        <i class="fas fa-reply" title="撤销" :class="$parent.disableUndo ? 'disabled':''"
+        <i class="iconfont icon-undo" title="撤销" :class="$parent.disableUndo ? 'disabled':''"
            @click="$parent.undoHandler"></i>
-        <i class="fas fa-share" title="重做" :class="$parent.disableRedo ? 'disabled':''"
+        <i class="iconfont icon-redo" title="重做" :class="$parent.disableRedo ? 'disabled':''"
            @click="$parent.redoHandler"></i>
         <span class="separator"></span>
-        <i class="fas fa-copy" title="复制" :class="$parent.disableCopy ? 'disabled':''" @click="$parent.copyHandler"></i>
-        <i class="fas fa-paste" title="粘贴" :class="$parent.disablePaste ? 'disabled':''"
+        <i class="iconfont icon-copy" title="复制" :class="$parent.disableCopy ? 'disabled':''" @click="$parent.copyHandler"></i>
+        <i class="iconfont icon-paste" title="粘贴" :class="$parent.disablePaste ? 'disabled':''"
            @click="$parent.pasteHandler"></i>
-        <i class="far fa-trash-alt" title="删除" :class="$parent.disableDelete ? 'disabled':''"
+        <i class="iconfont icon-clear" title="删除" :class="$parent.disableDelete ? 'disabled':''"
            @click="$parent.deleteHandler"></i>
         <span class="separator"></span>
-        <i class="fas fa-search-plus" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
-        <i class="fas fa-search-minus" title="缩小" @click="$parent.zoomOutHandler"></i>
-        <i class="fas fa-compress" title="适应画布" @click="$parent.autoZoomHandler"></i>
-        <i class="fas fa-expand" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
+        <i class="iconfont icon-zoom-in" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
+        <i class="iconfont icon-zoom-out" title="缩小" @click="$parent.zoomOutHandler"></i>
+        <i class="iconfont icon-fit" title="适应画布" @click="$parent.autoZoomHandler"></i>
+        <i class="iconfont icon-actual-size" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
-        <i class="fas fa-vector-square" id="multi-select" title="多选" @click="$parent.multiSelectHandler"></i>
+        <i class="iconfont icon-marquee" id="multi-select" title="框选" @click="$parent.multiSelectHandler"></i>
       </div>
       当前模式：{{ $parent.graphMode }}
     </el-col>
@@ -71,11 +71,11 @@ export default {
     text-align: center;
   }
 
-  .edge-type {
-    width: 60%;
+  .edge-shape {
+    width: 100%;
     /*margin-right: 20px;*/
     line-height: 25px;
-    text-align: left;
+    text-align: center;
     /*border-right: 1px solid #E6E9ED;*/
   }
 

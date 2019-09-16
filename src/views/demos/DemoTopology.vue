@@ -1,5 +1,5 @@
 <template>
-  <cc-topology :graph-data="graphData"></cc-topology>
+  <cc-topology :graph-data="graphData1"></cc-topology>
 </template>
 
 <script>
@@ -144,113 +144,61 @@ export default {
       graphData1: {
         nodes: [
           {
-            shape: 'background-animate',
-            color: '#40a9ff',
-            img: '/img/purple.23f14d56.svg',
-            size: [48, 48],
-            id: 'node1'
-          },
-          {
+            x: 0,
+            y: 0,
             shape: 'cc-image',
-            color: '#40a9ff',
             img: '/img/purple.23f14d56.svg',
-            size: [48, 48],
-            alert: true,
-            id: 'node2'
+            appState: {
+              alert: true
+            },
+            id: 'node1',
+            anchorPoints: [
+              [0, 0.5], // 左侧中间
+              [1, 0.5] // 右侧中间
+            ],
+            size: 48,
+            width: 48,
+            height: 48
           },
           {
-            shape: 'cc-image',
-            color: '#40a9ff',
-            img: '/img/purple.23f14d56.svg',
-            size: [48, 48],
-            alert: false,
-            id: 'node3'
+            x: 100,
+            y: 100,
+            shape: 'cc-rect',
+            appState: {
+              alert: true
+            },
+            id: 'node2',
+            size: 48,
+            width: 48,
+            height: 48
           },
           {
-            id: 'node4',
-          },
-          {
-            id: 'node5',
-          },
-          {
-            id: 'node6'
-          },
-          {
-            id: 'node7',
-          },
-          {
-            id: 'node8',
-          },
-          {
-            id: 'node9',
-          },
-          {
-            id: 'node10'
-          },
-          {
-            id: 'node11'
+            x: 200,
+            y: 200,
+            shape: 'cc-rect',
+            appState: {
+              alert: false
+            },
+            id: 'node3',
+            anchorPoints: [
+              [0, 0.5], // 左侧中间
+              [1, 0.5] // 右侧中间
+            ],
+            size: 48,
+            width: 48,
+            height: 48
           }
         ],
         edges: [
           {
-            id: 'edge1',
-            source: 'node4',
-            target: 'node2'
-          },
-          {
-            id: 'edge2',
-            source: 'node5',
-            target: 'node3'
-          },
-          {
-            id: 'edge3',
-            source: 'node1',
-            target: 'node3'
-          },
-          {
-            id: 'edge4',
-            source: 'node1',
-            target: 'node4'
-          },
-          {
-            id: 'edge5',
-            source: 'node1',
-            target: 'node5'
-          },
-          {
-            id: 'edge6',
-            source: 'node3',
-            target: 'node4'
-          },
-          {
-            id: 'edge7',
-            source: 'node3',
-            target: 'node6'
-          },
-          {
-            id: 'edge8',
-            source: 'node2',
-            target: 'node4'
-          },
-          {
-            id: 'edge9',
-            source: 'node1',
-            target: 'node2'
-          },
-          {
-            id: 'edge10',
-            source: 'node7',
-            target: 'node8'
-          },
-          {
             id: 'edge11',
-            source: 'node8',
-            target: 'node9'
+            source: 'node1',
+            target: 'node2',
           },
           {
             id: 'edge12',
-            source: 'node9',
-            target: 'node7'
+            source: 'node1',
+            target: 'node3',
           }
         ]
       },

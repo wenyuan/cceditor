@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@antv/g6": "^3.0.5-beta.7",
-    "@fortawesome/fontawesome-free": "^5.10.0",
     "core-js": "^2.6.5",
     "element-ui": "^2.11.1",
     "vue": "^2.6.10",

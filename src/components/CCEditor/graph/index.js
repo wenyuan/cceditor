@@ -1,4 +1,5 @@
 import d3 from '../plugins/d3-installer';
+import theme from '../theme';
 
 /**
  * 图的布局方式
@@ -13,31 +14,34 @@ const initGraph = {
    */
   commonGraph: function(G6, options) {
     let graphData = options.graphData;
+    let themeStyle = theme.defaultStyle; // todo...先使用默认主题，后期可能增加其它风格的主体
     // 生成G6实例
     let graph = new G6.Graph({
       plugins: options.plugins,
       container: options.container,
       width: options.width,
       height: options.height,
-      nodeStyle: {
-        selected: {
-          shadowColor: '#626262',
-          shadowBlur: 8,
-          shadowOffsetX: -1,
-          shadowOffsetY: 3
-        }
-      },
-      edgeStyle: {
-        default: {
-          stroke: '#e2e2e2',
-          lineWidth: 3,
-          lineAppendWidth: 4
-        },
-        selected: {
-          shadowColor: '#626262',
-          shadowBlur: 3
-        }
-      },
+      nodeStyle: themeStyle.nodeStyle,
+      // nodeStyle: {
+      //   selected: {
+      //     shadowColor: '#626262',
+      //     shadowBlur: 8,
+      //     shadowOffsetX: -1,
+      //     shadowOffsetY: 3
+      //   }
+      // },
+      edgeStyle: themeStyle.edgeStyle,
+      // edgeStyle: {
+      //   default: {
+      //     stroke: '#e2e2e2',
+      //     lineWidth: 3,
+      //     lineAppendWidth: 10
+      //   },
+      //   selected: {
+      //     shadowColor: '#626262',
+      //     shadowBlur: 3
+      //   }
+      // },
       modes: options.modes
     });
     // 将 read 方法分解成 data() 和 render 方法，便于整个生命周期的管理
@@ -54,18 +58,14 @@ const initGraph = {
    */
   forceLayoutGraph: function(resolve, G6, options) {
     let graphData = options.graphData;
+    let themeStyle = theme.defaultStyle; // todo...先使用默认主题，后期可能增加其它风格的主体
     // 生成G6实例
-    console.log(graphData);
     let graph = new G6.Graph({
       container: options.container,
       width: options.width,
       height: options.height,
-      edgeStyle: {
-        default: {
-          stroke: '#e2e2e2',
-          lineWidth: 3
-        }
-      }
+      nodeStyle: themeStyle.nodeStyle,
+      edgeStyle: themeStyle.edgeStyle
     });
     // 初始化力导布局
     let simulation = d3
@@ -80,7 +80,7 @@ const initGraph = {
           .distance(linkDistance)
           .strength(0.5)
       )
-      .force('charge', d3.forceManyBody().strength(-200).distanceMax(500).distanceMin(100))
+      .force('charge', d3.forceManyBody().strength(-500).distanceMax(500).distanceMin(100))
       .force('center', d3.forceCenter(options.width / 2, options.height / 2));
     // 定义节点数据
     simulation.nodes(graphData.nodes).on('tick', ticked);

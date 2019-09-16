@@ -5,13 +5,13 @@
     </el-col>
     <el-col :span="18">
       <div class="graph-ops">
-        <i class="fas fa-search-plus" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
-        <i class="fas fa-search-minus" title="缩小" @click="$parent.zoomOutHandler"></i>
-        <i class="fas fa-compress" title="适应画布" @click="$parent.autoZoomHandler"></i>
-        <i class="fas fa-expand" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
+        <i class="iconfont icon-zoom-in" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
+        <i class="iconfont icon-zoom-out" title="缩小" @click="$parent.zoomOutHandler"></i>
+        <i class="iconfont icon-fit" title="适应画布" @click="$parent.autoZoomHandler"></i>
+        <i class="iconfont icon-actual-size" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
         <el-checkbox @change="$parent.enableMinimapHandler">导航器</el-checkbox>
-        <i class="fas fa-vector-square" id="multi-select" title="多选" @click="$parent.multiSelectHandler"></i>
+        <i class="iconfont icon-marquee" id="multi-select" title="框选" @click="$parent.multiSelectHandler"></i>
       </div>
       当前模式：{{ $parent.graphMode }}
     </el-col>
