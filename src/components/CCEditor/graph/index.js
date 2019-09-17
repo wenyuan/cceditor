@@ -21,6 +21,12 @@ const initGraph = {
       container: options.container,
       width: options.width,
       height: options.height,
+      defaultNode: {
+        shape: 'cc-rect',
+        labelCfg: {
+          position: 'bottom'
+        }
+      },
       nodeStyle: themeStyle.nodeStyle,
       // nodeStyle: {
       //   selected: {

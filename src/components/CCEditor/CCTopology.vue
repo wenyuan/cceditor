@@ -42,8 +42,19 @@
         <div class="detail-pannel">
           <div v-if="currentFocus === 'node'">
             <div class="pannel-title">节点</div>
+            <div class="block-container">
+              <span>节点标签</span>
+              <!--<el-input v-model="selectedNodeParams.label" size="mini"></el-input>-->
+              <input class="params-input" type="text" autocomplete="off" v-model="selectedNodeParams.label"/>
+              <div v-for="(value, key) in nodeAppConfig" :key="key">
+                <span>{{ value }}</span>
+                <!--<el-input v-model="selectedNodeParams.appConfig[key]" size="mini"></el-input>-->
+                <input class="params-input" type="text" autocomplete="off" v-model="selectedNodeParams.appConfig[key]"/>
+              </div>
+            </div>
           </div>
-          <div v-else-if="currentFocus === 'B'">
+          <div v-else-if="currentFocus === 'edge'">
+            <div class="pannel-title">连线</div>
             B
           </div>
           <div v-else-if="currentFocus === 'C'">
@@ -108,6 +119,12 @@ export default {
       default: () => {
         return { nodes: [], edges: [] };
       }
+    },
+    nodeAppConfig: {
+      type: Object,
+      default: () => {
+        return {};
+      }
     }
   },
   data() {
@@ -134,10 +151,17 @@ export default {
         label: '直线'
       },
       currentFocus: 'canvas',
+      selectedNode: null,
+      selectedNodeParams: {
+        label: '',
+        appConfig: this.nodeAppConfig
+      },
+      selectedNodeParamsTimeout: null,
       zoomValue: 1,
       nodesInClipboard: [],
       historyIndex: 0,
       undoCount: 0,
+      onresizeTimeout: null
     };
   },
   computed: {
@@ -157,7 +181,8 @@ export default {
       return this.selectedNodes.length === 0 && this.selectedEdges.length === 0;
     },
     selectedNodes: function() {
-      let graph = this.graph;
+      let self = this;
+      let graph = self.graph;
       if (graph && !graph.destroyed) {
         return graph.findAllByState('node', 'selected');
       } else {
@@ -176,6 +201,26 @@ export default {
   watch: {
     layoutType() {
       this.initTopo(this.graphData);
+    },
+    selectedNodeParams: {
+      deep: true,
+      handler: function(newVal, oldVal) {
+        // 实时监听input值的变化，停止输入300ms后执行update，而不是时时update
+        clearTimeout(this.selectedNodeParamsTimeout);
+        this.selectedNodeParamsTimeout = setTimeout(() => {
+          let selectedNodeModel = this.selectedNode.getModel();
+          selectedNodeModel.label = newVal.label;
+          selectedNodeModel.appConfig = newVal.appConfig;
+          // todo...测试用彩蛋 -- start
+          if (newVal.label === '开启告警') {
+            selectedNodeModel.appState.alert = true;
+          } else if (newVal.label === '关闭告警') {
+            selectedNodeModel.appState.alert = false;
+          }
+          // todo...测试用菜单 -- end
+          this.selectedNode.update(selectedNodeModel);
+        }, 300);
+      }
     }
   },
   created() {
@@ -185,6 +230,11 @@ export default {
     ccBehavior.obj.dragEvent.sendThis(this);
     this.clearHistoryData();
     this.initTopo(this.graphData);
+    window.onresize = () => {
+      return (() => {
+        this.onresizeHandler();
+      })();
+    };
   },
   beforeRouteUpdate(to, from, next) {
     console.log('beforeRouteUpdate');
@@ -366,7 +416,7 @@ export default {
           'hover-event',
           'click-event',
           'keyup-event',
-          'drag-event',
+          // 'drag-event',
           'drag-add-edge'
         ],
         addEdge: [
@@ -395,7 +445,7 @@ export default {
         });
         plugins.push(minimap);
       }
-      // 生成图
+      /* 生成图 */
       if (self.layoutType === 'force') {
         /* 力导布局: force-layout */
         self.graph = initGraph.forceLayoutGraph(G6, {
@@ -626,7 +676,9 @@ export default {
             [0, 0.5] // left
           ],
           // 自定义属性
-          appState: {}
+          appState: {
+            alert: false
+          }
         });
         // 记录【添加节点】后的数据状态
         if (node) {
@@ -650,14 +702,6 @@ export default {
     },
     unselectAllNodes() {
     },
-    getGraphData() {
-      let graph = this.graph;
-      if (graph && !graph.destroyed) {
-        return graph.save();
-      } else {
-        return { nodes: [], edges: [] };
-      }
-    },
     addHistoryData(key, value) {
       sessionStorage.setItem(key, value);
     },
@@ -673,6 +717,37 @@ export default {
         if (key.startsWith('graph_history')) {
           sessionStorage.removeItem(key);
         }
+      }
+    },
+    onresizeHandler() {
+      // 实时监听窗口大小变化
+      let self = this;
+      clearTimeout(this.onresizeTimeout);
+      this.onresizeTimeout = setTimeout(() => {
+        console.log('窗口大小变化')
+        let graph = self.graph;
+        if (graph && !graph.destroyed) {
+          let graphContainer = self.$refs.graphContainer;
+          let graphWidth = graphContainer.$el.clientWidth;
+          let graphHeight = graphContainer.$el.clientHeight;
+          graph.changeSize(graphWidth, graphHeight);
+        }
+      }, 1000);
+    },
+    /* 暴露给外部的接口 */
+    refreshGraph() {
+      let graph = this.graph;
+      if (graph && !graph.destroyed) {
+        graph.refresh();
+      }
+    },
+    getGraphData() {
+      let graph = this.graph;
+      if (graph && !graph.destroyed) {
+        console.log(JSON.stringify(graph.save()));
+        return graph.save();
+      } else {
+        return { nodes: [], edges: [] };
       }
     },
     changeGraphData(data) {
@@ -771,6 +846,24 @@ export default {
 
     .block-container {
       padding: 16px 8px;
+
+      .params-input {
+        -webkit-appearance: none;
+        background-color: #FFF;
+        background-image: none;
+        border-radius: 4px;
+        border: 1px solid #DCDFE6;
+        box-sizing: border-box;
+        color: #606266;
+        display: inline-block;
+        outline: 0;
+        transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+        padding: 0 5px;
+        width: 100%;
+        height: 25px;
+        line-height: 25px;
+        font-size: 12px;
+      }
     }
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <cc-topology :graph-data="graphData1"></cc-topology>
+  <cc-topology :graph-data="graphData2" :node-app-config="nodeAppConfig"></cc-topology>
 </template>
 
 <script>
@@ -161,12 +161,33 @@ export default {
             height: 48
           },
           {
+            id: 'helloworld',
+            x: 100,
+            y: 0,
+            label: '告警',
+            labelCfg: {
+              position: 'bottom'
+            },
+            shape: 'cc-image',
+            img: '/img/purple.23f14d56.svg',
+            size: [55, 55],
+            width: 48,
+            height: 48,
+            anchorPoints: [
+              [0.5, 0], // top
+              [1, 0.5], // right
+              [0.5, 1], // bottom
+              [0, 0.5] // left
+            ],
+            // 自定义属性
+            appState: {
+              alert: true
+            }
+          },
+          {
             x: 100,
             y: 100,
             shape: 'cc-rect',
-            appState: {
-              alert: true
-            },
             id: 'node2',
             size: 48,
             width: 48,
@@ -176,9 +197,6 @@ export default {
             x: 200,
             y: 200,
             shape: 'cc-rect',
-            appState: {
-              alert: false
-            },
             id: 'node3',
             anchorPoints: [
               [0, 0.5], // 左侧中间
@@ -193,12 +211,12 @@ export default {
           {
             id: 'edge11',
             source: 'node1',
-            target: 'node2',
+            target: 'node2'
           },
           {
             id: 'edge12',
             source: 'node1',
-            target: 'node3',
+            target: 'node3'
           }
         ]
       },
@@ -538,6 +556,12 @@ export default {
           { source: "Mme.Hucheloup", target: "Gavroche", value: 1 },
           { source: "Mme.Hucheloup", target: "Enjolras", value: 1 }
         ]
+      },
+      // 节点配置
+      nodeAppConfig: {
+        ip: '节点IP',
+        port: '节点端口',
+        sysName: '设备名称'
       }
     };
   },
