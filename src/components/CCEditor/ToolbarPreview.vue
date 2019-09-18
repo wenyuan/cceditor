@@ -10,10 +10,10 @@
         <i class="iconfont icon-fit" title="适应画布" @click="$parent.autoZoomHandler"></i>
         <i class="iconfont icon-actual-size" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
-        <el-checkbox @change="$parent.enableMinimapHandler">导航器</el-checkbox>
         <i class="iconfont icon-marquee" id="multi-select" title="框选" @click="$parent.multiSelectHandler"></i>
+        <span class="separator"></span>
+        <el-checkbox @change="$parent.enableMinimapHandler">导航器</el-checkbox>
       </div>
-      当前模式：{{ $parent.graphMode }}
     </el-col>
     <el-col :span="3" style="text-align: right;">
       <el-button size="mini" @click="$parent.changeModeHandler('edit')">编辑</el-button>
@@ -87,6 +87,10 @@ export default {
     .separator {
       margin: 4px;
       border-left: 1px solid #E9E9E9;
+    }
+
+    .el-checkbox {
+      margin: 0 6px;
     }
   }
 }

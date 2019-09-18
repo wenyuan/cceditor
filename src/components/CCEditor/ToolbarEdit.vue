@@ -37,7 +37,6 @@
         <span class="separator"></span>
         <i class="iconfont icon-marquee" id="multi-select" title="框选" @click="$parent.multiSelectHandler"></i>
       </div>
-      当前模式：{{ $parent.graphMode }}
     </el-col>
     <el-col :span="6" style="text-align: right;">
       <el-button size="mini" @click="$parent.changeModeHandler('preview')">预览</el-button>

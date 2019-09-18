@@ -27,6 +27,13 @@ const initGraph = {
           position: 'bottom'
         }
       },
+      defaultEdge: {
+        shape: 'cc-line',
+        labelCfg: {
+          position: 'center',
+          autoRotate: false
+        }
+      },
       nodeStyle: themeStyle.nodeStyle,
       // nodeStyle: {
       //   selected: {

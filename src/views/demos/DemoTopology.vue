@@ -1,5 +1,5 @@
 <template>
-  <cc-topology :graph-data="graphData2" :node-app-config="nodeAppConfig"></cc-topology>
+  <cc-topology :graph-data="graphData1" :node-app-config="nodeAppConfig"></cc-topology>
 </template>
 
 <script>

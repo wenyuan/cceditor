@@ -11,7 +11,7 @@ const sendThis = (_this) => {
 
 export default {
   sendThis, // 暴露函数
-  name: 'click-event',
+  name: 'click-event-edit',
   options: {
     getEvents() {
       return {
@@ -77,6 +77,7 @@ export default {
       vm.currentFocus = 'canvas';
     },
     updateVmData(event) {
+      console.log(event.item._cfg.type)
       if (event.item._cfg.type === 'node') {
         // 更新vm的data: selectedNode 和 selectedNodeParams
         let clickNode = event.item;
@@ -91,6 +92,22 @@ export default {
           vm.selectedNodeParams = {
             label: clickNodeModel.label || '',
             appConfig: {...nodeAppConfig, ...clickNodeModel.appConfig}
+          };
+        }
+      } else if (event.item._cfg.type === 'edge') {
+        // 更新vm的data: selectedEdge 和 selectedEdgeParams
+        let clickEdge = event.item;
+        if (clickEdge.hasState('selected')) {
+          let clickEdgeModel = clickEdge.getModel();
+          console.log('clickEdgeModel:', clickEdgeModel)
+          vm.selectedEdge = clickEdge;
+          let edgeAppConfig = {...vm.edgeAppConfig};
+          Object.keys(edgeAppConfig).forEach(function(key){
+            edgeAppConfig[key] = '';
+          });
+          vm.selectedEdgeParams = {
+            label: clickEdgeModel.label || '',
+            appConfig: {...edgeAppConfig, ...clickEdgeModel.appConfig}
           };
         }
       }

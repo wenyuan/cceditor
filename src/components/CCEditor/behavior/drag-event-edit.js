@@ -11,7 +11,7 @@ const sendThis = (_this) => {
 
 export default {
   sendThis, // 暴露函数
-  name: 'drag-event',
+  name: 'drag-event-edit',
   options: {
     getEvents() {
       return {

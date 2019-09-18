@@ -4,7 +4,7 @@
  */
 
 export default {
-  name: 'hover-event',
+  name: 'hover-event-edit',
   options: {
     getEvents() {
       return {

@@ -55,7 +55,14 @@
           </div>
           <div v-else-if="currentFocus === 'edge'">
             <div class="pannel-title">连线</div>
-            B
+            <div class="block-container">
+              <span>连线标签</span>
+              <input class="params-input" type="text" autocomplete="off" v-model="selectedEdgeParams.label"/>
+              <div v-for="(value, key) in edgeAppConfig" :key="key">
+                <span>{{ value }}</span>
+                <input class="params-input" type="text" autocomplete="off" v-model="selectedEdgeParams.appConfig[key]"/>
+              </div>
+            </div>
           </div>
           <div v-else-if="currentFocus === 'C'">
             C
@@ -125,6 +132,12 @@ export default {
       default: () => {
         return {};
       }
+    },
+    edgeAppConfig: {
+      type: Object,
+      default: () => {
+        return {};
+      }
     }
   },
   data() {
@@ -157,6 +170,12 @@ export default {
         appConfig: this.nodeAppConfig
       },
       selectedNodeParamsTimeout: null,
+      selectedEdge: null,
+      selectedEdgeParams: {
+        label: '',
+        appConfig: this.edgeAppConfig
+      },
+      selectedEdgeParamsTimeout: null,
       zoomValue: 1,
       nodesInClipboard: [],
       historyIndex: 0,
@@ -221,13 +240,26 @@ export default {
           this.selectedNode.update(selectedNodeModel);
         }, 300);
       }
+    },
+    selectedEdgeParams: {
+      deep: true,
+      handler: function(newVal, oldVal) {
+        // 实时监听input值的变化，停止输入300ms后执行update，而不是时时update
+        clearTimeout(this.selectedEdgeParamsTimeout);
+        this.selectedEdgeParamsTimeout = setTimeout(() => {
+          let selectedEdgeModel = this.selectedEdge.getModel();
+          selectedEdgeModel.label = newVal.label;
+          selectedEdgeModel.appConfig = newVal.appConfig;
+          this.selectedEdge.update(selectedEdgeModel);
+        }, 300);
+      }
     }
   },
   created() {
   },
   mounted() {
-    ccBehavior.obj.clickEvent.sendThis(this);
-    ccBehavior.obj.dragEvent.sendThis(this);
+    ccBehavior.obj.clickEventEdit.sendThis(this);
+    ccBehavior.obj.dragEventEdit.sendThis(this);
     this.clearHistoryData();
     this.initTopo(this.graphData);
     window.onresize = () => {
@@ -413,10 +445,10 @@ export default {
           'right-click-node',
           'right-click-edge',
           // 自定义Behavior
-          'hover-event',
-          'click-event',
+          'hover-event-edit',
+          'click-event-edit',
           'keyup-event',
-          // 'drag-event',
+          // 'drag-event-edit',
           'drag-add-edge'
         ],
         addEdge: [

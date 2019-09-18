@@ -2,15 +2,15 @@
  * 注册交互
  */
 import dragAddEdge from './drag-add-edge';
-import hoverEvent from './hover-event';
-import clickEvent from './click-event';
-import dragEvent from './drag-event';
+import hoverEventEdit from './hover-event-edit';
+import clickEventEdit from './click-event-edit';
+import dragEventEdit from './drag-event-edit';
 
 const obj = {
   dragAddEdge,
-  hoverEvent,
-  clickEvent,
-  dragEvent
+  hoverEventEdit,
+  clickEventEdit,
+  dragEventEdit
 };
 
 export default {
