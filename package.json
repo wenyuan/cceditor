@@ -1,11 +1,23 @@
 {
-  "name": "cceditor",
+  "name": "@chaincloud/cceditor",
   "version": "0.1.0",
+  "description": "A visual graph editor based on G6 and Vue.js.",
+  "author": "winyuan <xuwenyuan2016@163.com>",
+  "main": "lib/cceditor.common.js",
+  "keywords": [
+    "vue",
+    "graph",
+    "graph editor",
+    "topo",
+    "topology"
+  ],
+  "license": "MIT",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name cceditor --dest lib packages/index.js"
   },
   "dependencies": {
     "@antv/g6": "^3.0.5-beta.7",

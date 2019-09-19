@@ -3,7 +3,8 @@
 </template>
 
 <script>
-import CCTopology from '../../components/CCEditor/CCTopology';
+/* 局部注册 */
+import { CCTopology } from '../../../packages/index';
 
 export default {
   name: 'DemoTopology',
