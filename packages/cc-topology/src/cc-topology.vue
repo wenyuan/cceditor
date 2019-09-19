@@ -96,7 +96,8 @@
 
 
 <script>
-import { Loading } from 'element-ui';
+import { Loading, Row, Col, Slider, Checkbox } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import G6 from '@antv/g6';
 
 import ToolbarPreview from './toolbar-preview';
@@ -117,6 +118,12 @@ ccBehavior.register(G6);
 export default {
   name: 'CCTopology',
   components: {
+    // element-ui的组件
+    'el-row': Row,
+    'el-col': Col,
+    'el-slider': Slider,
+    'el-checkbox': Checkbox,
+    // 自定义的组件
     'toolbar-preview': ToolbarPreview,
     'toolbar-edit': ToolbarEdit
   },
@@ -146,9 +153,9 @@ export default {
       clientWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
       clientHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
       nodeTypeList: [
-        { guid: 'blue', label: '蓝色', imgSrc: require('@/assets/images/blue.svg') },
-        { guid: 'green', label: '绿色', imgSrc: require('@/assets/images/green.svg') },
-        { guid: 'purple', label: '紫色', imgSrc: require('@/assets/images/purple.svg') }
+        { guid: 'blue', label: '蓝色', imgSrc: '../../assets/images/blue.svg' },
+        { guid: 'green', label: '绿色', imgSrc: require('~/assets/images/green.svg') },
+        { guid: 'purple', label: '紫色', imgSrc: '/images/purple.svg' }
       ],
       edgeShapeList: [
         { guid: 'cc-line', label: '直线', class: 'iconfont icon-flow-line' },
@@ -792,6 +799,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import '../../assets/iconfont/iconfont.css';
+
 *[draggable = true] {
   -khtml-user-drag: element;
 }

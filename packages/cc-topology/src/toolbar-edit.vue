@@ -24,7 +24,8 @@
         <i class="iconfont icon-redo" title="重做" :class="$parent.disableRedo ? 'disabled':''"
            @click="$parent.redoHandler"></i>
         <span class="separator"></span>
-        <i class="iconfont icon-copy" title="复制" :class="$parent.disableCopy ? 'disabled':''" @click="$parent.copyHandler"></i>
+        <i class="iconfont icon-copy" title="复制" :class="$parent.disableCopy ? 'disabled':''"
+           @click="$parent.copyHandler"></i>
         <i class="iconfont icon-paste" title="粘贴" :class="$parent.disablePaste ? 'disabled':''"
            @click="$parent.pasteHandler"></i>
         <i class="iconfont icon-clear" title="删除" :class="$parent.disableDelete ? 'disabled':''"
@@ -48,8 +49,20 @@
 </template>
 
 <script>
+import { Row, Col, Dropdown, DropdownMenu, DropdownItem, Button } from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
 export default {
-  name: 'ToolbarEdit'
+  name: 'ToolbarEdit',
+  components: {
+    // element-ui的组件
+    'el-row': Row,
+    'el-col': Col,
+    'el-dropdown': Dropdown,
+    'el-dropdown-menu': DropdownMenu,
+    'el-dropdown-item': DropdownItem,
+    'el-button': Button
+  }
 };
 </script>
 

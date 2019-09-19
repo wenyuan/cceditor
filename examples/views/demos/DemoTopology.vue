@@ -148,7 +148,7 @@ export default {
             x: 0,
             y: 0,
             shape: 'cc-image',
-            img: '/img/purple.23f14d56.svg',
+            img: '/images/purple.svg',
             appState: {
               alert: true
             },
@@ -170,7 +170,7 @@ export default {
               position: 'bottom'
             },
             shape: 'cc-image',
-            img: '/img/purple.23f14d56.svg',
+            img: '/images/purple.svg',
             size: [55, 55],
             width: 48,
             height: 48,

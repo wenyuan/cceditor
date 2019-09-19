@@ -23,8 +23,17 @@
 </template>
 
 <script>
+import { Row, Col, Checkbox, Button } from 'element-ui';
+
 export default {
-  name: 'ToolbarEdit'
+  name: 'ToolbarEdit',
+  components: {
+    // element-ui的组件
+    'el-row': Row,
+    'el-col': Col,
+    'el-checkbox': Checkbox,
+    'el-button': Button
+  }
 };
 </script>
 

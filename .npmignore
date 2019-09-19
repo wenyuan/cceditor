@@ -1,7 +1,7 @@
 # 忽略目录
+.idea/
 examples/
 packages/
-public/
 
 # 忽略指定文件
 vue.config.js
