@@ -2,8 +2,8 @@ import Vue from 'vue';
 import router from './router';
 import store from './store';
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-// import '@fortawesome/fontawesome-free/css/all.min.css';
+
+import '@/styles/index.scss'; // global css
 
 import App from './App.vue';
 

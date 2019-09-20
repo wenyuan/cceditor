@@ -4,7 +4,7 @@
       <!--<el-checkbox class="edge-enabled" title="连线模式" @change="$parent.enableEdgeHandler"></el-checkbox>-->
       <el-dropdown class="edge-shape" trigger="click" @command="$parent.changeEdgeShape">
         <span class="el-dropdown-link">
-          {{ $parent.currentEdgeShape.label }}<i class="el-icon-arrow-down el-icon--right"></i>
+          {{ $parent.currentEdgeShape.label }}<i class="iconfont icon-arrow-dropdown" style="padding-left: 5px;"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item
@@ -17,7 +17,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
-    <el-col :span="15">
+    <el-col :span="14">
       <div class="graph-ops">
         <i class="iconfont icon-undo" title="撤销" :class="$parent.disableUndo ? 'disabled':''"
            @click="$parent.undoHandler"></i>
@@ -34,12 +34,12 @@
         <i class="iconfont icon-zoom-in" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
         <i class="iconfont icon-zoom-out" title="缩小" @click="$parent.zoomOutHandler"></i>
         <i class="iconfont icon-fit" title="适应画布" @click="$parent.autoZoomHandler"></i>
-        <i class="iconfont icon-actual-size" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
+        <i class="iconfont icon-actualsize" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
-        <i class="iconfont icon-marquee" id="multi-select" title="框选" @click="$parent.multiSelectHandler"></i>
+        <i class="iconfont icon-roi-select" id="multi-select" title="框选" @click="$parent.multiSelectHandler"></i>
       </div>
     </el-col>
-    <el-col :span="6" style="text-align: right;">
+    <el-col :span="7" style="text-align: right; padding-right: 5px;">
       <el-button size="mini" @click="$parent.changeModeHandler('preview')">预览</el-button>
       <el-button size="mini" @click="$parent.autoLayout">自动布局</el-button>
       <el-button size="mini" @click="$parent.getGraphData">获取json数据</el-button>
@@ -50,7 +50,6 @@
 
 <script>
 import { Row, Col, Dropdown, DropdownMenu, DropdownItem, Button } from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 
 export default {
   name: 'ToolbarEdit',

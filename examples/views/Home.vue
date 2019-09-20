@@ -5,12 +5,12 @@
         <el-row :gutter="20">
           <el-col :span="8" style="text-align: left">
             <a class="navbar-brand" href="http://www.chain2cloud.com/" target="_blank">
-              <img src="@/assets/logo.png" id="logo" alt="畅云网络"/>
-              <span> 畅云网络 </span>
+              <img id="logo" src="@/assets/logo.png" width="38px" height="38px" alt="CCEditor"/>
+              <span> CCEditor </span>
             </a>
           </el-col>
           <el-col :span="8" style="text-align: center">
-            <div class="navbar-title">CCEditor</div>
+            <div class="navbar-title">&nbsp;</div>
           </el-col>
           <el-col :span="8" style="text-align: right">
             <div class="navbar-btns">

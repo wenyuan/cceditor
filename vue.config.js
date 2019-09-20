@@ -28,13 +28,13 @@ module.exports = {
       .exclude.add(path.resolve('examples/docs'))
       .end();
     // 一种折中的办法：将图片资源转换成 base64 编码内联，解决图片路径的问题
-    // 要求尽可能地使用小尺寸图片，此处限制在100kb
+    // 要求尽可能地使用小尺寸图片，此处限制在10kb
     config.module
       .rule('images')
       .use('url-loader')
       .loader('url-loader')
       .tap(options => {
-        options.limit = 102400;
+        options.limit = 10240;
         return options;
       });
     // 扩展 webpack 配置，使 packages 加入编译
