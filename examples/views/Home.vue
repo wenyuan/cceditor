@@ -99,7 +99,7 @@ export default {
           }
         }
       ]
-    };
+    }
   },
   methods: {
     about() {
@@ -111,10 +111,10 @@ export default {
         duration: 30000,
         showClose: true,
         offset: 100
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -220,16 +220,20 @@ export default {
 
     .links {
       float: left;
+
       ul {
         padding-left: 60px;
       }
+
       li {
         display: inline;
         padding: 10px;
       }
+
       i {
         font-size: 16px;
       }
+
       a {
         color: rgba(255, 255, 255, 0.45);
       }
@@ -237,16 +241,20 @@ export default {
 
     .copyright {
       float: right;
+
       ul {
         padding-right: 60px;
       }
+
       li {
         display: inline;
         padding: 5px;
       }
+
       i {
         font-size: 16px;
       }
+
       a {
         color: rgba(255, 255, 255, 0.45);
       }

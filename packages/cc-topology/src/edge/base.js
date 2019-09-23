@@ -1,11 +1,11 @@
 /**
  * 线公共方法
  */
-import utils from '../utils';
+import utils from '../utils'
 
 export default {
   draw(cfg, group) {
-    const { startPoint, endPoint } = cfg;
+    const { startPoint, endPoint } = cfg
     const keyShape = group.addShape('path', {
       className: 'edge-shape',
       attrs: {
@@ -15,11 +15,11 @@ export default {
           ['L', endPoint.x, endPoint.y]
         ]
       }
-    });
-    return keyShape;
+    })
+    return keyShape
   },
   setState(name, value, item) {
     // 设置边状态
-    utils.edge.setState(name, value, item);
+    utils.edge.setState(name, value, item)
   }
-};
+}

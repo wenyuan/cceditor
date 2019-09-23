@@ -1,13 +1,13 @@
-import Vue from 'vue';
-import router from './router';
-import store from './store';
-import ElementUI from 'element-ui';
+import Vue from 'vue'
+import router from './router'
+import store from './store'
+import ElementUI from 'element-ui'
 
-import '@/styles/index.scss'; // global css
+import '@/styles/index.scss' // global css
 
-import App from './App.vue';
+import App from './App.vue'
 
-Vue.use(ElementUI);
+Vue.use(ElementUI)
 
 /* 全局注册 */
 
@@ -27,10 +27,10 @@ Vue.use(ElementUI);
 // import { CCTopology } from '../packages/index';
 // Vue.use(CCTopology);
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app');
+}).$mount('#app')

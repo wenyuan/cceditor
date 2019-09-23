@@ -4,7 +4,7 @@
  * 更新锚点
  */
 
-export default function (cfg, group) {
+export default function(cfg, group) {
   let { anchorPoints, width, height, id } = cfg
   if (anchorPoints && anchorPoints.length) {
     for (let i = 0, len = anchorPoints.length; i < len; i++) {

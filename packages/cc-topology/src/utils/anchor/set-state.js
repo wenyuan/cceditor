@@ -1,21 +1,21 @@
 /**
  * 设置锚点状态
  */
-import theme from '../../theme';
+import theme from '../../theme'
 
 export default function(name, value, item) {
-  const themeStyle = theme.defaultStyle; // todo...先使用默认主题，后期可能增加其它风格的主体
+  const themeStyle = theme.defaultStyle // todo...先使用默认主题，后期可能增加其它风格的主体
   if (name === 'hover') {
-    let group = item.getContainer();
-    let children = group.get('children');
+    let group = item.getContainer()
+    let children = group.get('children')
     for (let i = 0, len = children.length; i < len; i++) {
-      let child = children[i];
+      let child = children[i]
       // 处理锚点状态
       if (child._attrs.name === 'anchor') {
         if (value) {
-          child.attr(themeStyle.anchorStyle.hover);
+          child.attr(themeStyle.anchorStyle.hover)
         } else {
-          child.attr(themeStyle.anchorStyle.unhover);
+          child.attr(themeStyle.anchorStyle.unhover)
         }
       }
     }

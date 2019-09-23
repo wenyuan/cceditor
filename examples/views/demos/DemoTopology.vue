@@ -4,7 +4,7 @@
 
 <script>
 /* 局部注册 */
-import { CCTopology } from '../../../packages/index';
+import { CCTopology } from '../../../packages/index'
 
 export default {
   name: 'DemoTopology',
@@ -444,7 +444,8 @@ export default {
       }
     };
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 

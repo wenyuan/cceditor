@@ -2,7 +2,7 @@
  * 图片节点
  */
 
-import utils from '../utils';
+import utils from '../utils'
 
 export default {
   name: 'cc-image',
@@ -10,15 +10,15 @@ export default {
   options: {
     setState(name, value, item) {
       // 设置节点状态
-      utils.node.setState(name, value, item);
+      utils.node.setState(name, value, item)
       // 设置锚点状态
-      utils.anchor.setState(name, value, item);
+      utils.anchor.setState(name, value, item)
     },
     // 绘制后附加锚点
     afterDraw(cfg, group) {
       console.log('afterDraw')
       // 绘制锚点
-      utils.anchor.draw(cfg, group);
+      utils.anchor.draw(cfg, group)
       /*
       // 告警
       if (cfg.appState && cfg.appState.alert) {
@@ -78,13 +78,13 @@ export default {
     },
     // 设置告警状态
     afterUpdate(cfg, node) {
-      const group = node.getContainer();
+      const group = node.getContainer()
       console.log('afterUpdate')
       // 告警
       if (cfg.appState && cfg.appState.alert) {
-        let size = this.getSize(cfg) || [48, 48];
-        let r = size[0] / 2;
-        let { id } = cfg;
+        let size = this.getSize(cfg) || [48, 48]
+        let r = size[0] / 2
+        let { id } = cfg
         let halo1 = group.addShape('circle', {
           id: id + '_halo_' + 1,
           attrs: {
@@ -96,7 +96,7 @@ export default {
             opacity: 0.6
           },
           zIndex: -3
-        });
+        })
         let halo2 = group.addShape('circle', {
           id: id + '_halo_' + 2,
           attrs: {
@@ -108,7 +108,7 @@ export default {
             opacity: 0.6
           },
           zIndex: -2
-        });
+        })
         let halo3 = group.addShape('circle', {
           id: id + '_halo_' + 3,
           attrs: {
@@ -120,31 +120,31 @@ export default {
             opacity: 0.6
           },
           zIndex: -1
-        });
-        group.sort(); // 排序，根据zIndex 排序
+        })
+        group.sort() // 排序，根据zIndex 排序
         halo1.animate({ // 逐渐放大，并消失
           r: r + 10,
           opacity: 0.1,
           repeat: true // 循环
-        }, 3000, 'easeCubic', null, 0); // 无延迟
+        }, 3000, 'easeCubic', null, 0) // 无延迟
         halo2.animate({ // 逐渐放大，并消失
           r: r + 10,
           opacity: 0.1,
           repeat: true // 循环
-        }, 3000, 'easeCubic', null, 1000); // 1 秒延迟
+        }, 3000, 'easeCubic', null, 1000) // 1 秒延迟
         halo3.animate({ // 逐渐放大，并消失
           r: r + 10,
           opacity: 0.1,
           repeat: true // 循环
-        }, 3000, 'easeCubic', null, 2000); // 2 秒延迟
+        }, 3000, 'easeCubic', null, 2000) // 2 秒延迟
       } else {
         const children = group.findAll(function(item) {
-          return item._attrs.name === 'halo';
-        });
+          return item._attrs.name === 'halo'
+        })
         for (let i = 0; i < children.length; i++) {
           group.removeChild(children[i])
         }
       }
     }
   }
-};
+}

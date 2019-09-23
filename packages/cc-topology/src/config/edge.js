@@ -13,4 +13,4 @@ export default {
       // d: 6
     }
   }
-};
+}

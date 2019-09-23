@@ -112,7 +112,6 @@ export default {
   },
 
 
-
   nodeActivedOutterStyle: { lineWidth: 0 },
   groupSelectedOutterStyle: { stroke: '#E0F0FF', lineWidth: 2 },
   nodeSelectedOutterStyle: { stroke: '#E0F0FF', lineWidth: 2 },
@@ -162,4 +161,4 @@ export default {
     lineWidth: 1
   },
   edgeDelegationStyle: { stroke: '#1890FF', lineDash: [4, 4], lineWidth: 1 }
-};
+}

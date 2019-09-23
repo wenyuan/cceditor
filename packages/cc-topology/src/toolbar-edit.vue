@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { Row, Col, Dropdown, DropdownMenu, DropdownItem, Button } from 'element-ui';
+import { Row, Col, Dropdown, DropdownMenu, DropdownItem, Button } from 'element-ui'
 
 export default {
   name: 'ToolbarEdit',
@@ -62,7 +62,7 @@ export default {
     'el-dropdown-item': DropdownItem,
     'el-button': Button
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

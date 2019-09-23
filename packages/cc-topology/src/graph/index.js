@@ -1,5 +1,5 @@
-import d3 from '../plugins/d3-installer';
-import theme from '../theme';
+import d3 from '../plugins/d3-installer'
+import theme from '../theme'
 
 /**
  * 图的布局方式
@@ -13,8 +13,8 @@ const initGraph = {
    * @returns {G6.Graph}
    */
   commonGraph: function(G6, options) {
-    let graphData = options.graphData;
-    let themeStyle = theme.defaultStyle; // todo...先使用默认主题，后期可能增加其它风格的主体
+    let graphData = options.graphData
+    let themeStyle = theme.defaultStyle // todo...先使用默认主题，后期可能增加其它风格的主体
     // 生成G6实例
     let graph = new G6.Graph({
       plugins: options.plugins,
@@ -56,12 +56,12 @@ const initGraph = {
       //   }
       // },
       modes: options.modes
-    });
+    })
     // 将 read 方法分解成 data() 和 render 方法，便于整个生命周期的管理
-    graph.read(graphData);
-    graph.render();
+    graph.read(graphData)
+    graph.render()
     // 返回G6实例
-    return graph;
+    return graph
   },
   /**
    * 力导布局
@@ -70,8 +70,8 @@ const initGraph = {
    * @returns {*}
    */
   forceLayoutGraph: function(resolve, G6, options) {
-    let graphData = options.graphData;
-    let themeStyle = theme.defaultStyle; // todo...先使用默认主题，后期可能增加其它风格的主体
+    let graphData = options.graphData
+    let themeStyle = theme.defaultStyle // todo...先使用默认主题，后期可能增加其它风格的主体
     // 生成G6实例
     let graph = new G6.Graph({
       container: options.container,
@@ -79,7 +79,7 @@ const initGraph = {
       height: options.height,
       nodeStyle: themeStyle.nodeStyle,
       edgeStyle: themeStyle.edgeStyle
-    });
+    })
     // 初始化力导布局
     let simulation = d3
       .forceSimulation()
@@ -88,67 +88,67 @@ const initGraph = {
         d3
           .forceLink()
           .id(function(d) {
-            return d.id;
+            return d.id
           })
           .distance(linkDistance)
           .strength(0.5)
       )
       .force('charge', d3.forceManyBody().strength(-500).distanceMax(500).distanceMin(100))
-      .force('center', d3.forceCenter(options.width / 2, options.height / 2));
+      .force('center', d3.forceCenter(options.width / 2, options.height / 2))
     // 定义节点数据
-    simulation.nodes(graphData.nodes).on('tick', ticked);
+    simulation.nodes(graphData.nodes).on('tick', ticked)
     // 定义连线数据
-    let edges = [];
+    let edges = []
     for (let i = 0; i < graphData.edges.length; i++) {
       edges.push({
         id: graphData.edges[i].id,
         source: graphData.edges[i].source,
         target: graphData.edges[i].target
-      });
+      })
     }
-    simulation.force('link').links(edges);
-    graph.data(graphData);
-    graph.render();
+    simulation.force('link').links(edges)
+    graph.data(graphData)
+    graph.render()
 
     function linkDistance(d) {
-      console.log(d);
-      return 150;
+      console.log(d)
+      return 150
     }
 
     function ticked() {
       // protect: planA: 移除事件监听器 planB: 手动停止力模拟
       if (graph.destroyed) {
         // simulation.nodes(graphData.nodes).on('tick', null)
-        simulation.stop();
-        console.log('销毁了');
-        return;
+        simulation.stop()
+        console.log('销毁了')
+        return
       }
       if (!graph.get('data')) {
-        console.log('开始自动布局');
+        console.log('开始自动布局')
         // 若是第一次渲染，定义数据，渲染
-        graph.data(graphData);
-        graph.render();
+        graph.data(graphData)
+        graph.render()
       } else {
-        console.log('自动布局中');
+        console.log('自动布局中')
         // 后续渲染，直接刷新所有点和边的位置
-        graph.refreshPositions();
+        graph.refreshPositions()
       }
     }
 
     // 控制时间: 只布局10秒
     let t = setTimeout(function() {
-      simulation.stop();
-      console.log('时间到，返回');
-      resolve(graph);
-    }, 10000);
+      simulation.stop()
+      console.log('时间到，返回')
+      resolve(graph)
+    }, 10000)
 
     // 判断force-layout结束
     simulation.on('end', () => {
-      console.log('布局结束，返回');
-      clearTimeout(t);
-      resolve(graph);
-    });
+      console.log('布局结束，返回')
+      clearTimeout(t)
+      resolve(graph)
+    })
   }
-};
+}
 
-export default initGraph;
+export default initGraph

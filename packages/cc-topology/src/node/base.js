@@ -1,18 +1,18 @@
 /**
  * 节点基础方法
  */
-import utils from '../utils';
+import utils from '../utils'
 
 export default {
   setState(name, value, item) {
     // 设置节点状态
-    utils.node.setState(name, value, item);
+    utils.node.setState(name, value, item)
     // 设置锚点状态
-    utils.anchor.setState(name, value, item);
+    utils.anchor.setState(name, value, item)
   },
   // 绘制后附加锚点
   afterDraw(cfg, group) {
     // 绘制锚点
-    utils.anchor.draw(cfg, group);
+    utils.anchor.draw(cfg, group)
   }
-};
+}

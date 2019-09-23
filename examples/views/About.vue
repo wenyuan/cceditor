@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import G6 from '@antv/g6';
+import G6 from '@antv/g6'
 
 export default {
-  name: "about",
+  name: 'about',
   components: {},
   data() {
     return {
@@ -51,7 +51,7 @@ export default {
           target: 'node2',
           source: 'node1'
         }]
-      };
+      }
 
       // 图画布的定义
       this.graph = new G6.Graph({
@@ -63,28 +63,28 @@ export default {
           addNode: ['click-add-node', 'click-select'],
           addEdge: ['click-add-edge', 'click-select']
         }
-      });
+      })
 
       // 将 read 方法分解成 data() 和 render 方法，便于整个生命周期的管理
-      this.graph.read(data);
-      this.graph.render();
+      this.graph.read(data)
+      this.graph.render()
 
       // 封装点击添加节点的交互
       G6.registerBehavior('click-add-node', {
         getEvents() {
           return {
             'canvas:click': 'onClick'
-          };
+          }
         },
         onClick(ev) {
-          const graph = this.graph;
+          const graph = this.graph
           const node = graph.addItem('node', {
             x: ev.x,
             y: ev.y,
             id: G6.Util.uniqueId()
-          });
+          })
         }
-      });
+      })
 
       // 封装点击添加边的交互
       G6.registerBehavior('click-add-edge', {
@@ -93,53 +93,53 @@ export default {
             'node:click': 'onClick',
             mousemove: 'onMousemove',
             'edge:click': 'onEdgeClick' // 点击空白处，取消边
-          };
+          }
         },
         onClick(ev) {
-          const node = ev.item;
-          const graph = this.graph;
-          const point = { x: ev.x, y: ev.y };
-          const model = node.getModel();
+          const node = ev.item
+          const graph = this.graph
+          const point = { x: ev.x, y: ev.y }
+          const model = node.getModel()
           if (this.addingEdge && this.edge) {
             graph.updateItem(this.edge, {
               target: model.id
-            });
+            })
 
-            this.edge = null;
-            this.addingEdge = false;
+            this.edge = null
+            this.addingEdge = false
           } else {
             this.edge = graph.addItem('edge', {
               source: model.id,
               target: point
-            });
-            this.addingEdge = true;
+            })
+            this.addingEdge = true
           }
         },
         onMousemove(ev) {
-          const point = { x: ev.x, y: ev.y };
+          const point = { x: ev.x, y: ev.y }
           if (this.addingEdge && this.edge) {
             this.graph.updateItem(this.edge, {
               target: point
-            });
+            })
           }
         },
         onEdgeClick(ev) {
-          const currentEdge = ev.item;
+          const currentEdge = ev.item
           // 拖拽过程中，点击会点击到新增的边上
           if (this.addingEdge && this.edge == currentEdge) {
-            graph.removeItem(this.edge);
-            this.edge = null;
-            this.addingEdge = false;
+            graph.removeItem(this.edge)
+            this.edge = null
+            this.addingEdge = false
           }
         }
-      });
+      })
 
     },
     changeMode(value) {
-      this.graph.setMode(value);
+      this.graph.setMode(value)
     }
   }
-};
+}
 </script>
 
 <style>

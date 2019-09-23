@@ -6,7 +6,7 @@
  */
 
 // 折线寻径
-export const polylineFinding = function (sNode, tNode, sPort, tPort, offset = 10) {
+export const polylineFinding = function(sNode, tNode, sPort, tPort, offset = 10) {
   const sourceBBox = sNode && sNode.getBBox ? sNode.getBBox() : getPointBBox(sPort)
   const targetBBox = tNode && tNode.getBBox ? tNode.getBBox() : getPointBBox(tPort)
   // 获取节点带 offset 的区域（扩展区域）
@@ -26,7 +26,7 @@ export const polylineFinding = function (sNode, tNode, sPort, tPort, offset = 10
   return polylinePoints
 }
 
-const getPointBBox = function (t) {
+const getPointBBox = function(t) {
   return {
     centerX: t.x,
     centerY: t.y,
@@ -40,7 +40,7 @@ const getPointBBox = function (t) {
 }
 
 // 获取扩展区域
-const getExpandedBBox = function (bbox, offset) {
+const getExpandedBBox = function(bbox, offset) {
   if (bbox.width === 0 && bbox.height === 0) {
     return bbox
   }
@@ -57,7 +57,7 @@ const getExpandedBBox = function (bbox, offset) {
 }
 
 // 获取扩展区域上的连接点
-const getExpandedPort = function (bbox, point) {
+const getExpandedPort = function(bbox, point) {
   // 判断连接点在上下左右哪个区域，相应地给 x 或 y 加上或者减去 offset
   if (Math.abs(point.x - bbox.centerX) / bbox.width > Math.abs(point.y - bbox.centerY) / bbox.height) {
     return {
@@ -72,7 +72,7 @@ const getExpandedPort = function (bbox, point) {
 }
 
 // 获取合法折点集合
-const getConnectablePoints = function (sBBox, tBBox, sPoint, tPoint) {
+const getConnectablePoints = function(sBBox, tBBox, sPoint, tPoint) {
   let lineBBox = getBBoxFromVertexes(sPoint, tPoint)
   let outerBBox = combineBBoxes(sBBox, tBBox)
   let sLineBBox = combineBBoxes(sBBox, lineBBox)
@@ -83,7 +83,7 @@ const getConnectablePoints = function (sBBox, tBBox, sPoint, tPoint) {
     ...vertexOfBBox(outerBBox)
   ]
   const centerPoint = { x: outerBBox.centerX, y: outerBBox.centerY }
-  let bboxes = [ outerBBox, sLineBBox, tLineBBox, lineBBox ]
+  let bboxes = [outerBBox, sLineBBox, tLineBBox, lineBBox]
   bboxes.forEach(bbox => {
     // 包含 bbox 延长线和线段的相交线
     points = [
@@ -96,7 +96,7 @@ const getConnectablePoints = function (sBBox, tBBox, sPoint, tPoint) {
   return points
 }
 
-const getBBoxFromVertexes = function (sPoint, tPoint) {
+const getBBoxFromVertexes = function(sPoint, tPoint) {
   const minX = Math.min(sPoint.x, tPoint.x)
   const maxX = Math.max(sPoint.x, tPoint.x)
   const minY = Math.min(sPoint.y, tPoint.y)
@@ -114,7 +114,7 @@ const getBBoxFromVertexes = function (sPoint, tPoint) {
   }
 }
 
-const combineBBoxes = function (sBBox, tBBox) {
+const combineBBoxes = function(sBBox, tBBox) {
   const minX = Math.min(sBBox.minX, tBBox.minX)
   const minY = Math.min(sBBox.minY, tBBox.minY)
   const maxX = Math.max(sBBox.maxX, tBBox.maxX)
@@ -132,7 +132,7 @@ const combineBBoxes = function (sBBox, tBBox) {
   }
 }
 
-const vertexOfBBox = function (bbox) {
+const vertexOfBBox = function(bbox) {
   return [
     { x: bbox.minX, y: bbox.minY },
     { x: bbox.maxX, y: bbox.minY },
@@ -141,7 +141,7 @@ const vertexOfBBox = function (bbox) {
   ]
 }
 
-const crossPointsByLineAndBBox = function (bbox, centerPoint) {
+const crossPointsByLineAndBBox = function(bbox, centerPoint) {
   let crossPoints = []
   if (!(centerPoint.x < bbox.minX || centerPoint.x > bbox.maxX)) {
     crossPoints = [
@@ -162,13 +162,13 @@ const crossPointsByLineAndBBox = function (bbox, centerPoint) {
 }
 
 // 过滤连接点
-const filterConnectablePoints = function (points, bbox) {
+const filterConnectablePoints = function(points, bbox) {
   return points.filter(point => {
     return point.x <= bbox.minX || point.x >= bbox.maxX || point.y <= bbox.minY || point.y >= bbox.maxY
   })
 }
 
-const crossBBox = function (bboxes, p1, p2) {
+const crossBBox = function(bboxes, p1, p2) {
   for (let i = 0; i < bboxes.length; i++) {
     const bbox = bboxes[i]
     if (p1.x === p2.x && bbox.minX < p1.x && bbox.maxX > p1.x) {
@@ -184,12 +184,12 @@ const crossBBox = function (bboxes, p1, p2) {
   return false
 }
 
-const getCost = function (p1, p2) {
+const getCost = function(p1, p2) {
   return Math.abs(p1.x - p2.x) + Math.abs(p1.y - p2.y)
 }
 
 // aStar 寻径
-const AStar = function (points, sPoint, tPoint, sBBox, tBBox) {
+const AStar = function(points, sPoint, tPoint, sBBox, tBBox) {
   const openList = [sPoint]
   const closeList = []
   points.forEach(item => {

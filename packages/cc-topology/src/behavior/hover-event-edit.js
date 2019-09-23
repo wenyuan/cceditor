@@ -10,15 +10,15 @@ export default {
       return {
         'node:mouseover': 'onNodeHover',
         'node:mouseout': 'onNodeOut'
-      };
+      }
     },
     onNodeHover(event) {
-      let hoverNode = event.item;
-      hoverNode.setState('hover', true);
+      let hoverNode = event.item
+      hoverNode.setState('hover', true)
     },
     onNodeOut(event) {
-      let hoverNode = event.item;
-      hoverNode.setState('hover', false);
+      let hoverNode = event.item
+      hoverNode.setState('hover', false)
     }
   }
-};
+}

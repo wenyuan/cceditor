@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { Row, Col, Checkbox, Button } from 'element-ui';
+import { Row, Col, Checkbox, Button } from 'element-ui'
 
 export default {
   name: 'ToolbarEdit',
@@ -34,7 +34,7 @@ export default {
     'el-checkbox': Checkbox,
     'el-button': Button
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

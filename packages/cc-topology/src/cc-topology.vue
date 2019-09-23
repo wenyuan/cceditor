@@ -94,26 +94,25 @@
   </div>
 </template>
 
-
 <script>
-import { Loading, Row, Col, Slider, Checkbox } from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import G6 from '@antv/g6';
+import { Loading, Row, Col, Slider, Checkbox } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import G6 from '@antv/g6'
 
-import ToolbarPreview from './toolbar-preview';
-import ToolbarEdit from './toolbar-edit';
-import registerNode from './node';
-import registerEdge from './edge';
-import ccBehavior from './behavior';
-import config from './config';
-import theme from './theme';
-import initGraph from './graph';
+import ToolbarPreview from './toolbar-preview'
+import ToolbarEdit from './toolbar-edit'
+import registerNode from './node'
+import registerEdge from './edge'
+import ccBehavior from './behavior'
+import config from './config'
+import theme from './theme'
+import initGraph from './graph'
 
-const Minimap = require('@antv/g6/build/minimap');
-const Grid = require('@antv/g6/build/grid');
-registerNode(G6);
-registerEdge(G6);
-ccBehavior.register(G6);
+const Minimap = require('@antv/g6/build/minimap')
+const Grid = require('@antv/g6/build/grid')
+registerNode(G6)
+registerEdge(G6)
+ccBehavior.register(G6)
 
 export default {
   name: 'CCTopology',
@@ -131,7 +130,7 @@ export default {
     graphData: {
       type: Object,
       default: () => {
-        return { nodes: [], edges: [] };
+        return { nodes: [], edges: [] }
       }
     },
     nodeTypeList: {
@@ -158,19 +157,19 @@ export default {
             label: '客户端',
             imgSrc: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABICAYAAAB7qJLVAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAACcQAAAnEAGUaVEZAAAAB3RJTUUH4wUGFSkCASqMfAAABb9JREFUeNrtnE1vG8cZgJ93hkty9WHISR2kimC1SOAgaIEg6CmpiwJFCwdtgBY+5hi76K2HXPMDeizQS5BrDjkZdmA4SNxDERT2oT0Z6ZcbBEVc1zHhKpJrkxSXOztvDxQZ0qYUrmUuV+I8F4GLmf14NPvOO7O7A4FCka8rcObMGQBUddbnWipUlWazSZZlABhjADh37tye9XYV3hfdx3svQXoPEcF7z82bN02SJKyurrKxsZHFcYy1FlXl0qVL4+uO2zgkW4DvA68Ca0xwR8wR4pyLWq2W3d7e9qr6b+CDer3+x263q8YYLl68+FClyrg9qSrWWrz3rwO/BY7N+urKSKVSYXl5GYBWqwXwRqfTefPWrVvvrq+vj61jxm3cuWWeAd4iyN4TYwxLS0tUKhWAJ1X1rbW1teP92P5Q+T329TzwrVlf0EHAWksURf2f68B3duvv9hK+yC4hJ/AwIoPurSIiy7uVyy1UjOnfPnOPcw71PledXOYqUZWTr77G8WdPzH1enqry2afXufaHj3Dd7sT1JhbuvefYN5/hez/4EfFiHebbN4kH+8QxbvztE+7c+NfE9XK18Kga9dLFLE+tw4nPPGIMNsoXXk2u0sDcN+0RlLyR9RGEB/ZDEF4wQXjBBOEFE4QXTDFDxoMyqVtAAjZ14VnqyLpp7vSpaETAVqPceXVeprp3n3madzZJO5MPfWdJVK+y/PQ3MHZ6kXaqMVyzjCx10zzEYyVLHZpNdxgdOs2CCcILJggvmCC8YILwgplqWijWYqsRekDSQluNEGuneoypCjfWsPzUEwcmNbRRZao5OBQw0jQVi4mm22oeG4dhaF/UhRwUQqdZMKV9wWS/E4xlvalKKVzxbGZ3SHQbyaleUWoSc9Q+hZTwBi6dcAFupp9xZft9Et/J39QVaibmZPxzjkcnStfSSyccoOE+p+n/h8E+Umxo+rs03Occj07M+lIeonz3HL2wkDeUDCMIWrq23aOUwmF/nV45VfcoZUhZMMsIgiffm6l9BGHBLD9S3WlTOuEKPFd9EacpLX8PyRlZVGHRHOG56oulbOmlEw5Ql0Veqv9wX/soo2woqXAor7D9UtpO87AShBdMEF4wQXjBBOEFE4QXTBBeMEF4weQe+OgDf+cV5z0KuaceJhYuwHanw3+bLeqLQulf+J4iSu9L5Cx1pEmSq+7kwo3hy9u3+PPvP2Dthe8iInPrXKS3psx//vFXthpfIGbyyLzrAjWqas0DO/JZxt+vfsw//3T14HxGMi0UMpfmrjZWeLvdxntfXVhYMHbMq1+PcqBAj7HCm80mwCbQXVpaiiVvzzBnqCr+q2U8uqr65W5lK3vs5JNWq3U9y7KX4jgmSN+dbrdLstN5ish1EfnLbr5Gtg6vUdjpdLh79+4pVf2diJTv8XeJGFo75lNjzK+zLLtcqVRwzrGwsMD58+cHZce2cBFZieP4J3Ecv5ym6e00Tb+tqtEEx55nUufc7Xa7/VNr7ZPAR8aYzXa7PVJo0MLPnj3b/089DbwN/AwIkidERMiyjK2tLZIkyUTkQxH5lap+UavVuHDhAjB+aP8G8AuC7FyoKuar9cCsqr6mqr9M05Th9NoMV6An+ZVZn/wh4uV6vV5LhkajgxieJAmqWqnVakshI3k8qGrdOTcSRQY/Njc3aTQadDqdWZ/noWYkpIgI9+/fJ8k5IRNgZ25JcW7v75kGIcVai7XWO+fSra0t4jgOC0LmJE1TukNrGIpIaq31w2s8DoxWq1UajUaysrJyzXv/453VggP749rGxkayuro62DASUlZWVhCRd4Crsz7TQ8AVEXnn6NGjIxtH0pFTp071w8i6qr4OnARqhAc8kyJAAlwxxrynqjecc1y+fHlQYCRI7yzSjjHmRpqmvzly5EhVVcNzzxyIiL937163Wq3ivefB6e2xCffp06cBhqccAznojyyHJ60CM+L/5UoejpR/JKUAAAAldEVYdGRhdGU6Y3JlYXRlADIwMTktMDUtMDZUMjE6NDE6MDIrMDg6MDCIwcUDAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDE5LTA1LTA2VDIxOjQxOjAyKzA4OjAw+Zx9vwAAAEN0RVh0c29mdHdhcmUAL3Vzci9sb2NhbC9pbWFnZW1hZ2ljay9zaGFyZS9kb2MvSW1hZ2VNYWdpY2stNy8vaW5kZXguaHRtbL21eQoAAAAYdEVYdFRodW1iOjpEb2N1bWVudDo6UGFnZXMAMaf/uy8AAAAYdEVYdFRodW1iOjpJbWFnZTo6SGVpZ2h0ADYxMo3L7dgAAAAXdEVYdFRodW1iOjpJbWFnZTo6V2lkdGgANzgzuT1cbQAAABl0RVh0VGh1bWI6Ok1pbWV0eXBlAGltYWdlL3BuZz+yVk4AAAAXdEVYdFRodW1iOjpNVGltZQAxNTU3MTUwMDYyDS3pMwAAABF0RVh0VGh1bWI6OlNpemUAOTg0MUJ1EjZzAAAAYnRFWHRUaHVtYjo6VVJJAGZpbGU6Ly8vaG9tZS93d3dyb290L25ld3NpdGUvd3d3LmVhc3lpY29uLm5ldC9jZG4taW1nLmVhc3lpY29uLmNuL2ZpbGVzLzEyMy8xMjMzMzgyLnBuZ6YwiUMAAAAASUVORK5CYII='
           }
-        ];
+        ]
       }
     },
     nodeAppConfig: {
       type: Object,
       default: () => {
-        return {};
+        return {}
       }
     },
     edgeAppConfig: {
       type: Object,
       default: () => {
-        return {};
+        return {}
       }
     }
   },
@@ -210,106 +209,106 @@ export default {
       historyIndex: 0,
       undoCount: 0,
       onresizeTimeout: null
-    };
+    }
   },
   computed: {
     disableUndo: function() {
-      return this.historyIndex === 0 || this.historyIndex - (this.undoCount + 1) < 0;
+      return this.historyIndex === 0 || this.historyIndex - (this.undoCount + 1) < 0
     },
     disableRedo: function() {
-      return this.historyIndex === 0 || this.historyIndex === 10 || this.undoCount < 1;
+      return this.historyIndex === 0 || this.historyIndex === 10 || this.undoCount < 1
     },
     disableCopy: function() {
-      return this.selectedNodes.length === 0;
+      return this.selectedNodes.length === 0
     },
     disablePaste: function() {
-      return this.nodesInClipboard.length === 0;
+      return this.nodesInClipboard.length === 0
     },
     disableDelete: function() {
-      return this.selectedNodes.length === 0 && this.selectedEdges.length === 0;
+      return this.selectedNodes.length === 0 && this.selectedEdges.length === 0
     },
     selectedNodes: function() {
-      let self = this;
-      let graph = self.graph;
+      let self = this
+      let graph = self.graph
       if (graph && !graph.destroyed) {
-        return graph.findAllByState('node', 'selected');
+        return graph.findAllByState('node', 'selected')
       } else {
-        return [];
+        return []
       }
     },
     selectedEdges: function() {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        return graph.findAllByState('edge', 'selected');
+        return graph.findAllByState('edge', 'selected')
       } else {
-        return [];
+        return []
       }
     }
   },
   watch: {
     layoutType() {
-      this.initTopo(this.graphData);
+      this.initTopo(this.graphData)
     },
     selectedNodeParams: {
       deep: true,
       handler: function(newVal, oldVal) {
         // 实时监听input值的变化，停止输入300ms后执行update，而不是时时update
-        clearTimeout(this.selectedNodeParamsTimeout);
+        clearTimeout(this.selectedNodeParamsTimeout)
         this.selectedNodeParamsTimeout = setTimeout(() => {
-          let selectedNodeModel = this.selectedNode.getModel();
-          selectedNodeModel.label = newVal.label;
-          selectedNodeModel.appConfig = newVal.appConfig;
+          let selectedNodeModel = this.selectedNode.getModel()
+          selectedNodeModel.label = newVal.label
+          selectedNodeModel.appConfig = newVal.appConfig
           // todo...测试用彩蛋 -- start
           if (newVal.label === '开启告警') {
-            selectedNodeModel.appState.alert = true;
+            selectedNodeModel.appState.alert = true
           } else if (newVal.label === '关闭告警') {
-            selectedNodeModel.appState.alert = false;
+            selectedNodeModel.appState.alert = false
           }
           // todo...测试用菜单 -- end
-          this.selectedNode.update(selectedNodeModel);
-        }, 300);
+          this.selectedNode.update(selectedNodeModel)
+        }, 300)
       }
     },
     selectedEdgeParams: {
       deep: true,
       handler: function(newVal, oldVal) {
         // 实时监听input值的变化，停止输入300ms后执行update，而不是时时update
-        clearTimeout(this.selectedEdgeParamsTimeout);
+        clearTimeout(this.selectedEdgeParamsTimeout)
         this.selectedEdgeParamsTimeout = setTimeout(() => {
-          let selectedEdgeModel = this.selectedEdge.getModel();
-          selectedEdgeModel.label = newVal.label;
-          selectedEdgeModel.appConfig = newVal.appConfig;
-          this.selectedEdge.update(selectedEdgeModel);
-        }, 300);
+          let selectedEdgeModel = this.selectedEdge.getModel()
+          selectedEdgeModel.label = newVal.label
+          selectedEdgeModel.appConfig = newVal.appConfig
+          this.selectedEdge.update(selectedEdgeModel)
+        }, 300)
       }
     }
   },
   created() {
   },
   mounted() {
-    ccBehavior.obj.clickEventEdit.sendThis(this);
-    ccBehavior.obj.dragEventEdit.sendThis(this);
-    this.clearHistoryData();
-    this.initTopo(this.graphData);
+    ccBehavior.obj.clickEventEdit.sendThis(this)
+    ccBehavior.obj.dragEventEdit.sendThis(this)
+    this.clearHistoryData()
+    this.initTopo(this.graphData)
     window.onresize = () => {
       return (() => {
-        this.onresizeHandler();
-      })();
-    };
+        this.onresizeHandler()
+      })()
+    }
   },
   beforeRouteUpdate(to, from, next) {
-    console.log('beforeRouteUpdate');
-    this.clearHistoryData();
-    next();
+    console.log('beforeRouteUpdate')
+    this.clearHistoryData()
+    next()
   },
   beforeRouteLeave(to, from, next) {
-    console.log('beforeRouteLeave');
-    this.clearHistoryData();
-    next();
+    console.log('beforeRouteLeave')
+    this.clearHistoryData()
+    next()
   },
   beforeDestroy() {
-    console.log('beforeDestroy');
-    this.clearHistoryData();
+    console.log('beforeDestroy')
+    this.clearHistoryData()
   },
   methods: {
     openFullScreenLoading() {
@@ -318,129 +317,129 @@ export default {
         text: '自动布局中...',
         spinner: 'el-icon-loading',
         background: 'transparent'
-      });
+      })
     },
     closeFullScreenLoading() {
       this.$nextTick(() => {
-        this.loadingInstance.close();
-      });
+        this.loadingInstance.close()
+      })
     },
     dragstartHandler(event, nodeType) {
-      event.dataTransfer.setData('text', JSON.stringify(nodeType));
+      event.dataTransfer.setData('text', JSON.stringify(nodeType))
     },
     dragenterHandler(event) {
-      event.preventDefault();
+      event.preventDefault()
     },
     dragoverHandler(event) {
-      event.preventDefault();
+      event.preventDefault()
     },
     dropHandler(event) {
-      let nodeTypeStr = event.dataTransfer.getData('text');
-      let nodeType = JSON.parse(nodeTypeStr);
-      let clientX = event.clientX;
-      let clientY = event.clientY;
-      this.addNode(clientX, clientY, nodeType);
+      let nodeTypeStr = event.dataTransfer.getData('text')
+      let nodeType = JSON.parse(nodeTypeStr)
+      let clientX = event.clientX
+      let clientY = event.clientY
+      this.addNode(clientX, clientY, nodeType)
     },
     dragendHandler() {
     },
     initTopo(graphData) {
-      let self = this;
+      let self = this
       if (self.graph) {
-        self.graph.destroy();
+        self.graph.destroy()
       }
       // 【预览模式】 - 封装的节点展开/收缩交互
       G6.registerBehavior('my-collapse-expand', {
         getEvents() {
           return {
             'node:click': 'onNodeClick'
-          };
+          }
         },
         onNodeClick(event) {
-          let clickNode = event.item;
-          this.sourceNodeIds = [clickNode._cfg.id];
+          let clickNode = event.item
+          this.sourceNodeIds = [clickNode._cfg.id]
           if (clickNode.hasState('collapse')) {
             // 节点已收缩, 需要展开
-            let visible = true;
-            this.collapseOrExpand(clickNode, visible);
-            clickNode.clearStates('collapse');
+            let visible = true
+            this.collapseOrExpand(clickNode, visible)
+            clickNode.clearStates('collapse')
           } else {
             // 节点未收缩, 需要收缩
-            let visible = false;
-            this.collapseOrExpand(clickNode, visible);
-            clickNode.setState('collapse', true);
+            let visible = false
+            this.collapseOrExpand(clickNode, visible)
+            clickNode.setState('collapse', true)
           }
-          self.graph.paint();
+          self.graph.paint()
         },
         collapseOrExpand(sourceNode, visible) {
-          let outEdges = sourceNode.getOutEdges();
+          let outEdges = sourceNode.getOutEdges()
           for (let i = 0; i < outEdges.length; i++) {
-            let targetNode = outEdges[i].getTarget();
-            let targetNodeId = targetNode._cfg.id;
+            let targetNode = outEdges[i].getTarget()
+            let targetNodeId = targetNode._cfg.id
             if (!this.sourceNodeIds.includes(targetNodeId)) {
-              targetNode.changeVisibility(visible);
+              targetNode.changeVisibility(visible)
               // 如果一个节点隐藏/显示了，那么它关联的所有边都隐藏
-              let relationEdges = targetNode.getEdges();
+              let relationEdges = targetNode.getEdges()
               for (let i = 0; i < relationEdges.length; i++) {
-                relationEdges[i].changeVisibility(visible);
+                relationEdges[i].changeVisibility(visible)
               }
-              this.sourceNodeIds.push(targetNodeId);
+              this.sourceNodeIds.push(targetNodeId)
               // 递归, 该节点的下属节点继续隐藏
               if (targetNode.getOutEdges().length > 0) {
-                this.collapseOrExpand(targetNode, visible);
+                this.collapseOrExpand(targetNode, visible)
               }
             }
           }
         }
-      });
+      })
       // 【编辑模式】 - 封装键盘事件的交互
       G6.registerBehavior('keyup-event', {
         getEvents() {
           return {
             'keyup': 'onKeyup'
-          };
+          }
         },
         onKeyup(event) {
-          let graph = this.graph;
-          let selectedNodes = graph.findAllByState('node', 'selected');
-          let selectedEdges = graph.findAllByState('edge', 'selected');
+          let graph = this.graph
+          let selectedNodes = graph.findAllByState('node', 'selected')
+          let selectedEdges = graph.findAllByState('edge', 'selected')
           if (event.keyCode === 46 && (selectedNodes.length > 0 || selectedEdges.length > 0)) {
             // 记录【删除】前的数据状态
-            let historyData = JSON.stringify(graph.save());
-            let key = `graph_history_${self.historyIndex}`;
-            self.addHistoryData(key, historyData);
+            let historyData = JSON.stringify(graph.save())
+            let key = `graph_history_${self.historyIndex}`
+            self.addHistoryData(key, historyData)
             // 开始删除
             for (let i = 0; i < selectedNodes.length; i++) {
-              graph.removeItem(selectedNodes[i]);
+              graph.removeItem(selectedNodes[i])
             }
             for (let i = 0; i < selectedEdges.length; i++) {
-              graph.removeItem(selectedEdges[i]);
+              graph.removeItem(selectedEdges[i])
             }
             // 记录【删除】后的数据状态
             // 如果当前点过【撤销】了，拖拽节点后将取消【重做】功能
             // 重置undoCount，【删除】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
             if (self.undoCount > 0) {
-              self.historyIndex = self.historyIndex - self.undoCount; // 此时的historyIndex应当更新为【撤销】后所在的索引位置
+              self.historyIndex = self.historyIndex - self.undoCount // 此时的historyIndex应当更新为【撤销】后所在的索引位置
               for (let i = 1; i <= self.undoCount; i++) {
-                let key = `graph_history_${self.historyIndex + i}`;
-                self.removeHistoryData(key);
+                let key = `graph_history_${self.historyIndex + i}`
+                self.removeHistoryData(key)
               }
-              self.undoCount = 0;
+              self.undoCount = 0
             }
             // 记录【删除】后的数据状态
-            self.historyIndex += 1;
-            key = `graph_history_${self.historyIndex}`;
-            let currentData = JSON.stringify(graph.save());
-            self.addHistoryData(key, currentData);
+            self.historyIndex += 1
+            key = `graph_history_${self.historyIndex}`
+            let currentData = JSON.stringify(graph.save())
+            self.addHistoryData(key, currentData)
           }
         }
-      });
+      })
 
       // 图画布的定义
-      let graphContainer = self.$refs.graphContainer;
-      let graphWidth = graphContainer.$el.clientWidth;
-      let graphHeight = graphContainer.$el.clientHeight;
+      let graphContainer = self.$refs.graphContainer
+      let graphWidth = graphContainer.$el.clientWidth
+      let graphHeight = graphContainer.$el.clientHeight
       // Plugins
-      let plugins = [];
+      let plugins = []
       let modes = {
         default: [
           'drag-canvas',
@@ -455,13 +454,13 @@ export default {
           {
             type: 'tooltip',
             formatterText(model) {
-              return model.label;
+              return model.label
             }
           },
           {
             type: 'edge-tooltip',
             formatterText(model) {
-              return model.label;
+              return model.label
             }
           },
           // 自定义Behavior
@@ -489,24 +488,24 @@ export default {
           {
             type: 'brush-select',
             onSelect() {
-              this.graph.setMode('edit');
-              window.document.getElementById('multi-select').style.backgroundColor = 'transparent';
+              this.graph.setMode('edit')
+              window.document.getElementById('multi-select').style.backgroundColor = 'transparent'
             }
           }
         ]
-      };
+      }
       if (self.graphMode === 'edit') {
-        let navigator = self.$refs.navigator;
-        let minimapWidth = navigator ? navigator.clientWidth : 160;
-        let minimapHeight = navigator ? navigator.clientHeight : 120;
-        minimapWidth = minimapWidth > 160 ? minimapWidth : 120;
-        minimapHeight = minimapHeight > 160 ? minimapHeight : 120;
+        let navigator = self.$refs.navigator
+        let minimapWidth = navigator ? navigator.clientWidth : 160
+        let minimapHeight = navigator ? navigator.clientHeight : 120
+        minimapWidth = minimapWidth > 160 ? minimapWidth : 120
+        minimapHeight = minimapHeight > 160 ? minimapHeight : 120
         let minimap = new Minimap({
           size: [minimapWidth, minimapHeight],
           container: 'g6-minimap',
           type: 'default'
-        });
-        plugins.push(minimap);
+        })
+        plugins.push(minimap)
       }
       /* 生成图 */
       if (self.layoutType === 'force') {
@@ -518,7 +517,7 @@ export default {
           height: graphHeight,
           modes: modes,
           graphData: graphData
-        });
+        })
       } else {
         /* 默认布局: 自由布局 */
         self.graph = initGraph.commonGraph(G6, {
@@ -528,163 +527,163 @@ export default {
           height: graphHeight,
           modes: modes,
           graphData: graphData
-        });
+        })
       }
-      self.graph.$C = config;
-      self.graph.$T = theme.defaultStyle;
-      self.graph.setMode(self.graphMode);
-      self.graph.refresh();
+      self.graph.$C = config
+      self.graph.$T = theme.defaultStyle
+      self.graph.setMode(self.graphMode)
+      self.graph.refresh()
     },
     autoLayout() {
-      let self = this;
+      let self = this
       // 数据获取
-      let graphData = self.getGraphData();
+      let graphData = self.getGraphData()
       if (self.graph && !self.graph.destroyed) {
-        self.graph.destroy();
+        self.graph.destroy()
       }
-      let graphContainer = self.$refs.graphContainer;
-      let graphWidth = graphContainer.$el.clientWidth;
-      let graphHeight = graphContainer.$el.clientHeight;
-      self.openFullScreenLoading();
+      let graphContainer = self.$refs.graphContainer
+      let graphWidth = graphContainer.$el.clientWidth
+      let graphHeight = graphContainer.$el.clientHeight
+      self.openFullScreenLoading()
       let promise = new Promise((resolve) => {
         initGraph.forceLayoutGraph(resolve, G6, {
           container: 'mount-topology',
           width: graphWidth,
           height: graphHeight,
           graphData: graphData
-        });
-      });
+        })
+      })
       promise.then(graph => {
-        self.graph = graph;
-        self.closeFullScreenLoading();
-        self.initTopo(self.getGraphData());
-      });
+        self.graph = graph
+        self.closeFullScreenLoading()
+        self.initTopo(self.getGraphData())
+      })
     },
     changeEdgeShape(command) {
-      this.currentEdgeShape = this.edgeShapeList.filter(edgeShape => edgeShape.guid === command)[0];
-      this.graph.$C.edge.shape = this.currentEdgeShape['guid'];
+      this.currentEdgeShape = this.edgeShapeList.filter(edgeShape => edgeShape.guid === command)[0]
+      this.graph.$C.edge.shape = this.currentEdgeShape['guid']
     },
     undoHandler() {
       if (this.historyIndex > 0 && this.historyIndex - (this.undoCount + 1) >= 0) {
-        this.undoCount += 1;
-        let key = `graph_history_${this.historyIndex - this.undoCount}`;
-        let historyData = this.getHistoryData(key);
-        this.changeGraphData(JSON.parse(historyData));
+        this.undoCount += 1
+        let key = `graph_history_${this.historyIndex - this.undoCount}`
+        let historyData = this.getHistoryData(key)
+        this.changeGraphData(JSON.parse(historyData))
       }
     },
     redoHandler() {
       if (this.undoCount > 0) {
-        let key = `graph_history_${this.historyIndex - this.undoCount + 1}`;
-        let historyData = this.getHistoryData(key);
-        this.changeGraphData(JSON.parse(historyData));
-        this.undoCount -= 1;
+        let key = `graph_history_${this.historyIndex - this.undoCount + 1}`
+        let historyData = this.getHistoryData(key)
+        this.changeGraphData(JSON.parse(historyData))
+        this.undoCount -= 1
       }
     },
     copyHandler() {
-      this.nodesInClipboard = this.selectedNodes;
+      this.nodesInClipboard = this.selectedNodes
     },
     pasteHandler() {
-      let graph = this.graph;
-      let nodesInClipboard = this.nodesInClipboard;
+      let graph = this.graph
+      let nodesInClipboard = this.nodesInClipboard
       if (graph && !graph.destroyed && nodesInClipboard.length > 0) {
         // 记录【粘贴】前的数据状态
-        let historyData = JSON.stringify(graph.save());
-        let key = `graph_history_${this.historyIndex}`;
-        this.addHistoryData(key, historyData);
+        let historyData = JSON.stringify(graph.save())
+        let key = `graph_history_${this.historyIndex}`
+        this.addHistoryData(key, historyData)
         // 开始粘贴
         for (let i = 0; i < nodesInClipboard.length; i++) {
-          let node = nodesInClipboard[i];
-          let model = node.getModel();
-          let newModel = { ...model, id: G6.Util.uniqueId(), x: model.x + 10, y: model.y + 10 };
-          graph.addItem('node', newModel);
+          let node = nodesInClipboard[i]
+          let model = node.getModel()
+          let newModel = { ...model, id: G6.Util.uniqueId(), x: model.x + 10, y: model.y + 10 }
+          graph.addItem('node', newModel)
         }
         // 记录【粘贴】后的数据状态
         // 如果当前点过【撤销】了，【粘贴】后将取消【重做】功能
         // 重置undoCount，【粘贴】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
         if (this.undoCount > 0) {
-          this.historyIndex = this.historyIndex - this.undoCount; // 此时的historyIndex应当更新为【撤销】后所在的索引位置
+          this.historyIndex = this.historyIndex - this.undoCount // 此时的historyIndex应当更新为【撤销】后所在的索引位置
           for (let i = 1; i <= this.undoCount; i++) {
-            let key = `graph_history_${this.historyIndex + i}`;
-            this.removeHistoryData(key);
+            let key = `graph_history_${this.historyIndex + i}`
+            this.removeHistoryData(key)
           }
-          this.undoCount = 0;
+          this.undoCount = 0
         }
         // 存储【粘贴】后的数据状态
-        this.historyIndex += 1;
-        key = `graph_history_${this.historyIndex}`;
-        let currentData = JSON.stringify(graph.save());
-        this.addHistoryData(key, currentData);
+        this.historyIndex += 1
+        key = `graph_history_${this.historyIndex}`
+        let currentData = JSON.stringify(graph.save())
+        this.addHistoryData(key, currentData)
       }
     },
     deleteHandler() {
-      let graph = this.graph;
-      let selectedNodes = graph.findAllByState('node', 'selected');
-      let selectedEdges = graph.findAllByState('edge', 'selected');
+      let graph = this.graph
+      let selectedNodes = graph.findAllByState('node', 'selected')
+      let selectedEdges = graph.findAllByState('edge', 'selected')
       if (this.selectedNodes.length > 0 || this.selectedEdges.length > 0) {
         // 记录【删除】前的数据状态
-        let historyData = JSON.stringify(graph.save());
-        let key = `graph_history_${this.historyIndex}`;
-        this.addHistoryData(key, historyData);
+        let historyData = JSON.stringify(graph.save())
+        let key = `graph_history_${this.historyIndex}`
+        this.addHistoryData(key, historyData)
         // 开始删除
         for (let i = 0; i < selectedNodes.length; i++) {
-          graph.removeItem(selectedNodes[i]);
+          graph.removeItem(selectedNodes[i])
         }
         for (let i = 0; i < selectedEdges.length; i++) {
-          graph.removeItem(selectedEdges[i]);
+          graph.removeItem(selectedEdges[i])
         }
         // 记录【删除】后的数据状态
         // 如果当前点过【撤销】了，拖拽节点后将取消【重做】功能
         // 重置undoCount，【删除】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
         if (this.undoCount > 0) {
-          this.historyIndex = this.historyIndex - this.undoCount; // 此时的historyIndex应当更新为【撤销】后所在的索引位置
+          this.historyIndex = this.historyIndex - this.undoCount // 此时的historyIndex应当更新为【撤销】后所在的索引位置
           for (let i = 1; i <= this.undoCount; i++) {
-            let key = `graph_history_${this.historyIndex + i}`;
-            this.removeHistoryData(key);
+            let key = `graph_history_${this.historyIndex + i}`
+            this.removeHistoryData(key)
           }
-          this.undoCount = 0;
+          this.undoCount = 0
         }
         // 记录【删除】后的数据状态
-        this.historyIndex += 1;
-        key = `graph_history_${this.historyIndex}`;
-        let currentData = JSON.stringify(graph.save());
-        this.addHistoryData(key, currentData);
+        this.historyIndex += 1
+        key = `graph_history_${this.historyIndex}`
+        let currentData = JSON.stringify(graph.save())
+        this.addHistoryData(key, currentData)
       }
     },
     zoomInHandler() {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        graph.zoom(1.2);
+        graph.zoom(1.2)
       }
     },
     zoomOutHandler() {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        graph.zoom(0.8);
+        graph.zoom(0.8)
       }
     },
     autoZoomHandler() {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        graph.fitView(10);
+        graph.fitView(10)
         // this.zoomValue = graph.getZoom();  // TODO...怎么处理changeZoomHandler的二次触发问题
       }
     },
     resetZoomHandler() {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        graph.zoomTo(1);
+        graph.zoomTo(1)
       }
     },
     multiSelectHandler(event) {
-      event.target.style.backgroundColor = '#EEEEEE';
-      this.graph.setMode('multiSelect');
+      event.target.style.backgroundColor = '#EEEEEE'
+      this.graph.setMode('multiSelect')
     },
     enableGridHandler(enableGrid) {
       if (enableGrid) {
-        this.grid = new Grid();
-        this.graph.addPlugin(this.grid);
+        this.grid = new Grid()
+        this.graph.addPlugin(this.grid)
       } else {
-        this.graph.removePlugin(this.grid);
+        this.graph.removePlugin(this.grid)
       }
     },
     enableMinimapHandler(enableMinimap) {
@@ -693,33 +692,33 @@ export default {
           size: [200, 120],
           type: 'default',
           className: 'g6-minimap-preview'
-        });
-        this.graph.addPlugin(this.minimap);
+        })
+        this.graph.addPlugin(this.minimap)
       } else {
-        this.graph.removePlugin(this.minimap);
+        this.graph.removePlugin(this.minimap)
       }
     },
     changeZoomHandler(zoomTo) {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        graph.zoomTo(zoomTo);
+        graph.zoomTo(zoomTo)
       }
     },
     changeModeHandler(graphMode) {
-      this.graphMode = graphMode;
+      this.graphMode = graphMode
       this.$nextTick(() => {
-        this.initTopo(this.graphData);
-      });
+        this.initTopo(this.graphData)
+      })
     },
     addNode(clientX, clientY, nodeType) {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
         // 记录【添加节点】前的数据状态
-        let historyData = JSON.stringify(graph.save());
-        let key = `graph_history_${this.historyIndex}`;
-        this.addHistoryData(key, historyData);
+        let historyData = JSON.stringify(graph.save())
+        let key = `graph_history_${this.historyIndex}`
+        this.addHistoryData(key, historyData)
         // 开始添加
-        let droppoint = graph.getPointByClient(clientX, clientY);
+        let droppoint = graph.getPointByClient(clientX, clientY)
         let node = graph.addItem('node', {
           id: G6.Util.uniqueId(),
           x: droppoint.x,
@@ -743,85 +742,85 @@ export default {
           appState: {
             alert: false
           }
-        });
+        })
         // 记录【添加节点】后的数据状态
         if (node) {
           // 如果当前点过【撤销】了，【添加节点】后将取消【重做】功能
           // 重置undoCount，【添加节点】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
           if (this.undoCount > 0) {
-            this.historyIndex = this.historyIndex - this.undoCount; // 此时的historyIndex应当更新为【撤销】后所在的索引位置
+            this.historyIndex = this.historyIndex - this.undoCount // 此时的historyIndex应当更新为【撤销】后所在的索引位置
             for (let i = 1; i <= this.undoCount; i++) {
-              let key = `graph_history_${this.historyIndex + i}`;
-              this.removeHistoryData(key);
+              let key = `graph_history_${this.historyIndex + i}`
+              this.removeHistoryData(key)
             }
-            this.undoCount = 0;
+            this.undoCount = 0
           }
           // 记录【添加节点】后的数据状态
-          this.historyIndex += 1;
-          let key = `graph_history_${this.historyIndex}`;
-          let currentData = JSON.stringify(graph.save());
-          this.addHistoryData(key, currentData);
+          this.historyIndex += 1
+          let key = `graph_history_${this.historyIndex}`
+          let currentData = JSON.stringify(graph.save())
+          this.addHistoryData(key, currentData)
         }
       }
     },
     unselectAllNodes() {
     },
     addHistoryData(key, value) {
-      sessionStorage.setItem(key, value);
+      sessionStorage.setItem(key, value)
     },
     getHistoryData(key) {
-      return sessionStorage.getItem(key);
+      return sessionStorage.getItem(key)
     },
     removeHistoryData(key) {
-      sessionStorage.removeItem(key);
+      sessionStorage.removeItem(key)
     },
     clearHistoryData() {
       for (let i = 0; i < sessionStorage.length; i++) {
-        let key = sessionStorage.key(i);
+        let key = sessionStorage.key(i)
         if (key.startsWith('graph_history')) {
-          sessionStorage.removeItem(key);
+          sessionStorage.removeItem(key)
         }
       }
     },
     onresizeHandler() {
       // 实时监听窗口大小变化
-      let self = this;
-      clearTimeout(this.onresizeTimeout);
+      let self = this
+      clearTimeout(this.onresizeTimeout)
       this.onresizeTimeout = setTimeout(() => {
-        console.log('窗口大小变化');
-        let graph = self.graph;
+        console.log('窗口大小变化')
+        let graph = self.graph
         if (graph && !graph.destroyed) {
-          let graphContainer = self.$refs.graphContainer;
-          let graphWidth = graphContainer.$el.clientWidth;
-          let graphHeight = graphContainer.$el.clientHeight;
-          graph.changeSize(graphWidth, graphHeight);
+          let graphContainer = self.$refs.graphContainer
+          let graphWidth = graphContainer.$el.clientWidth
+          let graphHeight = graphContainer.$el.clientHeight
+          graph.changeSize(graphWidth, graphHeight)
         }
-      }, 1000);
+      }, 1000)
     },
     /* 暴露给外部的接口 */
     refreshGraph() {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        graph.refresh();
+        graph.refresh()
       }
     },
     getGraphData() {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        console.log(JSON.stringify(graph.save()));
-        return graph.save();
+        console.log(JSON.stringify(graph.save()))
+        return graph.save()
       } else {
-        return { nodes: [], edges: [] };
+        return { nodes: [], edges: [] }
       }
     },
     changeGraphData(data) {
-      let graph = this.graph;
+      let graph = this.graph
       if (graph && !graph.destroyed) {
-        graph.changeData(data);
+        graph.changeData(data)
       }
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 @import '../../assets/iconfont/iconfont.css';

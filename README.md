@@ -55,64 +55,64 @@ npm install @chaincloud/cceditor --save
 * 完整引入：引入整个CCEditor：
 
 ```javascript
-import Vue from 'vue';
-import router from './router';
-import store from './store';
-import ElementUI from 'element-ui';
+import Vue from 'vue'
+import router from './router'
+import store from './store'
+import ElementUI from 'element-ui'
 
-import App from './App.vue';
+import App from './App.vue'
 
-Vue.use(ElementUI);
+Vue.use(ElementUI)
 
 /* 全局注册：引入整个CCEditor */
 import CCEditor from '@chaincloud/cceditor'
 Vue.use(CCEditor)
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app');
+}).$mount('#app')
 ```
 * 按需引入：引入需要的模块，例如CCTopology：
 
 ```javascript
-import Vue from 'vue';
-import router from './router';
-import store from './store';
-import ElementUI from 'element-ui';
+import Vue from 'vue'
+import router from './router'
+import store from './store'
+import ElementUI from 'element-ui'
 
-import App from './App.vue';
+import App from './App.vue'
 
-Vue.use(ElementUI);
+Vue.use(ElementUI)
 
 /* 全局注册：只加载CCTopology */
 import { CCTopology } from '@chaincloud/cceditor'
 Vue.use(CCTopology)
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app');
+}).$mount('#app')
 ```
 
 #### 局部注册
 在 `ComponentA.vue` 中进行局部注册：
 ```vue
 <script>
-import { CCTopology } from '@chaincloud/cceditor';
+import { CCTopology } from '@chaincloud/cceditor'
 
 export default {
   name: 'ComponentA',
   components: {
     'cc-topology': CCTopology
   }
-};
+}
 </script>
 ```
 
