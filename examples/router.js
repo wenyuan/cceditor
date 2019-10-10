@@ -9,24 +9,32 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
       component: () =>
-        import(/* webpackChunkName: "home" */ '@/views/Home.vue')
+        import('@/views/pages/index.vue'),
+      redirect: '/home',
+      children: [
+        {
+          path: 'home',
+          name: 'Home',
+          component: () =>
+            import(/* webpackChunkName: "home" */ '@/views/pages/home.vue')
+        },
+        {
+          path: 'about',
+          name: 'About',
+          // route level code-splitting
+          // this generates a separate chunk (about.[hash].js) for this route
+          // which is lazy-loaded when the route is visited.
+          component: () =>
+            import(/* webpackChunkName: "about" */ '@/views/pages/about.vue')
+        }
+      ]
     },
     {
       path: '/demo_topology',
       name: 'DemoTopology',
       component: () =>
-        import(/* webpackChunkName: "demo-topology" */ '@/views/demos/DemoTopology.vue')
-    },
-    {
-      path: '/about',
-      name: 'About',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ '@/views/About.vue')
+        import(/* webpackChunkName: "demo-topology" */ '@/views/demos/demo-topology.vue')
     }
   ]
 })

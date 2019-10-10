@@ -290,6 +290,7 @@ export default {
     ccBehavior.obj.dragEventEdit.sendThis(this)
     this.clearHistoryData()
     this.initTopo(this.graphData)
+    this.autoZoomHandler()
     window.onresize = () => {
       return (() => {
         this.onresizeHandler()
@@ -708,6 +709,7 @@ export default {
       this.graphMode = graphMode
       this.$nextTick(() => {
         this.initTopo(this.graphData)
+        this.autoZoomHandler()
       })
     },
     addNode(clientX, clientY, nodeType) {

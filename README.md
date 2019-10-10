@@ -1,6 +1,6 @@
 # CCEditor
-> A visual graph editor based on G6 and Vue.js.
-> 基于G6和Vue的可视化图形编辑器。
+> A visual graph editor component library based on G6 and Vue.js.
+> 基于G6和Vue的可视化图形编辑组件库。
 
 ## 版本
 | 稳定版本 |
