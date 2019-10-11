@@ -40,10 +40,9 @@
       </div>
     </el-col>
     <el-col :span="7" style="text-align: right; padding-right: 5px;">
-      <el-button size="mini" @click="$parent.changeModeHandler('preview')">预览</el-button>
       <el-button size="mini" @click="$parent.autoLayout">自动布局</el-button>
-      <el-button size="mini" @click="$parent.getGraphData">获取json数据</el-button>
-      <el-button size="mini" @click="$parent.refreshGraph">刷新页面数据</el-button>
+      <el-button size="mini" @click="$parent.changeModeHandler('preview')">返回</el-button>
+      <el-button size="mini" @click="$parent.saveGraphData">保存</el-button>
     </el-col>
   </el-row>
 </template>

@@ -10,14 +10,12 @@
         <i class="iconfont icon-fit" title="适应画布" @click="$parent.autoZoomHandler"></i>
         <i class="iconfont icon-actualsize" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
-        <i class="iconfont icon-roi-select" id="multi-select" title="框选" @click="$parent.multiSelectHandler"></i>
-        <span class="separator"></span>
         <el-checkbox @change="$parent.enableMinimapHandler">导航器</el-checkbox>
       </div>
     </el-col>
     <el-col :span="7" style="text-align: right; padding-right: 5px;">
+      <el-button size="mini" @click="$parent.refreshGraph">刷新</el-button>
       <el-button size="mini" @click="$parent.changeModeHandler('edit')">编辑</el-button>
-      <el-button size="mini" @click="$parent.getGraphData">获取json数据</el-button>
     </el-col>
   </el-row>
 </template>

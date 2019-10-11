@@ -5,12 +5,14 @@ import dragAddEdge from './drag-add-edge'
 import hoverEventEdit from './hover-event-edit'
 import clickEventEdit from './click-event-edit'
 import dragEventEdit from './drag-event-edit'
+import keyupEventEdit from './keyup-event-edit'
 
 const obj = {
   dragAddEdge,
   hoverEventEdit,
   clickEventEdit,
-  dragEventEdit
+  dragEventEdit,
+  keyupEventEdit
 }
 
 export default {

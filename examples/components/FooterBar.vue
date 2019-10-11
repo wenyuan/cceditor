@@ -23,13 +23,13 @@
     <div class="copyright">
       <ul>
         <li class="nav-item">
-          <span>ChainCloud FE</span>
+          <span>CCEditor 0.1.0</span>
         </li>
         <li>
           <span>|</span>
         </li>
         <li class="nav-item">
-          <span>CCEditor 0.1.0</span>
+          <span>ChainCloud FE</span>
         </li>
       </ul>
     </div>

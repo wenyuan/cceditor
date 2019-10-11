@@ -287,7 +287,9 @@ export default {
   },
   mounted() {
     ccBehavior.obj.clickEventEdit.sendThis(this)
+    ccBehavior.obj.dragAddEdge.sendThis(this)
     ccBehavior.obj.dragEventEdit.sendThis(this)
+    ccBehavior.obj.keyupEventEdit.sendThis(this)
     this.clearHistoryData()
     this.initTopo(this.graphData)
     this.autoZoomHandler()
@@ -392,48 +394,6 @@ export default {
           }
         }
       })
-      // 【编辑模式】 - 封装键盘事件的交互
-      G6.registerBehavior('keyup-event', {
-        getEvents() {
-          return {
-            'keyup': 'onKeyup'
-          }
-        },
-        onKeyup(event) {
-          let graph = this.graph
-          let selectedNodes = graph.findAllByState('node', 'selected')
-          let selectedEdges = graph.findAllByState('edge', 'selected')
-          if (event.keyCode === 46 && (selectedNodes.length > 0 || selectedEdges.length > 0)) {
-            // 记录【删除】前的数据状态
-            let historyData = JSON.stringify(graph.save())
-            let key = `graph_history_${self.historyIndex}`
-            self.addHistoryData(key, historyData)
-            // 开始删除
-            for (let i = 0; i < selectedNodes.length; i++) {
-              graph.removeItem(selectedNodes[i])
-            }
-            for (let i = 0; i < selectedEdges.length; i++) {
-              graph.removeItem(selectedEdges[i])
-            }
-            // 记录【删除】后的数据状态
-            // 如果当前点过【撤销】了，拖拽节点后将取消【重做】功能
-            // 重置undoCount，【删除】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
-            if (self.undoCount > 0) {
-              self.historyIndex = self.historyIndex - self.undoCount // 此时的historyIndex应当更新为【撤销】后所在的索引位置
-              for (let i = 1; i <= self.undoCount; i++) {
-                let key = `graph_history_${self.historyIndex + i}`
-                self.removeHistoryData(key)
-              }
-              self.undoCount = 0
-            }
-            // 记录【删除】后的数据状态
-            self.historyIndex += 1
-            key = `graph_history_${self.historyIndex}`
-            let currentData = JSON.stringify(graph.save())
-            self.addHistoryData(key, currentData)
-          }
-        }
-      })
 
       // 图画布的定义
       let graphContainer = self.$refs.graphContainer
@@ -476,8 +436,9 @@ export default {
           // 自定义Behavior
           'hover-event-edit',
           'click-event-edit',
-          'keyup-event',
-          // 'drag-event-edit',
+          // 'keyup-event',
+          'drag-event-edit',
+          'keyup-event-edit',
           'drag-add-edge'
         ],
         addEdge: [
@@ -570,6 +531,7 @@ export default {
         let key = `graph_history_${this.historyIndex - this.undoCount}`
         let historyData = this.getHistoryData(key)
         this.changeGraphData(JSON.parse(historyData))
+        this.refreshGraph()
       }
     },
     redoHandler() {
@@ -578,6 +540,7 @@ export default {
         let historyData = this.getHistoryData(key)
         this.changeGraphData(JSON.parse(historyData))
         this.undoCount -= 1
+        this.refreshGraph()
       }
     },
     copyHandler() {
@@ -587,10 +550,13 @@ export default {
       let graph = this.graph
       let nodesInClipboard = this.nodesInClipboard
       if (graph && !graph.destroyed && nodesInClipboard.length > 0) {
-        // 记录【粘贴】前的数据状态
+
+        // ************** 记录【粘贴】前的数据状态 start **************
         let historyData = JSON.stringify(graph.save())
         let key = `graph_history_${this.historyIndex}`
         this.addHistoryData(key, historyData)
+        // ************** 记录【粘贴】前的数据状态 end **************
+
         // 开始粘贴
         for (let i = 0; i < nodesInClipboard.length; i++) {
           let node = nodesInClipboard[i]
@@ -598,7 +564,8 @@ export default {
           let newModel = { ...model, id: G6.Util.uniqueId(), x: model.x + 10, y: model.y + 10 }
           graph.addItem('node', newModel)
         }
-        // 记录【粘贴】后的数据状态
+
+        // ************** 记录【粘贴】后的数据状态 start **************
         // 如果当前点过【撤销】了，【粘贴】后将取消【重做】功能
         // 重置undoCount，【粘贴】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
         if (this.undoCount > 0) {
@@ -614,6 +581,7 @@ export default {
         key = `graph_history_${this.historyIndex}`
         let currentData = JSON.stringify(graph.save())
         this.addHistoryData(key, currentData)
+        // ************** 记录【粘贴】后的数据状态 end **************
       }
     },
     deleteHandler() {
@@ -621,10 +589,13 @@ export default {
       let selectedNodes = graph.findAllByState('node', 'selected')
       let selectedEdges = graph.findAllByState('edge', 'selected')
       if (this.selectedNodes.length > 0 || this.selectedEdges.length > 0) {
-        // 记录【删除】前的数据状态
+
+        // ************** 记录【删除】前的数据状态 start **************
         let historyData = JSON.stringify(graph.save())
         let key = `graph_history_${this.historyIndex}`
         this.addHistoryData(key, historyData)
+        // ************** 记录【删除】前的数据状态 end **************
+
         // 开始删除
         for (let i = 0; i < selectedNodes.length; i++) {
           graph.removeItem(selectedNodes[i])
@@ -632,7 +603,8 @@ export default {
         for (let i = 0; i < selectedEdges.length; i++) {
           graph.removeItem(selectedEdges[i])
         }
-        // 记录【删除】后的数据状态
+
+        // ************** 记录【删除】后的数据状态 start **************
         // 如果当前点过【撤销】了，拖拽节点后将取消【重做】功能
         // 重置undoCount，【删除】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
         if (this.undoCount > 0) {
@@ -648,6 +620,7 @@ export default {
         key = `graph_history_${this.historyIndex}`
         let currentData = JSON.stringify(graph.save())
         this.addHistoryData(key, currentData)
+        // ************** 记录【删除】后的数据状态 end **************
       }
     },
     zoomInHandler() {
@@ -715,10 +688,13 @@ export default {
     addNode(clientX, clientY, nodeType) {
       let graph = this.graph
       if (graph && !graph.destroyed) {
-        // 记录【添加节点】前的数据状态
+
+        // ************** 记录【添加节点】前的数据状态 start **************
         let historyData = JSON.stringify(graph.save())
         let key = `graph_history_${this.historyIndex}`
         this.addHistoryData(key, historyData)
+        // ************** 记录【添加节点】前的数据状态 end **************
+
         // 开始添加
         let droppoint = graph.getPointByClient(clientX, clientY)
         let node = graph.addItem('node', {
@@ -745,7 +721,8 @@ export default {
             alert: false
           }
         })
-        // 记录【添加节点】后的数据状态
+
+        // ************** 记录【添加节点】后的数据状态 start **************
         if (node) {
           // 如果当前点过【撤销】了，【添加节点】后将取消【重做】功能
           // 重置undoCount，【添加节点】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
@@ -763,6 +740,7 @@ export default {
           let currentData = JSON.stringify(graph.save())
           this.addHistoryData(key, currentData)
         }
+        // ************** 记录【添加节点】后的数据状态 end **************
       }
     },
     unselectAllNodes() {
@@ -809,7 +787,6 @@ export default {
     getGraphData() {
       let graph = this.graph
       if (graph && !graph.destroyed) {
-        console.log(JSON.stringify(graph.save()))
         return graph.save()
       } else {
         return { nodes: [], edges: [] }
@@ -820,6 +797,11 @@ export default {
       if (graph && !graph.destroyed) {
         graph.changeData(data)
       }
+    },
+    /* 子组件向父组件传值 */
+    saveGraphData() {
+      let graphData = this.getGraphData()
+      this.$emit('saveGraphData', graphData)
     }
   }
 }
@@ -838,13 +820,13 @@ export default {
 }
 
 .bottom-container {
-  /*height: calc(100% - 55px);*/
-  height: 100%;
+  height: calc(100% - 55px);
+  /*height: 100%;*/
   /*width: calc(100% - 5px);*/
 
   .item-pannel {
     height: 100%;
-    min-height: 600px;
+    min-height: calc(600px - 55px);
     padding-top: 0;
     color: #333;
     font-size: 12px;
@@ -882,7 +864,7 @@ export default {
 
   .graph-container {
     height: 100%;
-    min-height: 600px;
+    min-height: calc(600px - 55px);
 
     #mount-topology {
       width: 100%;
@@ -892,7 +874,7 @@ export default {
 
   .graph-pannel {
     height: 100%;
-    min-height: 600px;
+    min-height: calc(600px - 55px);
     padding-top: 0;
     color: #333;
     font-size: 12px;

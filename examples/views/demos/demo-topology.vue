@@ -1,5 +1,5 @@
 <template>
-  <cc-topology :graph-data="graphData" :node-app-config="nodeAppConfig"></cc-topology>
+  <cc-topology :graph-data="graphData" :node-app-config="nodeAppConfig" @saveGraphData="saveGraphData"></cc-topology>
 </template>
 
 <script>
@@ -803,7 +803,11 @@ export default {
       }
     }
   },
-  mounted() {
+  mounted() {},
+  methods: {
+    saveGraphData(graphData) {
+      console.log(JSON.stringify(graphData))
+    }
   }
 }
 </script>

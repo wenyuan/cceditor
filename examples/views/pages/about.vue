@@ -44,7 +44,7 @@ export default {
   }
 
   .description {
-    margin: 20px 0 5px;
+    margin: 10px 0 5px;
     font-size: 18px;
     line-height: 36px;
     color: #888;

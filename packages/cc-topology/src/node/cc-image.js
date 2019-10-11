@@ -16,7 +16,6 @@ export default {
     },
     // 绘制后附加锚点
     afterDraw(cfg, group) {
-      console.log('afterDraw')
       // 绘制锚点
       utils.anchor.draw(cfg, group)
       /*
@@ -79,9 +78,15 @@ export default {
     // 设置告警状态
     afterUpdate(cfg, node) {
       const group = node.getContainer()
-      console.log('afterUpdate')
+      // 获取children
+      const halos = group.findAll(function(item) {
+        return item._attrs.name === 'halo'
+      })
       // 告警
       if (cfg.appState && cfg.appState.alert) {
+        if (halos.length > 0) {
+          return
+        }
         let size = this.getSize(cfg) || [48, 48]
         let r = size[0] / 2
         let { id } = cfg
@@ -138,11 +143,8 @@ export default {
           repeat: true // 循环
         }, 3000, 'easeCubic', null, 2000) // 2 秒延迟
       } else {
-        const children = group.findAll(function(item) {
-          return item._attrs.name === 'halo'
-        })
-        for (let i = 0; i < children.length; i++) {
-          group.removeChild(children[i])
+        for (let i = 0; i < halos.length; i++) {
+          group.removeChild(halos[i])
         }
       }
     }
