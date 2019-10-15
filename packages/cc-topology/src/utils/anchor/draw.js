@@ -1,6 +1,10 @@
 /**
- * 绘制锚点
+ * @author: winyuan
+ * @data: 2019/08/15
+ * @repository: https://github.com/winyuan
+ * @description: draw anchor
  */
+
 import theme from '../../theme'
 
 export default function(cfg, group) {

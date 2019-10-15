@@ -1,3 +1,10 @@
+/**
+ * @author: winyuan
+ * @data: 2019/08/15
+ * @repository: https://github.com/winyuan
+ * @description: default style
+ */
+
 export default {
   // 节点样式
   nodeStyle: {

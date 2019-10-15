@@ -1,5 +1,8 @@
 /**
- * 注册边
+ * @author: winyuan
+ * @data: 2019/07/18
+ * @repository: https://github.com/winyuan
+ * @description: register edges
  */
 
 import ccLine from './cc-line'

@@ -1,8 +1,15 @@
+/**
+ * @author: winyuan
+ * @data: 2019/07/05
+ * @repository: https://github.com/winyuan
+ * @description: 图的布局方式/图的初始化
+ */
+
 import d3 from '../plugins/d3-installer'
 import theme from '../theme'
 
 /**
- * 图的布局方式
+ * 图的布局方式/图的初始化
  * @type {{commonGraph: (function(*, *): G6.Graph)}}
  */
 const initGraph = {
@@ -21,6 +28,11 @@ const initGraph = {
       container: options.container,
       width: options.width,
       height: options.height,
+      // layout: {
+      //   type: 'random',
+      //   width: options.width,
+      //   height: options.height
+      // },
       defaultNode: {
         shape: 'cc-rect',
         labelCfg: {
@@ -111,7 +123,6 @@ const initGraph = {
     graph.render()
 
     function linkDistance(d) {
-      console.log(d)
       return 150
     }
 

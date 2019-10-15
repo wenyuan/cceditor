@@ -1,6 +1,10 @@
 /**
- * 整合所有的组件，对外导出，即一个完整的组件库
+ * @author: winyuan
+ * @data: 2019/08/20
+ * @repository: https://github.com/winyuan
+ * @description: 整合所有的组件，对外导出，即一个完整的组件库
  */
+
 import CCTopology from './cc-topology'
 
 // 存储组件列表

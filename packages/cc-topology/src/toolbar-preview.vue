@@ -11,10 +11,24 @@
         <i class="iconfont icon-actualsize" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
         <el-checkbox @change="$parent.enableMinimapHandler">导航器</el-checkbox>
+        <el-dropdown class="auto-refresh" trigger="click" @command="toggleAutoRefresh">
+        <span class="el-dropdown-link">
+          {{ currentRefreshOption.label }}<span class="iconfont icon-arrow-dropdown" style="padding-left: 5px;"></span>
+        </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              v-for="refreshOption in refreshOptions"
+              :key="refreshOption.label"
+              :command="refreshOption.value"
+            >
+              {{ refreshOption.label }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </el-col>
     <el-col :span="7" style="text-align: right; padding-right: 5px;">
-      <el-button size="mini" @click="$parent.refreshGraph">刷新</el-button>
+      <el-button size="mini" @click="$parent.manualRefreshHandler">刷新</el-button>
       <el-button size="mini" @click="$parent.changeModeHandler('edit')">编辑</el-button>
     </el-col>
   </el-row>
@@ -31,6 +45,25 @@ export default {
     'el-col': Col,
     'el-checkbox': Checkbox,
     'el-button': Button
+  },
+  data() {
+    return {
+      refreshOptions: [
+        { value: -1, label: '不自动刷新' },
+        { value: 10000, label: '10秒自动刷新' },
+        { value: 30000, label: '30秒自动刷新' },
+        { value: 60000, label: '60秒自动刷新' }
+      ],
+      currentRefreshOption: { value: -1, label: '不自动刷新' }
+    }
+  },
+  methods: {
+    toggleAutoRefresh(command) {
+      this.currentRefreshOption = this.refreshOptions.filter(function(item){
+        return item.value === command
+      })[0]
+      this.$parent.autoRefreshHandler(command)
+    }
   }
 }
 </script>
@@ -95,6 +128,10 @@ export default {
     .separator {
       margin: 4px;
       border-left: 1px solid #E9E9E9;
+    }
+
+    .auto-refresh {
+      margin: 0 8px 0 12px;
     }
 
     .el-checkbox {

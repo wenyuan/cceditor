@@ -1,6 +1,10 @@
 /**
- * 矩形
+ * @author: winyuan
+ * @data: 2019/07/05
+ * @repository: https://github.com/winyuan
+ * @description: 矩形节点
  */
+
 import base from './base'
 import theme from '../theme'
 

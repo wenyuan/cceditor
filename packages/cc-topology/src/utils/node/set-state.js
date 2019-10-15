@@ -1,6 +1,10 @@
 /**
- * 设置节点状态
+ * @author: winyuan
+ * @data: 2019/08/15
+ * @repository: https://github.com/winyuan
+ * @description: set node state
  */
+
 import theme from '../../theme'
 
 export default function(name, value, item) {

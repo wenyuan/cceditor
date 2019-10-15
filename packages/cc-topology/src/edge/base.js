@@ -1,6 +1,10 @@
 /**
- * 线公共方法
+ * @author: winyuan
+ * @data: 2019/07/18
+ * @repository: https://github.com/winyuan
+ * @description: 线公共方法
  */
+
 import utils from '../utils'
 
 export default {

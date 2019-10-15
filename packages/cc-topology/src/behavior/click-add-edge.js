@@ -1,7 +1,10 @@
 /**
- * edit模式
- * 通过先后点击两个节点来添加连线（容易和节点点击动作交叉，已弃用）
+ * @author: winyuan
+ * @data: 2019/07/05
+ * @repository: https://github.com/winyuan
+ * @description: edit mode: 通过先后点击两个节点来添加连线（容易和节点点击动作交叉，已弃用）
  */
+
 import G6 from '@antv/g6'
 import theme from '../theme'
 

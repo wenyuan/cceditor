@@ -1,5 +1,8 @@
 /**
- * 图片节点
+ * @author: winyuan
+ * @data: 2019/07/05
+ * @repository: https://github.com/winyuan
+ * @description: 图片节点
  */
 
 import utils from '../utils'

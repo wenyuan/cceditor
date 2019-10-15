@@ -107,6 +107,7 @@ import ccBehavior from './behavior'
 import config from './config'
 import theme from './theme'
 import initGraph from './graph'
+import utils from './utils'
 
 const Minimap = require('@antv/g6/build/minimap')
 const Grid = require('@antv/g6/build/grid')
@@ -127,12 +128,12 @@ export default {
     'toolbar-edit': ToolbarEdit
   },
   props: {
-    graphData: {
-      type: Object,
-      default: () => {
-        return { nodes: [], edges: [] }
-      }
-    },
+    // graphData: {
+    //   type: Object,
+    //   default: () => {
+    //     return { nodes: [], edges: [] }
+    //   }
+    // },
     nodeTypeList: {
       type: Array,
       default: () => {
@@ -175,6 +176,10 @@ export default {
   },
   data() {
     return {
+      graphData: {
+        nodes: [],
+        edges: []
+      },
       loadingInstance: null,
       clientWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
       clientHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
@@ -252,10 +257,13 @@ export default {
     selectedNodeParams: {
       deep: true,
       handler: function(newVal, oldVal) {
+        let selectedNodeModel = this.selectedNode.getModel()
+        if (utils.isObjectValueEqual(selectedNodeModel.appConfig, newVal.appConfig) && selectedNodeModel.label === newVal.label) {
+          return
+        }
         // 实时监听input值的变化，停止输入300ms后执行update，而不是时时update
         clearTimeout(this.selectedNodeParamsTimeout)
         this.selectedNodeParamsTimeout = setTimeout(() => {
-          let selectedNodeModel = this.selectedNode.getModel()
           selectedNodeModel.label = newVal.label
           selectedNodeModel.appConfig = newVal.appConfig
           // todo...测试用彩蛋 -- start
@@ -272,6 +280,10 @@ export default {
     selectedEdgeParams: {
       deep: true,
       handler: function(newVal, oldVal) {
+        let selectedEdgeModel = this.selectedEdge.getModel()
+        if (utils.isObjectValueEqual(selectedEdgeModel.appConfig, newVal.appConfig) && selectedEdgeModel.label === newVal.label) {
+          return
+        }
         // 实时监听input值的变化，停止输入300ms后执行update，而不是时时update
         clearTimeout(this.selectedEdgeParamsTimeout)
         this.selectedEdgeParamsTimeout = setTimeout(() => {
@@ -291,8 +303,8 @@ export default {
     ccBehavior.obj.dragEventEdit.sendThis(this)
     ccBehavior.obj.keyupEventEdit.sendThis(this)
     this.clearHistoryData()
-    this.initTopo(this.graphData)
-    this.autoZoomHandler()
+    // this.initTopo(this.graphData)
+    // this.autoZoomHandler()
     window.onresize = () => {
       return (() => {
         this.onresizeHandler()
@@ -414,18 +426,18 @@ export default {
           // 'click-select',
           {
             type: 'tooltip',
-            formatterText(model) {
-              return model.label
+            formatText(model) {
+              return model.description || model.label
             }
           },
           {
             type: 'edge-tooltip',
-            formatterText(model) {
-              return model.label
+            formatText(model) {
+              return model.description || 'source:' + model.sourceNode.getModel().label + ' target:' + model.targetNode.getModel().label
             }
-          },
+          }
           // 自定义Behavior
-          'my-collapse-expand'
+          // 'my-collapse-expand'
         ],
         edit: [
           'drag-node',
@@ -495,8 +507,10 @@ export default {
       self.graph.$T = theme.defaultStyle
       self.graph.setMode(self.graphMode)
       self.graph.refresh()
+      self.autoZoomHandler()
     },
-    autoLayout() {
+    /* Deprecated method: 早期用d3-force手写的自动布局 */
+    autoLayoutHandler() {
       let self = this
       // 数据获取
       let graphData = self.getGraphData()
@@ -521,7 +535,52 @@ export default {
         self.initTopo(self.getGraphData())
       })
     },
-    changeEdgeShape(command) {
+    /* 自动布局 */
+    forceLayoutHandler() {
+      let graph = this.graph
+      if (graph && !graph.destroyed) {
+        this.openFullScreenLoading()
+        graph.updateLayout({
+          type: 'force',
+          center: [200, 200],
+          preventOverlap: true,
+          linkDistance: 150,
+          nodeStrength: -200,
+          onLayoutEnd: () => {
+            this.closeFullScreenLoading()
+          }
+        })
+      }
+    },
+    /* 环形布局 - 相关逻辑未完成 */
+    circularLayoutHandler() {
+      let graph = this.graph
+      if (graph && !graph.destroyed) {
+        graph.updateLayout({
+          type: 'circular',
+          center: [200, 200],
+          radius: 200,
+          clockwise: false,
+          ordering: 'topology',
+          angleRatio: 1
+        })
+      }
+    },
+    /* 辐射状布局 - 相关逻辑未完成，且拓扑图不需要 */
+    radialLayoutHandler() {
+      let graph = this.graph
+      if (graph && !graph.destroyed) {
+        graph.updateLayout({
+          type: 'circular',
+          center: [200, 200],
+          linkDistance: 50,
+          maxIteration: 1000,
+          unitRadius: 100,
+          preventOverlap: true
+        })
+      }
+    },
+    changeEdgeShapeHandler(command) {
       this.currentEdgeShape = this.edgeShapeList.filter(edgeShape => edgeShape.guid === command)[0]
       this.graph.$C.edge.shape = this.currentEdgeShape['guid']
     },
@@ -678,13 +737,6 @@ export default {
         graph.zoomTo(zoomTo)
       }
     },
-    changeModeHandler(graphMode) {
-      this.graphMode = graphMode
-      this.$nextTick(() => {
-        this.initTopo(this.graphData)
-        this.autoZoomHandler()
-      })
-    },
     addNode(clientX, clientY, nodeType) {
       let graph = this.graph
       if (graph && !graph.destroyed) {
@@ -767,7 +819,6 @@ export default {
       let self = this
       clearTimeout(this.onresizeTimeout)
       this.onresizeTimeout = setTimeout(() => {
-        console.log('窗口大小变化')
         let graph = self.graph
         if (graph && !graph.destroyed) {
           let graphContainer = self.$refs.graphContainer
@@ -792,6 +843,13 @@ export default {
         return { nodes: [], edges: [] }
       }
     },
+    changeGraphMode(graphData, graphMode) {
+      this.graphMode = graphMode
+      this.$nextTick(() => {
+        this.initTopo(graphData)
+        this.autoZoomHandler()
+      })
+    },
     changeGraphData(data) {
       let graph = this.graph
       if (graph && !graph.destroyed) {
@@ -799,9 +857,18 @@ export default {
       }
     },
     /* 子组件向父组件传值 */
-    saveGraphData() {
+    autoRefreshHandler(interval) {
+      this.$emit('doAutoRefresh', interval)
+    },
+    manualRefreshHandler() {
+      this.$emit('doManualRefresh')
+    },
+    changeModeHandler(graphMode) {
+      this.$emit('doChangeMode', graphMode)
+    },
+    saveDataHandler() {
       let graphData = this.getGraphData()
-      this.$emit('saveGraphData', graphData)
+      this.$emit('doSaveData', graphData)
     }
   }
 }

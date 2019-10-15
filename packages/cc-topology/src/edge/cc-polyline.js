@@ -1,6 +1,10 @@
 /**
- * 折线
+ * @author: winyuan
+ * @data: 2019/07/18
+ * @repository: https://github.com/winyuan
+ * @description: 折线
  */
+
 import base from './base'
 import { polylineFinding } from './polyline-finding'
 

@@ -2,7 +2,7 @@
   <el-row class="toolbar">
     <el-col :span="3">
       <!--<el-checkbox class="edge-enabled" title="连线模式" @change="$parent.enableEdgeHandler"></el-checkbox>-->
-      <el-dropdown class="edge-shape" trigger="click" @command="$parent.changeEdgeShape">
+      <el-dropdown class="edge-shape" trigger="click" @command="$parent.changeEdgeShapeHandler">
         <span class="el-dropdown-link">
           {{ $parent.currentEdgeShape.label }}<i class="iconfont icon-arrow-dropdown" style="padding-left: 5px;"></i>
         </span>
@@ -40,9 +40,14 @@
       </div>
     </el-col>
     <el-col :span="7" style="text-align: right; padding-right: 5px;">
-      <el-button size="mini" @click="$parent.autoLayout">自动布局</el-button>
+      <el-button size="mini" @click="$parent.forceLayoutHandler">自动布局</el-button>
+      <!--<el-button size="mini" @click="$parent.circularLayoutHandler">环形布局</el-button>-->
+      <!--<el-button size="mini" @click="$parent.radialLayoutHandler">辐射</el-button>-->
+      <!--<el-button size="mini" @click="$parent.mdsLayoutHandler">MDS</el-button>-->
+      <!--<el-button size="mini" @click="$parent.dagreLayoutHandler">层次</el-button>-->
+      <!--<el-button size="mini" @click="$parent.autoLayoutHandler">自动（old）</el-button>-->
       <el-button size="mini" @click="$parent.changeModeHandler('preview')">返回</el-button>
-      <el-button size="mini" @click="$parent.saveGraphData">保存</el-button>
+      <el-button size="mini" @click="$parent.saveDataHandler">保存</el-button>
     </el-col>
   </el-row>
 </template>

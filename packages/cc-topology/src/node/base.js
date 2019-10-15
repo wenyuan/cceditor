@@ -1,6 +1,10 @@
 /**
- * 节点基础方法
+ * @author: winyuan
+ * @data: 2019/07/05
+ * @repository: https://github.com/winyuan
+ * @description: 节点基础方法
  */
+
 import utils from '../utils'
 
 export default {

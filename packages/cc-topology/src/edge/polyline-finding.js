@@ -58,7 +58,7 @@ const getExpandedBBox = function(bbox, offset) {
 
 // 获取扩展区域上的连接点
 const getExpandedPort = function(bbox, point) {
-  // 判断连接点在上下左右哪个区域，相应地给 x 或 y 加上或者减去 offset
+  // 判断连接点在上下左右哪个区域，相应地给x或y加上或者减去offset
   if (Math.abs(point.x - bbox.centerX) / bbox.width > Math.abs(point.y - bbox.centerY) / bbox.height) {
     return {
       x: point.x > bbox.centerX ? bbox.maxX : bbox.minX,

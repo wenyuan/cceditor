@@ -1,7 +1,10 @@
 /**
- * edit模式
- * 键盘事件的交互，主要是删除节点和连线(记录删除前后的数据，用于【撤销】和【重做】)
+ * @author: winyuan
+ * @data: 2019/07/16
+ * @repository: https://github.com/winyuan
+ * @description: edit mode: 键盘事件的交互，主要是删除节点和连线(记录删除前后的数据，用于【撤销】和【重做】)
  */
+
 // 用来获取调用此js的vue组件实例（this）
 let vm = null
 

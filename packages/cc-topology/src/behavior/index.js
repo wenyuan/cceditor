@@ -1,6 +1,10 @@
 /**
- * 注册交互
+ * @author: winyuan
+ * @data: 2019/07/16
+ * @repository: https://github.com/winyuan
+ * @description: register behaviors
  */
+
 import dragAddEdge from './drag-add-edge'
 import hoverEventEdit from './hover-event-edit'
 import clickEventEdit from './click-event-edit'

@@ -1,6 +1,8 @@
 /**
- * edit模式
- * 悬浮交互
+ * @author: winyuan
+ * @data: 2019/07/16
+ * @repository: https://github.com/winyuan
+ * @description: edit mode: 悬浮交互
  */
 
 export default {

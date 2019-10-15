@@ -1,5 +1,8 @@
 /**
- * 注册节点
+ * @author: winyuan
+ * @data: 2019/07/05
+ * @repository: https://github.com/winyuan
+ * @description: register nodes
  */
 
 import ccRect from './cc-rect'

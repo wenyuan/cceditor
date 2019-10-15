@@ -1,7 +1,10 @@
 /**
- * edit模式
- * 通过拖拽节点上的锚点添加连线
+ * @author: winyuan
+ * @data: 2019/07/16
+ * @repository: https://github.com/winyuan
+ * @description: edit mode: 通过拖拽节点上的锚点添加连线
  */
+
 // 用来获取调用此js的vue组件实例（this）
 let vm = null
 
