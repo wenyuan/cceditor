@@ -185,7 +185,8 @@ export default {
       clientHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
       edgeShapeList: [
         { guid: 'cc-line', label: '直线', class: 'iconfont icon-flow-line' },
-        { guid: 'cc-polyline', label: '折线', class: 'iconfont icon-flow-broken' },
+        { guid: 'cc-brokenline', label: '折线', class: 'iconfont icon-flow-broken' },
+        { guid: 'cc-polyline', label: '多段线', class: 'iconfont icon-flow-broken' },
         { guid: 'cc-cubic', label: '曲线', class: 'iconfont icon-flow-curve' }
       ],
       graph: null,
@@ -620,7 +621,7 @@ export default {
         for (let i = 0; i < nodesInClipboard.length; i++) {
           let node = nodesInClipboard[i]
           let model = node.getModel()
-          let newModel = { ...model, id: G6.Util.uniqueId(), x: model.x + 10, y: model.y + 10 }
+          let newModel = { ...model, id: utils.generateUUID(), x: model.x + 10, y: model.y + 10 }
           graph.addItem('node', newModel)
         }
 
@@ -696,7 +697,7 @@ export default {
     },
     autoZoomHandler() {
       let graph = this.graph
-      if (graph && !graph.destroyed) {
+      if (graph && !graph.destroyed && graph.save().nodes.length > 0) {
         graph.fitView(10)
         // this.zoomValue = graph.getZoom();  // TODO...怎么处理changeZoomHandler的二次触发问题
       }
@@ -750,7 +751,7 @@ export default {
         // 开始添加
         let droppoint = graph.getPointByClient(clientX, clientY)
         let node = graph.addItem('node', {
-          id: G6.Util.uniqueId(),
+          id: utils.generateUUID(),
           x: droppoint.x,
           y: droppoint.y,
           label: nodeType.label,

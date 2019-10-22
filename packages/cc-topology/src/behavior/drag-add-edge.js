@@ -4,6 +4,7 @@
  * @repository: https://github.com/winyuan
  * @description: edit mode: 通过拖拽节点上的锚点添加连线
  */
+import utils from '../utils'
 
 // 用来获取调用此js的vue组件实例（this）
 let vm = null
@@ -92,7 +93,8 @@ export default {
           })
         }
         self.drawEdge.currentLine = self.graph.addItem('edge', {
-          id: G6.Util.uniqueId(),
+          // id: G6.Util.uniqueId(),  // 这种生成id的方式有bug，会重复
+          id: utils.generateUUID(),
           // 起始节点
           source: sourceNodeModel.id,
           sourceAnchor: sourceAnchor ? sourceAnchor.anchorIndex : '',
