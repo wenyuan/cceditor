@@ -843,18 +843,27 @@ export default {
         return { nodes: [], edges: [] }
       }
     },
+    changeGraphData(data) {
+      let graph = this.graph
+      if (graph && !graph.destroyed) {
+        graph.changeData(data)
+      }
+    },
+    changeGraphSize(graphWidth = 0, graphHeight = 0) {
+      let graph = this.graph
+      if (graph && !graph.destroyed) {
+        let graphContainer = this.$refs.graphContainer
+        graphWidth = graphWidth || graphContainer.$el.clientWidth
+        graphHeight = graphHeight || graphContainer.$el.clientHeight
+        graph.changeSize(graphWidth, graphHeight)
+      }
+    },
     changeGraphMode(graphData, graphMode) {
       this.graphMode = graphMode
       this.$nextTick(() => {
         this.initTopo(graphData)
         this.autoZoomHandler()
       })
-    },
-    changeGraphData(data) {
-      let graph = this.graph
-      if (graph && !graph.destroyed) {
-        graph.changeData(data)
-      }
     },
     /* 子组件向父组件传值 */
     autoRefreshHandler(interval) {
