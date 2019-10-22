@@ -6,11 +6,13 @@
  */
 
 import ccLine from './cc-line'
+import ccBrokenline from './cc-brokenline'
 import ccPolyline from './cc-polyline'
 import ccCubic from './cc-cubic'
 
 const obj = {
   ccLine,
+  ccBrokenline,
   ccPolyline,
   ccCubic
 }

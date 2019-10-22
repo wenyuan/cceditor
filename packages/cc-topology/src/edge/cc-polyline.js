@@ -2,7 +2,7 @@
  * @author: winyuan
  * @data: 2019/07/18
  * @repository: https://github.com/winyuan
- * @description: 折线
+ * @description: 多段线
  */
 
 import base from './base'
