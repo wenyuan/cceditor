@@ -855,7 +855,24 @@ export default {
       for (let i = 0, len = nodes.length; i < len; i++) {
         let node = nodes[i]
         if (randomNodeIds.indexOf(node.id) > -1) {
-          node.description = `<div style="color: red">${node.label}告警了</div>`
+          node.description = `<p class="tooltips-title text-center">${node.label}</p>
+                <table class="tooltips-table">
+                <tr>
+                <td style="text-align:left;color:#303133">设备IP: 10.5.97.1</td>
+                </tr>
+                <tr>
+                <td style="text-align:left;color:#303133">设备名称: chaincloud-01</td>
+                </tr>
+                <tr>
+                <td style="text-align:left;color:#ff0000">CPU使用率: 99%</td>
+                </tr>
+                <tr>
+                <td style="text-align:left;color:#ff0000">内存使用率: 72%</td>
+                </tr>
+                <tr>
+                <td style="text-align:left;color:#303133">最近刷新时间: 2019-10-23 16:04:13</td>
+                </tr>
+                </table>`
           node.appState.alert = true
         } else {
           node.description = `<div>${node.label}</div>`

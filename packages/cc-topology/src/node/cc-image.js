@@ -100,7 +100,7 @@ export default {
             x: 0,
             y: 0,
             r: r,
-            fill: cfg.color || '#1890FF',
+            fill: cfg.color || '#F56C6C',
             opacity: 0.6
           },
           zIndex: -3
@@ -112,7 +112,7 @@ export default {
             x: 0,
             y: 0,
             r: r,
-            fill: cfg.color || '#1890FF', // 为了显示清晰，随意设置了颜色
+            fill: cfg.color || '#F56C6C', // 为了显示清晰，随意设置了颜色
             opacity: 0.6
           },
           zIndex: -2
@@ -124,7 +124,7 @@ export default {
             x: 0,
             y: 0,
             r: r,
-            fill: cfg.color || '#1890FF',
+            fill: cfg.color || '#F56C6C',
             opacity: 0.6
           },
           zIndex: -1
