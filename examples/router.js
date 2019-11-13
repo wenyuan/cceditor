@@ -35,6 +35,11 @@ export default new Router({
       name: 'DemoTopology',
       component: () =>
         import(/* webpackChunkName: "demo-topology" */ '@/views/demos/demo-topology.vue')
+    },
+    {
+      path: '*',
+      component: () =>
+        import(/* webpackChunkName: "home" */ '@/views/error-pages/404.vue')
     }
   ]
 })
