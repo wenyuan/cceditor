@@ -1,0 +1,14 @@
+/**
+ * @author: winyuan
+ * @data: 2019/11/14
+ * @repository: https://github.com/winyuan
+ * @description: cceditor内部的通用组件
+ */
+
+import Checkbox from './checkbox'
+import Button from './button'
+
+export {
+  Checkbox,
+  Button
+}

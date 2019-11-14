@@ -1,16 +1,14 @@
 <template>
-  <el-row class="toolbar">
-    <el-col :span="3">
-      &nbsp;
-    </el-col>
-    <el-col :span="14">
+  <div class="toolbar">
+    <div class="left">&nbsp;</div>
+    <div class="center">
       <div class="graph-ops">
         <i class="iconfont icon-zoom-in" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
         <i class="iconfont icon-zoom-out" title="缩小" @click="$parent.zoomOutHandler"></i>
         <i class="iconfont icon-fit" title="适应画布" @click="$parent.autoZoomHandler"></i>
         <i class="iconfont icon-actualsize" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
-        <el-checkbox @change="$parent.enableMinimapHandler">导航器</el-checkbox>
+        <cc-checkbox @change="$parent.enableMinimapHandler">导航器</cc-checkbox>
         <el-dropdown class="auto-refresh" trigger="click" @command="toggleAutoRefresh">
         <span class="el-dropdown-link">
           {{ currentRefreshOption.label }}<span class="iconfont icon-arrow-dropdown" style="padding-left: 5px;"></span>
@@ -26,25 +24,25 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-    </el-col>
-    <el-col :span="7" style="text-align: right; padding-right: 5px;">
-      <el-button size="mini" @click="$parent.manualRefreshHandler">刷新</el-button>
-      <el-button size="mini" @click="$parent.changeModeHandler('edit')">编辑</el-button>
-    </el-col>
-  </el-row>
+    </div>
+    <div class="right" style="text-align: right;">
+      <cc-button size="mini" @click="$parent.manualRefreshHandler">刷新</cc-button>
+      <cc-button size="mini" @click="$parent.changeModeHandler('edit')">编辑</cc-button>
+    </div>
+  </div>
 </template>
 
 <script>
-import { Row, Col, Checkbox, Button } from 'element-ui'
+import { Checkbox, Button } from '../../cc-elements'
 
 export default {
   name: 'ToolbarEdit',
   components: {
     // element-ui的组件
-    'el-row': Row,
-    'el-col': Col,
-    'el-checkbox': Checkbox,
-    'el-button': Button
+    // 'el-row': Row,
+    // 'el-col': Col,
+    'cc-checkbox': Checkbox,
+    'cc-button': Button
   },
   data() {
     return {
@@ -78,6 +76,25 @@ export default {
   background-color: #ffffff;
   border: 1px solid #E9E9E9;
   box-shadow: 0 8px 12px 0 rgba(0, 52, 107, 0.04);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  .left {
+    display: inline-block;
+    width: 10%;
+  }
+
+  .center {
+    display: inline-block;
+    width: 60%;
+  }
+
+  .right {
+    display: inline-block;
+    width: 30%;
+  }
 
   .edge-enabled {
     width: 40%;
@@ -134,9 +151,13 @@ export default {
       margin: 0 8px 0 12px;
     }
 
-    .el-checkbox {
+    .cc-checkbox {
       margin: 0 6px;
     }
+  }
+
+  .cc-button {
+    margin: 0 5px;
   }
 }
 </style>
