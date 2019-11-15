@@ -7,8 +7,10 @@
 
 import Checkbox from './checkbox'
 import Button from './button'
+import Dropdown from './dropdown'
 
 export {
   Checkbox,
-  Button
+  Button,
+  Dropdown
 }

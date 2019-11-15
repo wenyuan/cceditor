@@ -14,7 +14,6 @@
 <script>
 export default {
   name: 'CcCheckbox',
-
   data() {
     return {
       checkVal: false

@@ -19,7 +19,6 @@
 <script>
 export default {
   name: 'CcButton',
-
   props: {
     type: {
       type: String,

@@ -9,20 +9,7 @@
         <i class="iconfont icon-actualsize" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
         <span class="separator"></span>
         <cc-checkbox @change="$parent.enableMinimapHandler">导航器</cc-checkbox>
-        <el-dropdown class="auto-refresh" trigger="click" @command="toggleAutoRefresh">
-        <span class="el-dropdown-link">
-          {{ currentRefreshOption.label }}<span class="iconfont icon-arrow-dropdown" style="padding-left: 5px;"></span>
-        </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item
-              v-for="refreshOption in refreshOptions"
-              :key="refreshOption.label"
-              :command="refreshOption.value"
-            >
-              {{ refreshOption.label }}
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+        <cc-dropdown :dropdown-items="refreshOptions" @change="toggleAutoRefresh"></cc-dropdown>
       </div>
     </div>
     <div class="right" style="text-align: right;">
@@ -33,16 +20,14 @@
 </template>
 
 <script>
-import { Checkbox, Button } from '../../cc-elements'
+import { Checkbox, Button, Dropdown } from '../../cc-elements'
 
 export default {
   name: 'ToolbarEdit',
   components: {
-    // element-ui的组件
-    // 'el-row': Row,
-    // 'el-col': Col,
     'cc-checkbox': Checkbox,
-    'cc-button': Button
+    'cc-button': Button,
+    'cc-dropdown': Dropdown
   },
   data() {
     return {
@@ -56,12 +41,9 @@ export default {
     }
   },
   methods: {
-    toggleAutoRefresh(command) {
-      this.currentRefreshOption = this.refreshOptions.filter(function(item){
-        return item.value === command
-      })[0]
-      this.$parent.autoRefreshHandler(command)
-    }
+    toggleAutoRefresh(clickItem) {
+      this.$parent.autoRefreshHandler(clickItem.value)
+    },
   }
 }
 </script>
