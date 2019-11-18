@@ -8,9 +8,9 @@
       <toolbar-preview></toolbar-preview>
     </div>
     <!-- bottom-container -->
-    <el-row class="bottom-container">
+    <div class="bottom-container">
       <!-- item-pannel -->
-      <el-col v-if="graphMode === 'edit'" :span="3" class="item-pannel">
+      <div v-if="graphMode === 'edit'" class="left item-pannel">
         <div
           class="node-type"
           v-for="nodeType in nodeTypeList"
@@ -24,21 +24,22 @@
             @dragend="dragendHandler"
           />
         </div>
-      </el-col>
+      </div>
       <!-- graph-container -->
-      <el-col
-        :span="graphMode === 'edit' ? 18 : 24"
-        class="graph-container"
+      <div
+        class="center graph-container"
+        :style="{'width': graphMode === 'edit' ? '76%': '100%'}"
         ref="graphContainer">
         <div
           id="mount-topology"
           @dragenter="dragenterHandler"
           @dragover="dragoverHandler"
           @drop="dropHandler"
-        ></div>
-      </el-col>
+        >
+        </div>
+      </div>
       <!-- graph-pannel -->
-      <el-col v-if="graphMode === 'edit'" :span="3" class="graph-pannel">
+      <div v-if="graphMode === 'edit'" class="right graph-pannel">
         <div class="detail-pannel">
           <div v-if="currentFocus === 'node'">
             <div class="pannel-title">节点</div>
@@ -70,7 +71,7 @@
           <div v-else>
             <div class="pannel-title">画布</div>
             <div class="block-container">
-              <el-checkbox @change="enableGridHandler">网格对齐</el-checkbox>
+              <cc-checkbox @change="enableGridHandler">网格对齐</cc-checkbox>
             </div>
           </div>
         </div>
@@ -80,25 +81,17 @@
           <div class="navigator" ref="navigator">
             <div id="g6-minimap"></div>
           </div>
-          <div class="zoom-slider">
-            <el-slider
-              v-model="zoomValue"
-              :min="0.5"
-              :max="2"
-              :step="0.01"
-              :format-tooltip="(val=>{return `${parseInt(val*100)}%`})" @input="changeZoomHandler"></el-slider>
-          </div>
         </div>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
+    <cc-loading v-if="loading" loading-text="自动布局中..."></cc-loading>
   </div>
 </template>
 
 <script>
-import { Loading, Row, Col, Slider, Checkbox } from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
 import G6 from '@antv/g6'
 
+import { Loading, Checkbox } from '../../cc-elements'
 import ToolbarPreview from './toolbar-preview'
 import ToolbarEdit from './toolbar-edit'
 import registerNode from './node'
@@ -118,12 +111,8 @@ ccBehavior.register(G6)
 export default {
   name: 'CCTopology',
   components: {
-    // element-ui的组件
-    'el-row': Row,
-    'el-col': Col,
-    'el-slider': Slider,
-    'el-checkbox': Checkbox,
-    // 自定义的组件
+    'cc-checkbox': Checkbox,
+    'cc-loading': Loading,
     'toolbar-preview': ToolbarPreview,
     'toolbar-edit': ToolbarEdit
   },
@@ -180,7 +169,7 @@ export default {
         nodes: [],
         edges: []
       },
-      loadingInstance: null,
+      loading: false,
       clientWidth: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
       clientHeight: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight,
       edgeShapeList: [
@@ -328,16 +317,12 @@ export default {
   },
   methods: {
     openFullScreenLoading() {
-      this.loadingInstance = Loading.service({
-        // lock: true,
-        text: '自动布局中...',
-        spinner: 'el-icon-loading',
-        background: 'transparent'
-      })
+      this.loading = true
     },
     closeFullScreenLoading() {
-      this.$nextTick(() => {
-        this.loadingInstance.close()
+      let self = this
+      self.$nextTick(() => {
+        self.loading = false
       })
     },
     dragstartHandler(event, nodeType) {
@@ -410,8 +395,8 @@ export default {
 
       // 图画布的定义
       let graphContainer = self.$refs.graphContainer
-      let graphWidth = graphContainer.$el.clientWidth
-      let graphHeight = graphContainer.$el.clientHeight
+      let graphWidth = graphContainer.clientWidth
+      let graphHeight = graphContainer.clientHeight
       // Plugins
       let plugins = []
       let modes = {
@@ -519,8 +504,8 @@ export default {
         self.graph.destroy()
       }
       let graphContainer = self.$refs.graphContainer
-      let graphWidth = graphContainer.$el.clientWidth
-      let graphHeight = graphContainer.$el.clientHeight
+      let graphWidth = graphContainer.clientWidth
+      let graphHeight = graphContainer.clientHeight
       self.openFullScreenLoading()
       let promise = new Promise((resolve) => {
         initGraph.forceLayoutGraph(resolve, G6, {
@@ -581,8 +566,8 @@ export default {
         })
       }
     },
-    changeEdgeShapeHandler(command) {
-      this.currentEdgeShape = this.edgeShapeList.filter(edgeShape => edgeShape.guid === command)[0]
+    changeEdgeShapeHandler(edgeShape) {
+      this.currentEdgeShape = edgeShape
       this.graph.$C.edge.shape = this.currentEdgeShape['guid']
     },
     undoHandler() {
@@ -732,12 +717,6 @@ export default {
         this.graph.removePlugin(this.minimap)
       }
     },
-    changeZoomHandler(zoomTo) {
-      let graph = this.graph
-      if (graph && !graph.destroyed) {
-        graph.zoomTo(zoomTo)
-      }
-    },
     addNode(clientX, clientY, nodeType) {
       let graph = this.graph
       if (graph && !graph.destroyed) {
@@ -823,8 +802,8 @@ export default {
         let graph = self.graph
         if (graph && !graph.destroyed) {
           let graphContainer = self.$refs.graphContainer
-          let graphWidth = graphContainer.$el.clientWidth
-          let graphHeight = graphContainer.$el.clientHeight
+          let graphWidth = graphContainer.clientWidth
+          let graphHeight = graphContainer.clientHeight
           graph.changeSize(graphWidth, graphHeight)
         }
       }, 1000)
@@ -854,8 +833,8 @@ export default {
       let graph = this.graph
       if (graph && !graph.destroyed) {
         let graphContainer = this.$refs.graphContainer
-        graphWidth = graphWidth || graphContainer.$el.clientWidth
-        graphHeight = graphHeight || graphContainer.$el.clientHeight
+        graphWidth = graphWidth || graphContainer.clientWidth
+        graphHeight = graphHeight || graphContainer.clientHeight
         graph.changeSize(graphWidth, graphHeight)
       }
     },
@@ -900,6 +879,22 @@ export default {
   height: calc(100% - 55px);
   /*height: 100%;*/
   /*width: calc(100% - 5px);*/
+
+  .left {
+    float: left;
+    display: inline-block;
+    width: 12%;
+  }
+
+  .center {
+    display: inline-block;
+  }
+
+  .right {
+    float: right;
+    display: inline-block;
+    width: 12%;
+  }
 
   .item-pannel {
     height: 100%;
@@ -995,10 +990,6 @@ export default {
         height: 55%;
         min-height: 135px;
       }
-
-      .zoom-slider {
-        padding: 0 6px;
-      }
     }
 
     .pannel-title {
@@ -1021,11 +1012,6 @@ export default {
   background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid #e2e2e2;
   border-radius: 4px;
-}
-
-.navigator-pannel .zoom-slider .el-slider__button {
-  width: 10px;
-  height: 10px;
 }
 
 // 预览模式自动生成的节点

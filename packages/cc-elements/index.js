@@ -8,9 +8,11 @@
 import Checkbox from './checkbox'
 import Button from './button'
 import Dropdown from './dropdown'
+import Loading from './loading'
 
 export {
   Checkbox,
   Button,
-  Dropdown
+  Dropdown,
+  Loading
 }

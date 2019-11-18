@@ -1,23 +1,15 @@
 <template>
-  <el-row class="toolbar">
-    <el-col :span="3">
+  <div class="toolbar">
+    <div class="left">
       <!--<el-checkbox class="edge-enabled" title="连线模式" @change="$parent.enableEdgeHandler"></el-checkbox>-->
-      <el-dropdown class="edge-shape" trigger="click" @command="$parent.changeEdgeShapeHandler">
-        <span class="el-dropdown-link">
-          {{ $parent.currentEdgeShape.label }}<i class="iconfont icon-arrow-dropdown" style="padding-left: 5px;"></i>
-        </span>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item
-            v-for="edgeShape in $parent.edgeShapeList"
-            :key="edgeShape.guid"
-            :command="edgeShape.guid"
-          >
-            {{ edgeShape.label }}
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </el-col>
-    <el-col :span="14">
+      <cc-dropdown
+        class="edge-shape"
+        :dropdown-items="$parent.edgeShapeList"
+        @change="$parent.changeEdgeShapeHandler"
+      >
+      </cc-dropdown>
+    </div>
+    <div class="center">
       <div class="graph-ops">
         <i class="iconfont icon-undo" title="撤销" :class="$parent.disableUndo ? 'disabled':''"
            @click="$parent.undoHandler"></i>
@@ -38,33 +30,28 @@
         <span class="separator"></span>
         <i class="iconfont icon-roi-select" id="multi-select" title="框选" @click="$parent.multiSelectHandler"></i>
       </div>
-    </el-col>
-    <el-col :span="7" style="text-align: right; padding-right: 5px;">
-      <el-button size="mini" @click="$parent.forceLayoutHandler">自动布局</el-button>
+    </div>
+    <div class="right">
+      <cc-button size="mini" @click="$parent.forceLayoutHandler">自动布局</cc-button>
       <!--<el-button size="mini" @click="$parent.circularLayoutHandler">环形布局</el-button>-->
       <!--<el-button size="mini" @click="$parent.radialLayoutHandler">辐射</el-button>-->
       <!--<el-button size="mini" @click="$parent.mdsLayoutHandler">MDS</el-button>-->
       <!--<el-button size="mini" @click="$parent.dagreLayoutHandler">层次</el-button>-->
       <!--<el-button size="mini" @click="$parent.autoLayoutHandler">自动（old）</el-button>-->
-      <el-button size="mini" @click="$parent.changeModeHandler('preview')">返回</el-button>
-      <el-button size="mini" @click="$parent.saveDataHandler">保存</el-button>
-    </el-col>
-  </el-row>
+      <cc-button size="mini" @click="$parent.changeModeHandler('preview')">返回</cc-button>
+      <cc-button size="mini" @click="$parent.saveDataHandler">保存</cc-button>
+    </div>
+  </div>
 </template>
 
 <script>
-import { Row, Col, Dropdown, DropdownMenu, DropdownItem, Button } from 'element-ui'
+import { Button, Dropdown } from '../../cc-elements'
 
 export default {
   name: 'ToolbarEdit',
   components: {
-    // element-ui的组件
-    'el-row': Row,
-    'el-col': Col,
-    'el-dropdown': Dropdown,
-    'el-dropdown-menu': DropdownMenu,
-    'el-dropdown-item': DropdownItem,
-    'el-button': Button
+    'cc-button': Button,
+    'cc-dropdown': Dropdown
   }
 }
 </script>
@@ -81,6 +68,22 @@ export default {
   background-color: #ffffff;
   border: 1px solid #E9E9E9;
   box-shadow: 0 8px 12px 0 rgba(0, 52, 107, 0.04);
+
+  .left {
+    display: inline-block;
+    width: 12%;
+  }
+
+  .center {
+    display: inline-block;
+    width: 58%;
+  }
+
+  .right {
+    display: inline-block;
+    width: 30%;
+    text-align: right;
+  }
 
   .edge-enabled {
     width: 40%;
@@ -134,6 +137,10 @@ export default {
       margin: 4px;
       border-left: 1px solid #E9E9E9;
     }
+  }
+
+  .cc-button {
+    margin: 0 5px;
   }
 }
 </style>

@@ -12,7 +12,7 @@
         <cc-dropdown :dropdown-items="refreshOptions" @change="toggleAutoRefresh"></cc-dropdown>
       </div>
     </div>
-    <div class="right" style="text-align: right;">
+    <div class="right">
       <cc-button size="mini" @click="$parent.manualRefreshHandler">刷新</cc-button>
       <cc-button size="mini" @click="$parent.changeModeHandler('edit')">编辑</cc-button>
     </div>
@@ -76,6 +76,7 @@ export default {
   .right {
     display: inline-block;
     width: 30%;
+    text-align: right;
   }
 
   .edge-enabled {
