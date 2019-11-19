@@ -26,7 +26,6 @@ export default {
       let edgeShape = self.currentEdgeShape.guid || 'line'
       if (this.addingEdge && this.edge) {
         // 点击第二个节点
-        console.log('点击第二个节点')
         graph.updateItem(this.edge, {
           target: model.id
         })
@@ -58,7 +57,6 @@ export default {
       } else {
         // 点击第一个节点
         this.historyData = JSON.stringify(graph.save())
-        console.log('点击第一个节点')
         if (edgeShape === 'stepline') {
           this.edge = graph.addItem('edge', {
             source: model.id,

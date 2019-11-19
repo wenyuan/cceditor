@@ -49,7 +49,6 @@ export default {
         this.updateVmData(event)
       }
       let point = { x: event.x, y: event.y }
-      console.log('右击了节点')
     },
     onEdgeClick(event) {
       let clickEdge = event.item
@@ -74,19 +73,16 @@ export default {
         this.updateVmData(event)
       }
       let point = { x: event.x, y: event.y }
-      console.log('右击了边')
     },
     onCanvasClick() {
       vm.currentFocus = 'canvas'
     },
     updateVmData(event) {
-      console.log(event.item._cfg.type)
       if (event.item._cfg.type === 'node') {
         // 更新vm的data: selectedNode 和 selectedNodeParams
         let clickNode = event.item
         if (clickNode.hasState('selected')) {
           let clickNodeModel = clickNode.getModel()
-          console.log('clickNodeModel:', clickNodeModel)
           vm.selectedNode = clickNode
           let nodeAppConfig = { ...vm.nodeAppConfig }
           Object.keys(nodeAppConfig).forEach(function(key) {
@@ -102,7 +98,6 @@ export default {
         let clickEdge = event.item
         if (clickEdge.hasState('selected')) {
           let clickEdgeModel = clickEdge.getModel()
-          console.log('clickEdgeModel:', clickEdgeModel)
           vm.selectedEdge = clickEdge
           let edgeAppConfig = { ...vm.edgeAppConfig }
           Object.keys(edgeAppConfig).forEach(function(key) {

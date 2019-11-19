@@ -131,16 +131,13 @@ const initGraph = {
       if (graph.destroyed) {
         // simulation.nodes(graphData.nodes).on('tick', null)
         simulation.stop()
-        console.log('销毁了')
         return
       }
       if (!graph.get('data')) {
-        console.log('开始自动布局')
         // 若是第一次渲染，定义数据，渲染
         graph.data(graphData)
         graph.render()
       } else {
-        console.log('自动布局中')
         // 后续渲染，直接刷新所有点和边的位置
         graph.refreshPositions()
       }
@@ -149,13 +146,11 @@ const initGraph = {
     // 控制时间: 只布局10秒
     let t = setTimeout(function() {
       simulation.stop()
-      console.log('时间到，返回')
       resolve(graph)
     }, 10000)
 
     // 判断force-layout结束
     simulation.on('end', () => {
-      console.log('布局结束，返回')
       clearTimeout(t)
       resolve(graph)
     })

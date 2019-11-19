@@ -302,17 +302,14 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    console.log('beforeRouteUpdate')
     this.clearHistoryData()
     next()
   },
   beforeRouteLeave(to, from, next) {
-    console.log('beforeRouteLeave')
     this.clearHistoryData()
     next()
   },
   beforeDestroy() {
-    console.log('beforeDestroy')
     this.clearHistoryData()
   },
   methods: {
