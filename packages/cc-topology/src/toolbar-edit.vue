@@ -68,6 +68,10 @@ export default {
   background-color: #ffffff;
   border: 1px solid #E9E9E9;
   box-shadow: 0 8px 12px 0 rgba(0, 52, 107, 0.04);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 
   .left {
     display: inline-block;

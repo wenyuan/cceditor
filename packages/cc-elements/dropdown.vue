@@ -1,7 +1,7 @@
 <template>
-  <div class="cc-dropdown"  @mouseover="onMouseOver">
+  <div class="cc-dropdown" @mouseover="onMouseOver" @mouseout="onMouseOut">
     <span><a href="javascript:void(0);">{{ dropdownItems[activeIndex].label }}</a></span>
-    <div class="cc-dropdown-menu" ref="dropdownMenu">
+    <div class="cc-dropdown-menu" ref="dropdownMenu" @mouseover="onMouseOver">
       <ul>
         <li
           v-for="(dropdownItem, index) in dropdownItems"
@@ -33,12 +33,21 @@ export default {
   },
   data() {
     return {
-      activeIndex: 0
+      activeIndex: 0,
+      timeout: null
     }
   },
   methods: {
     onMouseOver() {
+      if (this.timeout) {
+        clearTimeout(this.timeout)
+      }
       this.$refs.dropdownMenu.style.display = 'block'
+    },
+    onMouseOut() {
+      this.timeout = setTimeout(() => {
+        this.$refs.dropdownMenu.style.display = 'none'
+      }, 300)
     },
     onItemClick(index) {
       this.$refs.dropdownMenu.style.display = 'none'
@@ -100,11 +109,6 @@ export default {
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   z-index: 1;
-  -webkit-transform: translateY(-50px); /* y轴方向平移 */
-  transform: translateY(-50px);
-  opacity: 0;
-  -webkit-transition: all .2s ease-in; /* 平移时间0.2s */
-  transition: all .2s ease-in;
 
   /* 一个很重要的三角形*/
   li:first-child:before {
@@ -164,11 +168,5 @@ export default {
 .cc-dropdown:hover span a:after {
   -webkit-transform: rotate(180deg);
   transform: rotate(180deg);
-}
-.cc-dropdown:hover .cc-dropdown-menu {
-  display: inline-block;
-  opacity: 1;
-  -webkit-transform: translateY(0);
-  transform: translateY(0);
 }
 </style>

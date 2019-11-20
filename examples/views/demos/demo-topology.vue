@@ -819,6 +819,7 @@ export default {
   mounted() {
     let graphData = deepClone(this.graphData)
     this.$refs.topology.initTopo(graphData)
+    this.randomChange()
   },
   methods: {
     doAutoRefresh(interval) {
@@ -886,5 +887,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.demo-topology {
+  width: 100%;
+  height: 100%;
+}
+</style>
 
+<style lang="scss">
+html {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
 </style>

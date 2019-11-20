@@ -7,10 +7,10 @@
     <div v-else>
       <toolbar-preview></toolbar-preview>
     </div>
-    <!-- bottom-container -->
-    <div class="bottom-container">
+    <!-- container -->
+    <div class="container">
       <!-- item-pannel -->
-      <div v-if="graphMode === 'edit'" class="left item-pannel">
+      <div v-if="graphMode === 'edit'" class="left">
         <div
           class="node-type"
           v-for="nodeType in nodeTypeList"
@@ -39,7 +39,7 @@
         </div>
       </div>
       <!-- graph-pannel -->
-      <div v-if="graphMode === 'edit'" class="right graph-pannel">
+      <div v-if="graphMode === 'edit'" class="right">
         <div class="detail-pannel">
           <div v-if="currentFocus === 'node'">
             <div class="pannel-title">节点</div>
@@ -872,28 +872,15 @@ export default {
   padding: 0;
 }
 
-.bottom-container {
-  height: calc(100% - 55px);
-  /*height: 100%;*/
+.container {
+  /*height: calc(100% - 55px);*/
+  height: 100%;
   /*width: calc(100% - 5px);*/
 
   .left {
     float: left;
     display: inline-block;
     width: 12%;
-  }
-
-  .center {
-    display: inline-block;
-  }
-
-  .right {
-    float: right;
-    display: inline-block;
-    width: 12%;
-  }
-
-  .item-pannel {
     height: 100%;
     min-height: calc(600px - 55px);
     padding-top: 0;
@@ -931,17 +918,15 @@ export default {
     }
   }
 
-  .graph-container {
-    height: 100%;
-    min-height: calc(600px - 55px);
-
-    #mount-topology {
-      width: 100%;
-      height: 100%;
-    }
+  .center {
+    display: inline-block;
+    height: calc(100% - 55px);
   }
 
-  .graph-pannel {
+  .right {
+    float: right;
+    display: inline-block;
+    width: 12%;
     height: 100%;
     min-height: calc(600px - 55px);
     padding-top: 0;
@@ -980,7 +965,7 @@ export default {
 
     .navigator-pannel {
       height: 40%;
-      min-height: 240px;
+      min-height: 135px;
 
       .navigator {
         padding: 1px;
@@ -997,6 +982,16 @@ export default {
       background-color: #EBEEF2;
       border-top: 1px solid #DCE3E8;
       border-bottom: 1px solid #DCE3E8;
+    }
+  }
+
+  .graph-container {
+    height: 100%;
+    min-height: calc(600px - 55px);
+
+    #mount-topology {
+      width: 100%;
+      height: 100%;
     }
   }
 }
