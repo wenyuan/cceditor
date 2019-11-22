@@ -1,7 +1,9 @@
 <template>
   <div class="pages-layout">
     <el-container>
-      <header-bar></header-bar>
+      <el-header height="60px">
+        <header-bar></header-bar>
+      </el-header>
       <el-main>
         <transition name="fade" mode="out-in">
           <router-view></router-view>
@@ -22,21 +24,6 @@ export default {
   components: {
     'header-bar': HeaderBar,
     'footer-bar': FooterBar
-  },
-  data() {
-    return {
-      demoList: [
-        {
-          title: '拓扑图',
-          developer: 'winyuan',
-          description: '拓扑网络编辑器<br/>',
-          imgSrc: require('@/assets/images/demo-topology.png'),
-          route: {
-            name: 'DemoTopology'
-          }
-        }
-      ]
-    }
   }
 }
 </script>
@@ -50,22 +37,29 @@ export default {
 
   .el-container {
     height: 100%;
-  }
+    .el-header {
+      padding: 0;
+      line-height: 60px;
+      text-align: center;
+      background-color: #FDFDFD;
+      box-shadow: 0 2px 8px rgba(229, 229, 229, 0.5);
+    }
 
-  .el-main {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
+    .el-main {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
 
-  .el-footer {
-    width: 100%;
-    line-height: 55px;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.45);
-    background-color: #06080A;
-    border: none;
-    border-top: 1px solid rgba(197, 203, 217, 0.3);
+    .el-footer {
+      width: 100%;
+      line-height: 55px;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.45);
+      background-color: #06080A;
+      border: none;
+      border-top: 1px solid rgba(197, 203, 217, 0.3);
+    }
   }
 }
 </style>

@@ -6,7 +6,11 @@
  */
 
 import defaultStyle from './default-style'
+import darkStyle from './dark-style'
+import officeStyle from './office-style'
 
 export default {
-  defaultStyle
+  defaultStyle,
+  darkStyle,
+  officeStyle
 }

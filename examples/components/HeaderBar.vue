@@ -1,28 +1,26 @@
 <template>
   <div class="header-bar">
-    <el-header height="60px">
-      <el-row :gutter="20">
-        <el-col :span="8" style="text-align: left">
-          <router-link to="/">
-            <div class="navbar-brand">
-              <img id="logo" src="@/assets/logo.png" width="38px" height="38px" alt="CCEditor"/>
-              <span> CCEditor </span>
-            </div>
-          </router-link>
-        </el-col>
-        <el-col :span="8" style="text-align: center">
-          <div class="navbar-title">&nbsp;</div>
-        </el-col>
-        <el-col :span="8" style="text-align: right">
-          <div class="navbar-btns">
-            <el-button type="text" @click="home">首页</el-button>
-            <el-button type="text" @click="about">关于CCEditor</el-button>
-            <el-button type="text" @click="tutorial">使用教程</el-button>
-            <el-button type="text" @click="$message('敬请期待...')">其它</el-button>
+    <el-row>
+      <el-col :span="8" style="text-align: left">
+        <router-link to="/">
+          <div class="navbar-brand">
+            <img id="logo" src="@/assets/logo.png" width="38px" height="38px" alt="CCEditor"/>
+            <span> CCEditor </span>
           </div>
-        </el-col>
-      </el-row>
-    </el-header>
+        </router-link>
+      </el-col>
+      <el-col :span="8" style="text-align: center">
+        <div class="navbar-title">&nbsp;</div>
+      </el-col>
+      <el-col :span="8" style="text-align: right">
+        <div class="navbar-btns">
+          <el-button type="text" @click="home">首页</el-button>
+          <el-button type="text" @click="about">关于CCEditor</el-button>
+          <el-button type="text" @click="tutorial">使用教程</el-button>
+          <el-button type="text" @click="$message('敬请期待...')">其它</el-button>
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -58,44 +56,39 @@ export default {
 
 <style lang="scss" scoped>
 .header-bar {
-  .el-header {
-    line-height: 60px;
+  .navbar-brand {
+    display: inline-block;
+    margin: 0 18px 0 35px;
+    /*padding: 0 0 0 8px;*/
+    line-height: 22px;
+    font-size: 20px;
+
+    img {
+      vertical-align: middle;
+    }
+
+    span {
+      vertical-align: middle;
+      /*font-family: "Microsoft YaHei";*/
+      color: #06080A;
+    }
+  }
+
+  .navbar-title {
+    vertical-align: middle;
     text-align: center;
-    background-color: #FDFDFD;
-    box-shadow: 0 2px 8px rgba(229, 229, 229, 0.5);
+    font-size: 20px;
+  }
 
-    .navbar-brand {
-      display: inline-block;
-      margin-right: 18px;
-      margin-left: 8px;
-      padding: 0 0 0 8px;
-      line-height: 22px;
-      font-size: 20px;
-
-      img {
-        vertical-align: middle;
-      }
-
-      span {
-        vertical-align: middle;
-        /*font-family: "Microsoft YaHei";*/
-        color: #06080A;
-      }
+  .navbar-btns {
+    vertical-align: middle;
+    text-align: right;
+    .el-button:last-child {
+      margin-right: 20px;
     }
 
-    .navbar-title {
-      vertical-align: middle;
-      text-align: center;
-      font-size: 20px;
-    }
-
-    .navbar-btns {
-      vertical-align: middle;
-      text-align: right;
-
-      .el-button--text {
-        color: #06080A;
-      }
+    .el-button--text {
+      color: #06080A;
     }
   }
 }

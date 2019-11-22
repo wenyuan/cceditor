@@ -1,6 +1,14 @@
 <template>
   <div class="toolbar">
-    <div class="left">&nbsp;</div>
+    <div class="left">
+      <cc-dropdown
+        class="theme-style"
+        ref="themeOptions"
+        :dropdown-items="themeOptions"
+        @change="toggleThemeChange"
+      >
+      </cc-dropdown>
+    </div>
     <div class="center">
       <div class="graph-ops">
         <i class="iconfont icon-zoom-in" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
@@ -31,19 +39,30 @@ export default {
   },
   data() {
     return {
+      themeOptions: [
+        { value: 'defaultStyle', label: '默认主题' },
+        { value: 'darkStyle', label: '暗黑风格' },
+        { value: 'officeStyle', label: '办公风格' }
+      ],
       refreshOptions: [
         { value: -1, label: '不自动刷新' },
         { value: 10000, label: '10秒自动刷新' },
         { value: 30000, label: '30秒自动刷新' },
         { value: 60000, label: '60秒自动刷新' }
-      ],
-      currentRefreshOption: { value: -1, label: '不自动刷新' }
+      ]
     }
   },
   methods: {
+    toggleThemeChange(clickItem) {
+      this.$parent.changeGraphTheme(clickItem.value)
+    },
     toggleAutoRefresh(clickItem) {
       this.$parent.autoRefreshHandler(clickItem.value)
     },
+    // 给父组件调用（代码触发主题修改）
+    changeThemeActiveIndex(index) {
+      this.$refs.themeOptions.activeIndex = index
+    }
   }
 }
 </script>
@@ -65,12 +84,12 @@ export default {
 
   .left {
     display: inline-block;
-    width: 10%;
+    width: 12%;
   }
 
   .center {
     display: inline-block;
-    width: 60%;
+    width: 58%;
   }
 
   .right {
@@ -88,6 +107,12 @@ export default {
     width: 60%;
     line-height: 25px;
     text-align: left;
+  }
+
+  .theme-style {
+    width: 100%;
+    line-height: 25px;
+    text-align: center;
   }
 
   .graph-ops {

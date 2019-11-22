@@ -30,11 +30,22 @@ export default {
         ]
       }
     },
+    defaultIndex: {
+      type: Number,
+      default() {
+        return 0
+      }
+    }
   },
   data() {
     return {
-      activeIndex: 0,
+      activeIndex: this.defaultIndex,
       timeout: null
+    }
+  },
+  watch: {
+    activeIndex() {
+      this.$emit('change', this.dropdownItems[this.activeIndex])
     }
   },
   methods: {
@@ -51,8 +62,9 @@ export default {
     },
     onItemClick(index) {
       this.$refs.dropdownMenu.style.display = 'none'
-      this.activeIndex = index
-      this.$emit('change', this.dropdownItems[index])
+      if (index !== this.activeIndex) {
+        this.activeIndex = index
+      }
     }
   }
 }

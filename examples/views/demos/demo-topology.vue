@@ -847,7 +847,7 @@ export default {
       console.log(JSON.stringify(graphData))
     },
     randomChange() {
-      let graphData = deepClone(this.graphData)
+      let graphData = deepClone(this.$refs.topology.getGraphData())
       let { nodes, edges } = graphData
       // let randomIdx = Math.floor((Math.random() * nodes.length))
       let randomNodeIds = getRandomArrayElements(nodes, 1).map(x => {

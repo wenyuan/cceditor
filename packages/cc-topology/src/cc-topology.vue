@@ -1,14 +1,14 @@
 <template>
   <div class="topology">
     <!-- toolbar -->
-    <div v-if="graphMode === 'edit'">
+    <div v-if="toolbarShow && graphMode === 'edit'">
       <toolbar-edit></toolbar-edit>
     </div>
-    <div v-else>
-      <toolbar-preview></toolbar-preview>
+    <div v-else-if="toolbarShow">
+      <toolbar-preview ref="toolbarPreview"></toolbar-preview>
     </div>
     <!-- container -->
-    <div class="container">
+    <div class="container" :class="graphBg">
       <!-- item-pannel -->
       <div v-if="graphMode === 'edit'" class="left">
         <div
@@ -165,6 +165,8 @@ export default {
   },
   data() {
     return {
+      graphBg: 'default-style',
+      toolbarShow: true,
       graphData: {
         nodes: [],
         edges: []
@@ -487,10 +489,10 @@ export default {
         })
       }
       self.graph.$C = config
-      self.graph.$T = theme.defaultStyle
       self.graph.setMode(self.graphMode)
       self.graph.refresh()
       self.autoZoomHandler()
+      self.$refs.toolbarPreview.changeThemeActiveIndex(1)
     },
     /* Deprecated method: 早期用d3-force手写的自动布局 */
     autoLayoutHandler() {
@@ -842,6 +844,65 @@ export default {
         this.autoZoomHandler()
       })
     },
+    changeGraphTheme(themeValue) {
+      let graph = this.graph
+      if (graph && !graph.destroyed) {
+        let nodes = graph.getNodes()
+        let edges = graph.getEdges()
+        switch (themeValue) {
+          case 'darkStyle':
+            this.graphBg = 'dark-style'
+            graph.$T = theme.darkStyle
+            for (let i = 0, len = edges.length; i < len; i++) {
+              let edge = edges[i]
+              let edgeModel = edge.getModel()
+              edgeModel.style = graph.$T.edgeStyle.default
+              edge.update(edgeModel)
+            }
+            for (let i = 0, len = edges.length; i < len; i++) {
+              let node = nodes[i]
+              let nodeModel = node.getModel()
+              nodeModel.labelCfg = graph.$T.nodeLabelCfg
+              node.update(nodeModel)
+            }
+            graph.paint()
+            break
+          case 'officeStyle':
+            this.graphBg = 'office-style'
+            graph.$T = theme.officeStyle
+            for (let i = 0, len = edges.length; i < len; i++) {
+              let edge = edges[i]
+              let edgeModel = edge.getModel()
+              edgeModel.style = graph.$T.edgeStyle.default
+              edge.update(edgeModel)
+            }
+            for (let i = 0, len = edges.length; i < len; i++) {
+              let node = nodes[i]
+              let nodeModel = node.getModel()
+              nodeModel.labelCfg = graph.$T.nodeLabelCfg
+              node.update(nodeModel)
+            }
+            graph.paint()
+            break
+          default:
+            this.graphBg = 'default-style'
+            graph.$T = theme.defaultStyle
+            for (let i = 0, len = edges.length; i < len; i++) {
+              let edge = edges[i]
+              let edgeModel = edge.getModel()
+              edgeModel.style = graph.$T.edgeStyle.default
+              edge.update(edgeModel)
+            }
+            for (let i = 0, len = edges.length; i < len; i++) {
+              let node = nodes[i]
+              let nodeModel = node.getModel()
+              nodeModel.labelCfg = graph.$T.nodeLabelCfg
+              node.update(nodeModel)
+            }
+            graph.paint()
+        }
+      }
+    },
     /* 子组件向父组件传值 */
     autoRefreshHandler(interval) {
       this.$emit('doAutoRefresh', interval)
@@ -850,6 +911,7 @@ export default {
       this.$emit('doManualRefresh')
     },
     changeModeHandler(graphMode) {
+      this.changeGraphTheme('defaultStyle')
       this.$emit('doChangeMode', graphMode)
     },
     saveDataHandler() {
@@ -994,6 +1056,20 @@ export default {
       height: 100%;
     }
   }
+}
+
+// 背景主题
+.default-style {
+  background: #fff;
+}
+
+.dark-style {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%), radial-gradient(at top center, rgba(255, 255, 255, 0.40) 0%, rgba(0, 0, 0, 0.40) 120%) #989898;
+  background-blend-mode: multiply, multiply;
+}
+
+.office-style {
+  background-image: linear-gradient(to right, #fef6de 0%, #f3ebd3 100%);
 }
 </style>
 

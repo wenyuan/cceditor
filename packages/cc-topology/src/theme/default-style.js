@@ -33,6 +33,13 @@ export default {
       shadowColor: ''
     }
   },
+  // 节点标签样式
+  nodeLabelCfg: {
+    positions: 'center',
+    style: {
+      fill: '#000'
+    }
+  },
   // 连线样式
   edgeStyle: {
     default: {

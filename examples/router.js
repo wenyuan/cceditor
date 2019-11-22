@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -37,9 +37,36 @@ export default new Router({
         import(/* webpackChunkName: "demo-topology" */ '@/views/demos/demo-topology.vue')
     },
     {
+      path: '/mobile',
+      name: 'Mobile',
+      component: () =>
+        import(/* webpackChunkName: "mobile" */ '@/views/pages/mobile.vue')
+    },
+    {
       path: '*',
       component: () =>
         import(/* webpackChunkName: "home" */ '@/views/error-pages/404.vue')
     }
   ]
 })
+
+/**
+ * 验证
+ */
+router.beforeEach((to, from, next) => {
+  if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
+    if (to.path === '/mobile') {
+      next()
+    } else {
+      next('/mobile')
+    }
+  } else {
+    if (to.path === '/mobile') {
+      next('/home')
+    } else {
+      next()
+    }
+  }
+})
+
+export default router
