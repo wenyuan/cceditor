@@ -5,7 +5,7 @@
 ## 版本
 | 稳定版本 |
 | :-------- |
-| [v1.0.0](https://github.com/winyuan/cceditor/tree/master) |
+| [v0.1.0](https://github.com/winyuan/cceditor/tree/master) |
 
 ## 预览
 [DEMO演示](http://cceditor.wenyuanblog.com)
@@ -48,6 +48,7 @@ npm install chaincloud-cceditor-0.1.0.tgz
 # npm安装（暂不支持）
 npm install @chaincloud/cceditor --save
 ```
+本地安装：[安装包下载](https://github.com/winyuan/cceditor/releases)
 
 ### 2. 引入CCEditor
 #### 全局注册
