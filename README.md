@@ -1,19 +1,19 @@
 # CCEditor
-> A visual graph editor component library based on G6 and Vue.js.
+> A visual graph editor component library based on G6 and Vue.js. </br>
 > 基于G6和Vue的可视化图形编辑组件库。
 
 ## 版本
 | 稳定版本 |
 | :-------- |
-| [v1.0.0](http://192.168.10.43/BigView/cceditor/tree/master) |
+| [v1.0.0](https://github.com/winyuan/cceditor/tree/master) |
 
 ## 预览
-[DEMO演示](http://192.168.10.43/BigView/cceditor.git)
+[DEMO演示](http://cceditor.wenyuanblog.com)
 ![](./docs/preview.png)
 
 ## 项目依赖
 * [Vue.js（2.x）](https://cn.vuejs.org/)
-* [Element UI（2.x）](https://element.eleme.cn/2.0/#/zh-CN)
+* ~~[Element UI（2.x）](https://element.eleme.cn/2.0/#/zh-CN)~~
 * [AntV G6（3.x）](http://antv.alipay.com/zh-cn/index.html)
 
 ## 项目结构
