@@ -1,14 +1,20 @@
 # CCEditor
 
 <p align="center">
-  <img src="https://www.wenyuanblog.com/medias/logo/wy.png" alt="wenyuanblog.com" width="160" hegiht="160"/>
+  <img src="https://www.wenyuanblog.com/medias/logo/cceditor.png" alt="cceditor" width="120" hegiht="120"/>
 </p>
 
 <p align="center">
-  <img alt="language" src="https://img.shields.io/badge/language-md-brightgreen.svg?style=flat-square">
+  <img alt="vue" src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg?style=flat-square">
+  <img alt="g6" src="https://img.shields.io/badge/g6-3.1.1-brightgreen.svg?style=flat-square">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square">
-  <img alt="version" src="https://img.shields.io/badge/version-2019-blue.svg?style=flat-square">
-  <img alt="keywords" src="https://img.shields.io/badge/keywords-frontend,backend-blue.svg?style=flat-square">
+  <img alt="release" src="https://img.shields.io/badge/release-v0.1.0-blue.svg?style=flat-square">
+  <a href="https://www.wenyuanblog.com/" style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/about-My%20Blog-46BC99.svg?style=flat-square" alt="wenyuanblog">
+  </a>
+  <a href="https://www.wenyuanblog.com/medias/reward/wechatpay.png"  style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg?style=flat-square" alt="donate">
+  </a>
 </p>
 
 > A visual graph editor component library based on G6 and Vue.js. </br>
