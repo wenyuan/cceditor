@@ -2,21 +2,21 @@
 > A visual graph editor component library based on G6 and Vue.js. </br>
 > 基于G6和Vue的可视化图形编辑组件库。
 
-## 版本
+## 一、 版本
 | 稳定版本 |
 | :-------- |
 | [v0.1.0](https://github.com/winyuan/cceditor/tree/master) |
 
-## 预览
+## 二、预览
 [DEMO演示](http://cceditor.wenyuanblog.com)
 ![](./docs/preview.png)
 
-## 项目依赖
+## 三、项目依赖
 * [Vue.js（2.x）](https://cn.vuejs.org/)
 * ~~[Element UI（2.x）](https://element.eleme.cn/2.0/#/zh-CN)~~
 * [AntV G6（3.x）](http://antv.alipay.com/zh-cn/index.html)
 
-## 项目结构
+## 四、项目结构
 ```
 .
 ├── packages  // 源码
@@ -25,7 +25,7 @@
 |
 ```
 
-## 开发方式
+## 五、开发方式
 ### 1. 调试
 ```bash
 npm install
@@ -39,7 +39,7 @@ npm pack
 ```
 
 
-## 使用方式
+## 六、使用方式
 ### 1. 安装CCEditor
 ```bash
 # 本地安装
