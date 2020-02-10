@@ -91,7 +91,7 @@
 <script>
 import G6 from '@antv/g6'
 
-import { Loading, Checkbox } from '../../cc-elements'
+import {Loading, Checkbox} from '../../cc-elements'
 import ToolbarPreview from './toolbar-preview'
 import ToolbarEdit from './toolbar-edit'
 import registerNode from './node'
@@ -402,7 +402,11 @@ export default {
         default: [
           'drag-canvas',
           'drag-node',
-          'click-select'
+          {
+            type: 'click-select',
+            trigger: 'ctrl',
+            multiple: true
+          }
         ],
         preview: [
           'drag-canvas',
@@ -427,7 +431,16 @@ export default {
         edit: [
           'drag-node',
           'drag-canvas',
-          'click-select',
+          {
+            type: 'click-select',
+            trigger: 'ctrl', // TODO... 疑似官方bug，ctrl无效
+            multiple: true
+          },
+          {
+            type: 'brush-select',
+            trigger: 'ctrl',
+            includeEdges: false
+          },
           'right-click-node',
           'right-click-edge',
           // 自定义Behavior
@@ -446,6 +459,7 @@ export default {
         multiSelect: [
           {
             type: 'brush-select',
+            trigger: 'drag',
             onSelect() {
               this.graph.setMode('edit')
               window.document.getElementById('multi-select').style.backgroundColor = 'transparent'
@@ -492,7 +506,9 @@ export default {
       self.graph.setMode(self.graphMode)
       self.graph.refresh()
       self.autoZoomHandler()
-      self.$refs.toolbarPreview.changeThemeActiveIndex(1)
+      if (this.graphMode === 'preview') {
+        self.$refs.toolbarPreview.changeThemeActiveIndex(1)
+      }
     },
     /* Deprecated method: 早期用d3-force手写的自动布局 */
     autoLayoutHandler() {
