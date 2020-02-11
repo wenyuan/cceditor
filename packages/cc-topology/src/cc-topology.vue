@@ -85,6 +85,12 @@
       </div>
     </div>
     <cc-loading v-if="loading" loading-text="自动布局中..."></cc-loading>
+    <div class="right-menu" ref="rightMenu" v-show="rightMenuShow" @contextmenu.prevent>
+      <ul>
+        <li @click="alignHandler('horizontal')">水平对齐</li>
+        <li @click="alignHandler('vertical')">垂直对齐</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -167,6 +173,7 @@ export default {
     return {
       graphBg: 'default-style',
       toolbarShow: true,
+      rightMenuShow: false,
       graphData: {
         nodes: [],
         edges: []
@@ -205,7 +212,8 @@ export default {
       nodesInClipboard: [],
       historyIndex: 0,
       undoCount: 0,
-      onresizeTimeout: null
+      onresizeTimeout: null,
+      pasteCount: 0
     }
   },
   computed: {
@@ -605,8 +613,10 @@ export default {
     },
     copyHandler() {
       this.nodesInClipboard = this.selectedNodes
+      this.pasteCount = 0
     },
     pasteHandler() {
+      this.pasteCount += 1 // 连续paste次数统计
       let graph = this.graph
       let nodesInClipboard = this.nodesInClipboard
       if (graph && !graph.destroyed && nodesInClipboard.length > 0) {
@@ -621,7 +631,12 @@ export default {
         for (let i = 0; i < nodesInClipboard.length; i++) {
           let node = nodesInClipboard[i]
           let model = node.getModel()
-          let newModel = { ...model, id: utils.generateUUID(), x: model.x + 10, y: model.y + 10 }
+          let newModel = {
+            ...model,
+            id: utils.generateUUID(),
+            x: model.x + 10 * this.pasteCount,
+            y: model.y + 10 * this.pasteCount
+          }
           graph.addItem('node', newModel)
         }
 
@@ -732,6 +747,41 @@ export default {
         this.graph.removePlugin(this.minimap)
       }
     },
+    // 右键菜单
+    alignHandler(coordinate) {
+      let graph = this.graph
+      if (this.selectedNodes.length > 0 && this.selectedNode) {
+        // ************** 记录【节点对齐】前的数据状态 start **************
+        let historyData = JSON.stringify(graph.save())
+        let key = `graph_history_${this.historyIndex}`
+        this.addHistoryData(key, historyData)
+        // ************** 记录【节点对齐】前的数据状态 end **************
+        // 开始节点对齐
+        let cfg = coordinate === 'horizontal' ? { y: this.selectedNode.getModel().y } : { x: this.selectedNode.getModel().x }
+        for (let i = 0, len = this.selectedNodes.length; i < len; i++) {
+          this.selectedNodes[i].updatePosition(cfg)
+        }
+        graph.refresh()
+        // ************** 记录【节点对齐】后的数据状态 start **************
+        // 如果当前点过【撤销】了，节点对齐后将取消【重做】功能
+        // 重置undoCount，【节点对齐】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
+        if (this.undoCount > 0) {
+          this.historyIndex = this.historyIndex - this.undoCount // 此时的historyIndex应当更新为【撤销】后所在的索引位置
+          for (let i = 1; i <= this.undoCount; i++) {
+            let key = `graph_history_${this.historyIndex + i}`
+            this.removeHistoryData(key)
+          }
+          this.undoCount = 0
+        }
+        // 记录【节点对齐】后的数据状态
+        this.historyIndex += 1
+        key = `graph_history_${this.historyIndex}`
+        let currentData = JSON.stringify(graph.save())
+        this.addHistoryData(key, currentData)
+        // ************** 记录【节点对齐】后的数据状态 end **************
+      }
+      this.rightMenuShow = false
+    },
     addNode(clientX, clientY, nodeType) {
       let graph = this.graph
       if (graph && !graph.destroyed) {
@@ -793,7 +843,19 @@ export default {
     unselectAllNodes() {
     },
     addHistoryData(key, value) {
-      sessionStorage.setItem(key, value)
+      try {
+        sessionStorage.setItem(key, value)
+      } catch (oException) {
+        if (oException.name === 'QuotaExceededError') {
+          console.warn('已经超出本地存储限定大小，清空历史记录！')
+          // 可进行超出限定大小之后的操作，如下面可以先清除记录，再次保存
+          // sessionStorage.clear()
+          this.clearHistoryData()
+          this.historyIndex = 0
+          this.undoCount = 0
+          sessionStorage.setItem(key, value)
+        }
+      }
     },
     getHistoryData(key) {
       return sessionStorage.getItem(key)
@@ -802,12 +864,12 @@ export default {
       sessionStorage.removeItem(key)
     },
     clearHistoryData() {
-      for (let i = 0; i < sessionStorage.length; i++) {
-        let key = sessionStorage.key(i)
+      let keys = Object.keys(sessionStorage)
+      keys.forEach(key => {
         if (key.startsWith('graph_history')) {
           sessionStorage.removeItem(key)
         }
-      }
+      })
     },
     onresizeHandler() {
       // 实时监听窗口大小变化
@@ -1013,6 +1075,10 @@ export default {
     text-align: left;
     background-color: #F7F9FB;
     border-left: 1px solid #E6E9ED;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 
     .detail-pannel {
       height: 60%;
@@ -1071,6 +1137,26 @@ export default {
       width: 100%;
       height: 100%;
     }
+  }
+}
+
+.right-menu {
+  position: absolute;
+  padding: 10px 5px;
+  list-style: none;
+  background-color: #fff;
+  opacity: 1;
+  border: 1px solid #DCDFE6;
+  border-radius: 10px;
+
+  li {
+    padding: 5px;
+    list-style-type: none;
+    cursor: pointer;
+  }
+
+  li:hover {
+    color: #409EFF;
   }
 }
 

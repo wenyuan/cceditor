@@ -30,6 +30,7 @@ export default {
       // let clickNode = event.item;
       // clickNode.setState('selected', !clickNode.hasState('selected'));
       vm.currentFocus = 'node'
+      vm.rightMenuShow = false
       this.updateVmData(event)
     },
     onNodeRightClick(event) {
@@ -37,10 +38,19 @@ export default {
       let clickNode = event.item
       let clickNodeModel = clickNode.getModel()
       let selectedNodes = graph.findAllByState('node', 'selected')
-      // 如果当前点击节点不是之前选中的单个节点，才进行下面的处理
-      if (!(selectedNodes.length === 1 && clickNodeModel.id === selectedNodes[0].getModel().id)) {
+      let selectedNodeIds = selectedNodes.map(item => {return item.getModel().id})
+      vm.selectedNode = clickNode
+      // 如果当前点击节点是之前选中的某个节点，就进行下面的处理
+      if (selectedNodes.length > 1 && selectedNodeIds.indexOf(clickNodeModel.id) > -1) {
+        vm.rightMenuShow = true
+        let rightMenu = vm.$refs.rightMenu
+        rightMenu.style.left = event.clientX + 'px'
+        rightMenu.style.top = event.clientY + 'px'
+      } else {
+        // 隐藏右键菜单
+        vm.rightMenuShow = false
         // 先取消所有节点的选中状态
-        graph.findAllByState('node', 'selected').forEach(node => {
+        selectedNodes.forEach(node => {
           node.setState('selected', false)
         })
         // 再添加该节点的选中状态
@@ -48,7 +58,7 @@ export default {
         vm.currentFocus = 'node'
         this.updateVmData(event)
       }
-      let point = { x: event.x, y: event.y }
+      graph.paint()
     },
     onEdgeClick(event) {
       let clickEdge = event.item
@@ -76,6 +86,7 @@ export default {
     },
     onCanvasClick() {
       vm.currentFocus = 'canvas'
+      vm.rightMenuShow = false
     },
     updateVmData(event) {
       if (event.item._cfg.type === 'node') {
