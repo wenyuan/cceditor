@@ -18,7 +18,9 @@ export default {
           ['M', startPoint.x, startPoint.y],
           ['L', endPoint.x, endPoint.y]
         ]
-      }
+      },
+      draggable: false,
+      name: 'edge-shape'
     })
     return keyShape
   },

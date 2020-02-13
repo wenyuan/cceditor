@@ -6,15 +6,9 @@
  */
 
 export default {
-  shape: 'cc-line',
+  type: 'cc-line',
   style: {
-    startArrow: {
-      // path: 'M 6,0 L -6,-6 L -3,0 L -6,6 Z',
-      // d: 6
-    },
-    endArrow: {
-      // path: 'M 6,0 L -6,-6 L -3,0 L -6,6 Z',
-      // d: 6
-    }
+    startArrow: false,
+    endArrow: true
   }
 }

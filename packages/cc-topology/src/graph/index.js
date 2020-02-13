@@ -34,19 +34,19 @@ const initGraph = {
       //   height: options.height
       // },
       defaultNode: {
-        shape: 'cc-rect',
+        type: 'cc-rect',
         labelCfg: {
           position: 'bottom'
         }
       },
       defaultEdge: {
-        shape: 'cc-line',
+        type: 'cc-line',
         labelCfg: {
           position: 'center',
           autoRotate: false
         }
       },
-      nodeStyle: themeStyle.nodeStyle,
+      nodeStateStyles: themeStyle.nodeStyle,
       // nodeStyle: {
       //   selected: {
       //     shadowColor: '#626262',
@@ -55,7 +55,7 @@ const initGraph = {
       //     shadowOffsetY: 3
       //   }
       // },
-      edgeStyle: themeStyle.edgeStyle,
+      edgeStateStyles: themeStyle.edgeStyle,
       // edgeStyle: {
       //   default: {
       //     stroke: '#e2e2e2',
@@ -89,8 +89,8 @@ const initGraph = {
       container: options.container,
       width: options.width,
       height: options.height,
-      nodeStyle: themeStyle.nodeStyle,
-      edgeStyle: themeStyle.edgeStyle
+      nodeStateStyles: themeStyle.nodeStyle,
+      edgeStateStyles: themeStyle.edgeStyle
     })
     // 初始化力导布局
     let simulation = d3

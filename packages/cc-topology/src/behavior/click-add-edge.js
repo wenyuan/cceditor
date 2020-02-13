@@ -61,14 +61,14 @@ export default {
           this.edge = graph.addItem('edge', {
             source: model.id,
             target: point,
-            shape: edgeShape,
+            type: edgeShape,
             controlPoints: [{ x: 100, y: 70 }]
           })
         } else {
           this.edge = graph.addItem('edge', {
             source: model.id,
             target: point,
-            shape: edgeShape
+            type: edgeShape
           })
         }
         this.addingEdge = true

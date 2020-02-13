@@ -10,7 +10,7 @@ export default {
   nodeStyle: {
     default: {
       stroke: '#CED4D9',
-      fill: '#FFFFFF',
+      fill: 'transparent',
       shadowOffsetX: 0,
       shadowOffsetY: 4,
       shadowBlur: 10,

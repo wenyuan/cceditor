@@ -36,9 +36,9 @@ export default {
         node: event.item,
         target: event.target
       }
-      if (self.evtInfo.target && self.evtInfo.target._attrs.name) {
+      if (self.evtInfo.target && self.evtInfo.target.attrs.name) {
         // todo...未来可能针对锚点增加其它功能(例如拖拽调整大小)
-        switch (self.evtInfo.target._attrs.name) {
+        switch (self.evtInfo.target.attrs.name) {
           case 'anchor':
             self.evtInfo.action = 'drawEdge'
             break
@@ -103,7 +103,7 @@ export default {
             x: event.x,
             y: event.y
           },
-          shape: self.graph.$C.edge.shape || 'cc-line',
+          type: self.graph.$C.edge.type || 'cc-line',
           style: G6.Util.mix({}, themeStyle.edgeStyle.default, self.graph.$C.edge.style)
         })
         self.drawEdge.isMoving = true
@@ -128,7 +128,7 @@ export default {
           } else {
             let targetNode = event.item
             let targetNodeModel = targetNode.getModel()
-            let targetAnchor
+            let targetAnchor = null
             // 锚点数据
             let anchorPoints = targetNode.getAnchorPoints()
             // 处理线条目标点

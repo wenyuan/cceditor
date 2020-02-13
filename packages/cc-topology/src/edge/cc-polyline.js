@@ -27,7 +27,9 @@ export default {
         attrs: {
           ...cfg,
           path: path
-        }
+        },
+        draggable: true,
+        name: 'edge-shape'
       })
       return keyShape
     },

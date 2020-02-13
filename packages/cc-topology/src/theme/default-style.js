@@ -10,7 +10,7 @@ export default {
   nodeStyle: {
     default: {
       stroke: '#CED4D9',
-      fill: '#FFFFFF',
+      fill: 'transparent',
       shadowOffsetX: 0,
       shadowOffsetY: 4,
       shadowBlur: 10,
@@ -71,7 +71,7 @@ export default {
   // 锚点样式
   anchorStyle: {
     default: {
-      radius: 3,
+      r: 3,
       symbol: 'circle',
       fill: '#FFFFFF',
       fillOpacity: 0,
@@ -99,7 +99,7 @@ export default {
   // 锚点背景样式
   anchorBgStyle: {
     default: {
-      radius: 10,
+      r: 10,
       symbol: 'circle',
       fill: '#1890FF',
       fillOpacity: 0,

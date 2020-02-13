@@ -89,6 +89,7 @@
       <ul>
         <li @click="alignHandler('horizontal')">水平对齐</li>
         <li @click="alignHandler('vertical')">垂直对齐</li>
+        <li @click="addGroup">创建分组</li>
       </ul>
     </div>
   </div>
@@ -108,8 +109,6 @@ import theme from './theme'
 import initGraph from './graph'
 import utils from './utils'
 
-const Minimap = require('@antv/g6/build/minimap')
-const Grid = require('@antv/g6/build/grid')
 registerNode(G6)
 registerEdge(G6)
 ccBehavior.register(G6)
@@ -430,7 +429,7 @@ export default {
           {
             type: 'edge-tooltip',
             formatText(model) {
-              return model.description || 'source:' + model.sourceNode.getModel().label + ' target:' + model.targetNode.getModel().label
+              return model.description || 'source:' + self.graph.findById(model.source).getModel().label + ' target:' + self.graph.findById(model.target).getModel().label
             }
           }
           // 自定义Behavior
@@ -451,6 +450,10 @@ export default {
           },
           'right-click-node',
           'right-click-edge',
+          // Group Behavior
+          'drag-group',
+          'collapse-expand-group',
+          'drag-node-with-group',
           // 自定义Behavior
           'hover-event-edit',
           'click-event-edit',
@@ -481,7 +484,7 @@ export default {
         let minimapHeight = navigator ? navigator.clientHeight : 120
         minimapWidth = minimapWidth > 160 ? minimapWidth : 120
         minimapHeight = minimapHeight > 160 ? minimapHeight : 120
-        let minimap = new Minimap({
+        let minimap = new G6.Minimap({
           size: [minimapWidth, minimapHeight],
           container: 'g6-minimap',
           type: 'default'
@@ -591,7 +594,7 @@ export default {
     },
     changeEdgeShapeHandler(edgeShape) {
       this.currentEdgeShape = edgeShape
-      this.graph.$C.edge.shape = this.currentEdgeShape['guid']
+      this.graph.$C.edge.type = this.currentEdgeShape['guid']
     },
     undoHandler() {
       if (this.historyIndex > 0 && this.historyIndex - (this.undoCount + 1) >= 0) {
@@ -729,7 +732,7 @@ export default {
     },
     enableGridHandler(enableGrid) {
       if (enableGrid) {
-        this.grid = new Grid()
+        this.grid = new G6.Grid()
         this.graph.addPlugin(this.grid)
       } else {
         this.graph.removePlugin(this.grid)
@@ -737,7 +740,7 @@ export default {
     },
     enableMinimapHandler(enableMinimap) {
       if (enableMinimap) {
-        this.minimap = new Minimap({
+        this.minimap = new G6.Minimap({
           size: [200, 120],
           type: 'default',
           className: 'g6-minimap-preview'
@@ -750,18 +753,21 @@ export default {
     // 右键菜单
     alignHandler(coordinate) {
       let graph = this.graph
-      if (this.selectedNodes.length > 0 && this.selectedNode) {
+      if (this.selectedNodes.length > 1 && this.selectedNode) {
+
         // ************** 记录【节点对齐】前的数据状态 start **************
         let historyData = JSON.stringify(graph.save())
         let key = `graph_history_${this.historyIndex}`
         this.addHistoryData(key, historyData)
         // ************** 记录【节点对齐】前的数据状态 end **************
+
         // 开始节点对齐
         let cfg = coordinate === 'horizontal' ? { y: this.selectedNode.getModel().y } : { x: this.selectedNode.getModel().x }
         for (let i = 0, len = this.selectedNodes.length; i < len; i++) {
           this.selectedNodes[i].updatePosition(cfg)
         }
         graph.refresh()
+
         // ************** 记录【节点对齐】后的数据状态 start **************
         // 如果当前点过【撤销】了，节点对齐后将取消【重做】功能
         // 重置undoCount，【节点对齐】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
@@ -781,6 +787,54 @@ export default {
         // ************** 记录【节点对齐】后的数据状态 end **************
       }
       this.rightMenuShow = false
+    },
+    addGroup() {
+      let graph = this.graph
+      if (graph && !graph.destroyed && this.selectedNodes.length > 1 && this.selectedNode) {
+
+        // ************** 记录【添加分组】前的数据状态 start **************
+        let historyData = JSON.stringify(graph.save())
+        let key = `graph_history_${this.historyIndex}`
+        this.addHistoryData(key, historyData)
+        // ************** 记录【添加分组】前的数据状态 end **************
+
+        let nodeIds = this.selectedNodes.map(item => { return item._cfg.id })
+        // 创建分组
+        let group = graph.addItem('group', {
+          groupId: utils.generateUUID(),
+          nodes: nodeIds,
+          type: 'circle ',
+          zIndex: 2,
+          title: {
+            text: '分组',
+            stroke: '#87e8de',
+            fill: '#87e8de',
+            offsetX: 2,
+            offsetY: 2
+          }
+        })
+
+        // ************** 记录【添加分组】后的数据状态 start **************
+        if (group) {
+          // 如果当前点过【撤销】了，【添加分组】后将取消【重做】功能
+          // 重置undoCount，【添加分组】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
+          if (this.undoCount > 0) {
+            this.historyIndex = this.historyIndex - this.undoCount // 此时的historyIndex应当更新为【撤销】后所在的索引位置
+            for (let i = 1; i <= this.undoCount; i++) {
+              let key = `graph_history_${this.historyIndex + i}`
+              this.removeHistoryData(key)
+            }
+            this.undoCount = 0
+          }
+          // 记录【添加分组】后的数据状态
+          this.historyIndex += 1
+          let key = `graph_history_${this.historyIndex}`
+          let currentData = JSON.stringify(graph.save())
+          this.addHistoryData(key, currentData)
+        }
+        // ************** 记录【添加分组】后的数据状态 end **************
+        this.rightMenuShow = false
+      }
     },
     addNode(clientX, clientY, nodeType) {
       let graph = this.graph
@@ -802,7 +856,7 @@ export default {
           labelCfg: {
             position: 'bottom'
           },
-          shape: 'cc-image',
+          type: 'cc-image',
           img: nodeType.imgSrc,
           size: [55, 55],
           width: 48,

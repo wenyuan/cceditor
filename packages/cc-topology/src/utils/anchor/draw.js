@@ -27,7 +27,9 @@ export default function(cfg, group) {
           y: anchorY,
           // 锚点默认样式
           ...themeStyle.anchorBgStyle.default
-        }
+        },
+        draggable: false,
+        name: 'markerBg-shape'
       })
       // 添加锚点Marker形状
       let anchorShape = group.addShape('marker', {
@@ -38,7 +40,9 @@ export default function(cfg, group) {
           y: anchorY,
           // 锚点默认样式
           ...themeStyle.anchorStyle.default
-        }
+        },
+        draggable: false,
+        name: 'marker-shape'
       })
 
       anchorShape.on('mouseenter', function() {
