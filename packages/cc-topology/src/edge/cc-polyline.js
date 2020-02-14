@@ -10,7 +10,7 @@ import { polylineFinding } from './polyline-finding'
 
 export default {
   name: 'cc-polyline',
-  extendName: 'single-line',
+  extendName: 'single-edge',
   options: {
     ...base,
     draw(cfg, group) {

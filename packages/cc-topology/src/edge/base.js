@@ -13,13 +13,12 @@ export default {
     const keyShape = group.addShape('path', {
       className: 'edge-shape',
       attrs: {
-        ...cfg,
+        ...cfg.style,
         path: [
           ['M', startPoint.x, startPoint.y],
           ['L', endPoint.x, endPoint.y]
         ]
       },
-      draggable: false,
       name: 'edge-shape'
     })
     return keyShape
