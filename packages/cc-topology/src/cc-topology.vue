@@ -8,7 +8,7 @@
       <toolbar-preview ref="toolbarPreview"></toolbar-preview>
     </div>
     <!-- container -->
-    <div class="container" :class="graphBg">
+    <div class="container" :class="graphBg" @contextmenu.prevent>
       <!-- item-pannel -->
       <div v-if="graphMode === 'edit'" class="left">
         <div
@@ -265,13 +265,6 @@ export default {
         this.selectedNodeParamsTimeout = setTimeout(() => {
           selectedNodeModel.label = newVal.label
           selectedNodeModel.appConfig = newVal.appConfig
-          // todo...测试用彩蛋 -- start
-          if (newVal.label === '开启告警') {
-            selectedNodeModel.appState.alert = true
-          } else if (newVal.label === '关闭告警') {
-            selectedNodeModel.appState.alert = false
-          }
-          // todo...测试用菜单 -- end
           this.selectedNode.update(selectedNodeModel)
         }, 300)
       }
@@ -440,7 +433,7 @@ export default {
           'drag-canvas',
           {
             type: 'click-select',
-            trigger: 'ctrl', // TODO... 疑似官方bug，ctrl无效
+            // trigger: 'ctrl', // TODO... 疑似官方bug，ctrl无效
             multiple: true
           },
           {
@@ -457,7 +450,7 @@ export default {
           // 自定义Behavior
           'hover-event-edit',
           'click-event-edit',
-          // 'keyup-event',
+          'keyup-event',
           'drag-event-edit',
           'keyup-event-edit',
           'drag-add-edge'
