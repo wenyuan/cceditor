@@ -43,8 +43,6 @@ export default {
             self.evtInfo.action = 'drawEdge'
             break
         }
-      } else {
-        self.evtInfo.action = 'dragNode'
       }
       if (self.evtInfo && self.evtInfo.action) {
         self[self.evtInfo.action].start.call(self, event)
@@ -172,30 +170,5 @@ export default {
         self.evtInfo = null
       }
     },
-    dragNode: {
-      start(event) {
-        let self = this
-      },
-      move(event) {
-        let self = this
-        if (self.evtInfo.node) {
-          let attrs = {
-            x: event.x,
-            y: event.y
-          }
-          // 更新节点
-          self.graph.updateItem(self.evtInfo.node, attrs)
-        }
-      },
-      stop(event) {
-        let self = this
-        self.dragNode.clear.call(self)
-        self.graph.paint()
-      },
-      clear() {
-        let self = this
-        self.evtInfo = null
-      }
-    }
   }
 }
