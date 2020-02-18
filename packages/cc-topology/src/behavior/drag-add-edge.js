@@ -169,6 +169,6 @@ export default {
         self.drawEdge.isMoving = false
         self.evtInfo = null
       }
-    },
+    }
   }
 }

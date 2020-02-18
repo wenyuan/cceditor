@@ -24,7 +24,8 @@ export default {
         ['M', startPoint.x, startPoint.y],
         ['L', endPoint.x / 3 + 2 / 3 * startPoint.x, startPoint.y],
         ['L', endPoint.x / 3 + 2 / 3 * startPoint.x, endPoint.y],
-        ['L', endPoint.x, endPoint.y]]
+        ['L', endPoint.x, endPoint.y]
+      ]
     },
     getShapeStyle(cfg) {
       const { startPoint, endPoint } = cfg
@@ -43,7 +44,7 @@ export default {
         lineWidth: 1,
         path,
         startArrow: false,
-        endArrow: true,
+        endArrow: false,
         ...themeStyle.edgeStyle.default
       }
       return style

@@ -9,6 +9,6 @@ export default {
   type: 'cc-line',
   style: {
     startArrow: false,
-    endArrow: true
+    endArrow: false
   }
 }

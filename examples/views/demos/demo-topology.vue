@@ -293,7 +293,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
@@ -313,7 +313,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
@@ -333,7 +333,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
@@ -353,7 +353,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
@@ -373,7 +373,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
@@ -393,7 +393,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
@@ -413,7 +413,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
@@ -433,7 +433,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
@@ -453,7 +453,7 @@ export default {
               strokeOpacity: 0.92,
               lineAppendWidth: 10,
               startArrow: false,
-              endArrow: true
+              endArrow: false
             },
             labelCfg: {
               position: 'center',
