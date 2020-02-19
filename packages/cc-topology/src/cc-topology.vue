@@ -985,7 +985,7 @@ export default {
               edgeModel.style = graph.$T.edgeStyle.default
               edge.update(edgeModel)
             }
-            for (let i = 0, len = edges.length; i < len; i++) {
+            for (let i = 0, len = nodes.length; i < len; i++) {
               let node = nodes[i]
               let nodeModel = node.getModel()
               nodeModel.labelCfg = graph.$T.nodeLabelCfg
@@ -1002,7 +1002,7 @@ export default {
               edgeModel.style = graph.$T.edgeStyle.default
               edge.update(edgeModel)
             }
-            for (let i = 0, len = edges.length; i < len; i++) {
+            for (let i = 0, len = nodes.length; i < len; i++) {
               let node = nodes[i]
               let nodeModel = node.getModel()
               nodeModel.labelCfg = graph.$T.nodeLabelCfg
@@ -1019,7 +1019,7 @@ export default {
               edgeModel.style = graph.$T.edgeStyle.default
               edge.update(edgeModel)
             }
-            for (let i = 0, len = edges.length; i < len; i++) {
+            for (let i = 0, len = nodes.length; i < len; i++) {
               let node = nodes[i]
               let nodeModel = node.getModel()
               nodeModel.labelCfg = graph.$T.nodeLabelCfg
