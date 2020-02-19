@@ -7,7 +7,15 @@
 
 import utils from '../utils'
 
+// 用来获取调用此js的vue组件实例（this）
+let vm = null
+
+const sendThis = (_this) => {
+  vm = _this
+}
+
 export default {
+  sendThis,
   name: 'cc-image',
   extendName: 'image',
   options: {
@@ -15,12 +23,16 @@ export default {
       // 设置节点状态
       utils.node.setState(name, value, item)
       // 设置锚点状态
-      utils.anchor.setState(name, value, item)
+      if (vm.graphMode === 'edit') {
+        utils.anchor.setState(name, value, item)
+      }
     },
     // 绘制后附加锚点
     afterDraw(cfg, group) {
       // 绘制锚点
-      utils.anchor.draw(cfg, group)
+      if (vm.graphMode === 'edit') {
+        utils.anchor.draw(cfg, group)
+      }
     },
     // 设置告警状态
     afterUpdate(cfg, node) {

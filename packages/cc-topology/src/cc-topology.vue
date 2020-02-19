@@ -101,16 +101,16 @@ import G6 from '@antv/g6'
 import {Loading, Checkbox} from '../../cc-elements'
 import ToolbarPreview from './toolbar-preview'
 import ToolbarEdit from './toolbar-edit'
-import registerNode from './node'
 import registerEdge from './edge'
+import ccNode from './node'
 import ccBehavior from './behavior'
 import config from './config'
 import theme from './theme'
 import initGraph from './graph'
 import utils from './utils'
 
-registerNode(G6)
 registerEdge(G6)
+ccNode.register(G6)
 ccBehavior.register(G6)
 
 export default {
@@ -290,6 +290,7 @@ export default {
   created() {
   },
   mounted() {
+    ccNode.obj.ccImage.sendThis(this)
     ccBehavior.obj.clickEventEdit.sendThis(this)
     ccBehavior.obj.dragAddEdge.sendThis(this)
     ccBehavior.obj.dragEventEdit.sendThis(this)

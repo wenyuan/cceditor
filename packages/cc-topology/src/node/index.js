@@ -13,8 +13,11 @@ const obj = {
   ccImage
 }
 
-export default function(G6) {
-  Object.values(obj).map(item => {
-    G6.registerNode(item.name, item.options, item.extendName)
-  })
+export default {
+  obj,
+  register(G6) {
+    Object.values(obj).map(item => {
+      G6.registerNode(item.name, item.options, item.extendName)
+    })
+  }
 }
