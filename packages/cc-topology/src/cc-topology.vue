@@ -86,10 +86,13 @@
     </div>
     <cc-loading v-if="loading" loading-text="自动布局中..."></cc-loading>
     <div class="right-menu" ref="rightMenu" v-show="rightMenuShow" @contextmenu.prevent>
-      <ul>
+      <ul v-if="currentFocus === 'node' && selectedNodes.length > 1">
         <li @click="alignHandler('horizontal')">水平对齐</li>
         <li @click="alignHandler('vertical')">垂直对齐</li>
         <li @click="addGroup">创建分组</li>
+      </ul>
+      <ul v-else-if="currentFocus === 'group'">
+        <li @click="removeGroup">移除分组</li>
       </ul>
     </div>
   </div>
@@ -207,6 +210,7 @@ export default {
         appConfig: this.edgeAppConfig
       },
       selectedEdgeParamsTimeout: null,
+      selectedGroupId: null,
       zoomValue: 1,
       nodesInClipboard: [],
       historyIndex: 0,
@@ -445,9 +449,9 @@ export default {
           'right-click-node',
           'right-click-edge',
           // Group Behavior
-          'drag-group',
-          'collapse-expand-group',
-          'drag-node-with-group',
+          // 'drag-group',
+          // 'collapse-expand-group',
+          // 'drag-node-with-group',
           // 自定义Behavior
           'hover-event-edit',
           'click-event-edit',
@@ -513,6 +517,21 @@ export default {
       self.autoZoomHandler()
       if (this.graphMode === 'preview') {
         self.$refs.toolbarPreview.changeThemeActiveIndex(1)
+      } else if (this.graphMode === 'edit') {
+        // 由于 G6 目前不支持监听 Group 的点击事件，故自行实现
+        self.graph.on('click', evt => {
+          if (evt.target.cfg.groupId) {
+            self.currentFocus = 'group'
+            self.selectedGroupId = evt.target.cfg.groupId
+          }
+        })
+        self.graph.on('contextmenu', evt => {
+          if (evt.target.cfg.groupId) {
+            self.currentFocus = 'group'
+            self.selectedGroupId = evt.target.cfg.groupId
+            self.rightMenuShow = true
+          }
+        })
       }
     },
     /* Deprecated method: 早期用d3-force手写的自动布局 */
@@ -828,6 +847,38 @@ export default {
         }
         // ************** 记录【添加分组】后的数据状态 end **************
         this.rightMenuShow = false
+      }
+    },
+    removeGroup() {
+      let graph = this.graph
+      if (this.selectedGroupId) {
+
+        // ************** 记录【删除】前的数据状态 start **************
+        let historyData = JSON.stringify(graph.save())
+        let key = `graph_history_${this.historyIndex}`
+        this.addHistoryData(key, historyData)
+        // ************** 记录【删除】前的数据状态 end **************
+
+        // 开始删除
+        graph.removeItem(this.selectedGroupId)
+
+        // ************** 记录【删除】后的数据状态 start **************
+        // 如果当前点过【撤销】了，删除分组后将取消【重做】功能
+        // 重置undoCount，【删除】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录
+        if (this.undoCount > 0) {
+          this.historyIndex = this.historyIndex - this.undoCount // 此时的historyIndex应当更新为【撤销】后所在的索引位置
+          for (let i = 1; i <= this.undoCount; i++) {
+            let key = `graph_history_${this.historyIndex + i}`
+            this.removeHistoryData(key)
+          }
+          this.undoCount = 0
+        }
+        // 记录【删除】后的数据状态
+        this.historyIndex += 1
+        key = `graph_history_${this.historyIndex}`
+        let currentData = JSON.stringify(graph.save())
+        this.addHistoryData(key, currentData)
+        // ************** 记录【删除】后的数据状态 end **************
       }
     },
     addNode(clientX, clientY, nodeType) {
