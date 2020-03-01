@@ -21,20 +21,24 @@
 > 基于G6和Vue的可视化图形编辑组件库。
 
 ## 一、 版本
+
 | 稳定版本 |
 | :-------- |
 | [v0.1.0](https://github.com/winyuan/cceditor/tree/master) |
 
 ## 二、预览
+
 [DEMO演示](http://cceditor.wenyuanblog.com)
 ![](./docs/preview.png)
 
 ## 三、项目依赖
+
 * [Vue.js（2.x）](https://cn.vuejs.org/)
 * ~~[Element UI（2.x）](https://element.eleme.cn/2.0/#/zh-CN)~~
 * [AntV G6（3.x）](http://antv.alipay.com/zh-cn/index.html)
 
 ## 四、项目结构
+
 ```
 .
 ├── packages  // 源码
@@ -44,21 +48,25 @@
 ```
 
 ## 五、开发方式
+
 ### 1. 调试
+
 ```bash
 npm install
 npm run serve
 ```
 
 ### 2. 发布
+
 ```bash
 npm run lib
 npm pack
 ```
 
-
 ## 六、使用方式
+
 ### 1. 安装CCEditor
+
 ```bash
 # 本地安装
 npm install chaincloud-cceditor-0.1.0.tgz
@@ -69,7 +77,9 @@ npm install @chaincloud/cceditor --save
 本地安装：[安装包下载](https://github.com/winyuan/cceditor/releases)
 
 ### 2. 引入CCEditor
+
 #### 全局注册
+
 在 `main.js` 中写入以下内容：
 * 完整引入：引入整个CCEditor：
 
@@ -121,6 +131,7 @@ new Vue({
 ```
 
 #### 局部注册
+
 在 `ComponentA.vue` 中进行局部注册：
 ```vue
 <script>
@@ -136,8 +147,15 @@ export default {
 ```
 
 ### 3. 开始使用
+
 #### 属性
+
 TODO...
 
 #### 方法
+
 TODO...
+
+## 七、备注
+
+由于 G6 在 3.1.x 版本作了 breaking change，且遗留了一些 bug。本项目先暂停更新。预计 4 月份或 G6 底层这些重要 bug 修复后，继续更新。—— 2020.3.1
