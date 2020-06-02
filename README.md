@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="vue" src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg?style=flat-square">
-  <img alt="g6" src="https://img.shields.io/badge/g6-3.1.1-brightgreen.svg?style=flat-square">
+  <img alt="g6" src="https://img.shields.io/badge/g6-3.5.0-brightgreen.svg?style=flat-square">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square">
   <img alt="release" src="https://img.shields.io/badge/release-v0.1.0-blue.svg?style=flat-square">
   <a href="https://www.wenyuanblog.com/" style="text-decoration: none;">
@@ -22,7 +22,7 @@
 
 ## 一、 版本
 
-| 稳定版本 |
+| 开发版本 |
 | :-------- |
 | [v0.1.0](https://github.com/winyuan/cceditor/tree/master) |
 
@@ -158,5 +158,5 @@ TODO...
 
 ## 七、备注
 
-* 升级到 G6 在 3.5.0 后，发现 G6 底层有 [bug](https://github.com/antvis/G6/issues/1613)：调用addItem方法报错：`p.getType is not a function`。该 bug 导致编辑（连线）功能不可用，需等待下个小版本的修复。—— 2020.06.02
+* 升级 G6 到 3.5.0 后，发现 G6 底层有 [bug](https://github.com/antvis/G6/issues/1613)：调用addItem方法报错：`p.getType is not a function`。该 bug 导致编辑（连线）功能不可用，需等待下个小版本的修复。—— 2020.06.02
 * 由于 G6 在 3.3.x 版本作了 breaking change，且遗留了一些 bug。本项目先暂停更新。预计 6 月份或 G6 底层这些重要 bug 修复后，继续跟进。—— 2020.03.01
