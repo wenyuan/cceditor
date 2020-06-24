@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="vue" src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg?style=flat-square">
-  <img alt="g6" src="https://img.shields.io/badge/g6-3.5.0-brightgreen.svg?style=flat-square">
+  <img alt="g6" src="https://img.shields.io/badge/g6-3.5.7-brightgreen.svg?style=flat-square">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square">
   <img alt="release" src="https://img.shields.io/badge/release-v0.1.0-blue.svg?style=flat-square">
   <a href="https://www.wenyuanblog.com/" style="text-decoration: none;">
