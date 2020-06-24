@@ -1,131 +1,54 @@
 <template>
   <div class="toolbar">
-    <div class="left">
-      <cc-dropdown
-        class="theme-style"
-        ref="themeOptions"
-        :dropdown-items="themeOptions"
-        @change="toggleThemeChange"
-      >
-      </cc-dropdown>
-    </div>
-    <div class="center">
+    <div class="pull-right">
       <div class="graph-ops">
-        <i class="iconfont icon-zoom-in" id="zoom-in" title="放大" @click="$parent.zoomInHandler"></i>
-        <i class="iconfont icon-zoom-out" title="缩小" @click="$parent.zoomOutHandler"></i>
-        <i class="iconfont icon-fit" title="适应画布" @click="$parent.autoZoomHandler"></i>
-        <i class="iconfont icon-actualsize" title="实际尺寸" @click="$parent.resetZoomHandler"></i>
+        <i class="iconfont icon-zoom-in" id="zoom-in" title="放大" @click="$parent.$parent.zoomInHandler"></i>
+        <i class="iconfont icon-zoom-out" title="缩小" @click="$parent.$parent.zoomOutHandler"></i>
+        <i class="iconfont icon-fit" title="适应画布" @click="$parent.$parent.autoZoomHandler"></i>
+        <i class="iconfont icon-actualsize" title="实际尺寸" @click="$parent.$parent.resetZoomHandler"></i>
+        <i class="iconfont icon-download" id="download" title="下载图片" @click="$parent.$parent.downloadFullImage"></i>
         <span class="separator"></span>
-        <cc-checkbox @change="$parent.enableMinimapHandler">导航器</cc-checkbox>
-        <cc-dropdown :dropdown-items="refreshOptions" @change="toggleAutoRefresh"></cc-dropdown>
+        <el-checkbox @change="$parent.$parent.enableMinimapHandler"
+                     style="margin-left: 8px; vertical-align: middle;color: #ededed">
+          导航器
+        </el-checkbox>
       </div>
-    </div>
-    <div class="right">
-      <cc-button size="mini" @click="$parent.manualRefreshHandler">刷新</cc-button>
-      <cc-button size="mini" @click="$parent.changeModeHandler('edit')">编辑</cc-button>
     </div>
   </div>
 </template>
 
 <script>
-import { Checkbox, Button, Dropdown } from '../../cc-elements'
 
 export default {
-  name: 'ToolbarEdit',
-  components: {
-    'cc-checkbox': Checkbox,
-    'cc-button': Button,
-    'cc-dropdown': Dropdown
-  },
-  data() {
-    return {
-      themeOptions: [
-        { value: 'defaultStyle', label: '默认主题' },
-        { value: 'darkStyle', label: '暗黑风格' },
-        { value: 'officeStyle', label: '办公风格' }
-      ],
-      refreshOptions: [
-        { value: -1, label: '不自动刷新' },
-        { value: 10000, label: '10秒自动刷新' },
-        { value: 30000, label: '30秒自动刷新' },
-        { value: 60000, label: '60秒自动刷新' }
-      ]
-    }
-  },
-  methods: {
-    toggleThemeChange(clickItem) {
-      this.$parent.changeGraphTheme(clickItem.value)
-    },
-    toggleAutoRefresh(clickItem) {
-      this.$parent.autoRefreshHandler(clickItem.value)
-    },
-    // 给父组件调用（代码触发主题修改）
-    changeThemeActiveIndex(index) {
-      this.$refs.themeOptions.activeIndex = index
-    }
-  }
+  name: 'ToolbarEdit'
 }
 </script>
 
 <style lang="scss" scoped>
 .toolbar {
-  /*height: 42px;*/
+  position: absolute;
+  width: 100%;
   color: #333;
   text-align: left;
   vertical-align: middle;
   line-height: 42px;
-  background-color: #ffffff;
-  border: 1px solid #E9E9E9;
-  box-shadow: 0 8px 12px 0 rgba(0, 52, 107, 0.04);
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-
-  .left {
-    display: inline-block;
-    width: 12%;
-  }
-
-  .center {
-    display: inline-block;
-    width: 58%;
-  }
-
-  .right {
-    display: inline-block;
-    width: 30%;
-    text-align: right;
-  }
-
-  .edge-enabled {
-    width: 40%;
-    text-align: center;
-  }
-
-  .edge-type {
-    width: 60%;
-    line-height: 25px;
-    text-align: left;
-  }
-
-  .theme-style {
-    width: 100%;
-    line-height: 25px;
-    text-align: center;
-  }
+  z-index: 999;
 
   .graph-ops {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 20px;
+    margin: 0 16px;
 
     i {
       width: 20px;
       height: 20px;
       margin: 0 6px;
       line-height: 20px;
-      color: #a8a8a8;
+      color: #EDEDED;
       text-align: center;
       border-radius: 2px;
       display: inline-block;
@@ -153,19 +76,24 @@ export default {
     .separator {
       margin: 4px;
       border-left: 1px solid #E9E9E9;
+      vertical-align: middle;
     }
+  }
+}
+</style>
+<style lang="scss">
+.graph-ops {
+  .el-checkbox__input {
+    vertical-align: baseline;
 
-    .auto-refresh {
-      margin: 0 8px 0 12px;
-    }
-
-    .cc-checkbox {
-      margin: 0 6px;
+    .el-checkbox__inner {
+      color: #EDEDED !important;
+      background-color: transparent !important;
     }
   }
 
-  .cc-button {
-    margin: 0 5px;
+  .el-checkbox__label {
+    vertical-align: text-bottom;
   }
 }
 </style>

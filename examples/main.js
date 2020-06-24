@@ -4,6 +4,7 @@ import store from './store'
 import ElementUI from 'element-ui'
 
 import '@/styles/index.scss' // global css
+import '@/styles/common.scss' // common css
 
 import App from './App.vue'
 

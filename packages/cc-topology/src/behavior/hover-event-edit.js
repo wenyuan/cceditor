@@ -8,19 +8,29 @@
 export default {
   name: 'hover-event-edit',
   options: {
-    getEvents() {
+    getEvents () {
       return {
         'node:mouseover': 'onNodeHover',
-        'node:mouseout': 'onNodeOut'
+        'node:mouseout': 'onNodeOut',
+        'combo:mouseover': 'onComboHover',
+        'combo:mouseout': 'onComboOut'
       }
     },
-    onNodeHover(event) {
+    onNodeHover (event) {
       let hoverNode = event.item
       hoverNode.setState('hover', true)
     },
-    onNodeOut(event) {
+    onNodeOut (event) {
       let hoverNode = event.item
       hoverNode.setState('hover', false)
+    },
+    onComboHover (event) {
+      let hoverCombo = event.item
+      hoverCombo.setState('hover', true)
+    },
+    onComboOut (event) {
+      let hoverCombo = event.item
+      hoverCombo.setState('hover', false)
     }
   }
 }

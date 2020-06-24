@@ -20,7 +20,7 @@ export default {
   sendThis, // 暴露函数
   name: 'drag-add-edge',
   options: {
-    getEvents() {
+    getEvents () {
       return {
         'node:mousedown': 'onNodeMousedown',
         'node:mouseup': 'onNodeMouseup',
@@ -28,7 +28,7 @@ export default {
         'mousemove': 'onMousemove'
       }
     },
-    onNodeMousedown(event) {
+    onNodeMousedown (event) {
       let self = this
       // 交互过程中的信息
       self.evtInfo = {
@@ -48,19 +48,19 @@ export default {
         self[self.evtInfo.action].start.call(self, event)
       }
     },
-    onNodeMouseup(event) {
+    onNodeMouseup (event) {
       let self = this
       if (self.evtInfo && self.evtInfo.action) {
         self[self.evtInfo.action].stop.call(self, event)
       }
     },
-    onEdgeMouseup(event) {
+    onEdgeMouseup (event) {
       let self = this
       if (self.evtInfo && self.evtInfo.action === 'drawEdge') {
         self[self.evtInfo.action].stop.call(self, event)
       }
     },
-    onMousemove(event) {
+    onMousemove (event) {
       let self = this
       if (self.evtInfo && self.evtInfo.action) {
         self[self.evtInfo.action].move.call(self, event)
@@ -69,7 +69,7 @@ export default {
     drawEdge: {
       isMoving: false,
       currentLine: null,
-      start: function(event) {
+      start: function (event) {
         let self = this
         let themeStyle = theme.defaultStyle // todo...先使用默认主题，后期可能增加其它风格的主体
 
@@ -106,7 +106,7 @@ export default {
         })
         self.drawEdge.isMoving = true
       },
-      move(event) {
+      move (event) {
         let self = this
         if (self.drawEdge.isMoving && self.drawEdge.currentLine) {
           self.graph.updateItem(self.drawEdge.currentLine, {
@@ -117,7 +117,7 @@ export default {
           })
         }
       },
-      stop(event) {
+      stop (event) {
         let self = this
         if (self.drawEdge.isMoving) {
           if (self.drawEdge.currentLine === event.item) {

@@ -37,9 +37,9 @@ export default {
           title: '拓扑图',
           developer: 'winyuan',
           description: '拓扑网络编辑器<br/>',
-          imgSrc: require('@/assets/images/demo-topology.png'),
+          imgSrc: require('@/assets/images/topology.png'),
           route: {
-            name: 'DemoTopology'
+            name: 'Topology'
           }
         }
       ]

@@ -19,7 +19,7 @@ export default {
   name: 'cc-image',
   extendName: 'image',
   options: {
-    setState(name, value, item) {
+    setState (name, value, item) {
       // 设置节点状态
       utils.node.setState(name, value, item)
       // 设置锚点状态
@@ -28,17 +28,17 @@ export default {
       }
     },
     // 绘制后附加锚点
-    afterDraw(cfg, group) {
+    afterDraw (cfg, group) {
       // 绘制锚点
       if (vm.graphMode === 'edit') {
         utils.anchor.draw(cfg, group)
       }
     },
     // 设置告警状态
-    afterUpdate(cfg, node) {
+    afterUpdate (cfg, node) {
       const group = node.getContainer()
       // 获取children
-      const halos = group.findAll(function(item) {
+      const halos = group.findAll(function (item) {
         return item.attrs.name === 'halo'
       })
       // 告警
@@ -46,7 +46,7 @@ export default {
         if (halos.length > 0) {
           return
         }
-        let size = this.getSize(cfg) || [48, 48]
+        let size = this.getSize(cfg) || [40, 40]
         let r = size[0] / 2
         let { id } = cfg
         let halo1 = group.addShape('circle', {
@@ -91,7 +91,7 @@ export default {
         group.sort() // 排序，根据zIndex 排序
         halo1.animate({ // 逐渐放大，并消失
           r: r + 10,
-          opacity: 0.1,
+          opacity: 0.1
         }, {
           repeat: true, // 循环
           duration: 3000,
