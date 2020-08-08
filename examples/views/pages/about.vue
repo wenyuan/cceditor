@@ -12,7 +12,7 @@
       简单、易用，在开箱即用的基础上，可以很方便的进行 <span class="tips">业务定制</span> 和 <span class="tips">功能扩展</span>。
     </p>
     <div class="demo-preview">
-      <img :src="require('@/assets/images/demo_topology.gif')"/>
+      <img :src="require('@/assets/images/topology.gif')"/>
     </div>
   </div>
 </template>

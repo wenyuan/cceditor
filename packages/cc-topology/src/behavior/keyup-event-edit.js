@@ -16,23 +16,21 @@ export default {
   sendThis, // 暴露函数
   name: 'keyup-event-edit',
   options: {
-    getEvents() {
+    getEvents () {
       return {
         'keyup': 'onKeyup'
       }
     },
-    onKeyup(event) {
+    onKeyup (event) {
       let graph = this.graph
       let selectedNodes = graph.findAllByState('node', 'selected')
       let selectedEdges = graph.findAllByState('edge', 'selected')
       if (event.keyCode === 46 && (selectedNodes.length > 0 || selectedEdges.length > 0)) {
-
         // ************** 记录【删除】前的数据状态 start **************
         let historyData = JSON.stringify(graph.save())
         let key = `graph_history_${vm.historyIndex}`
         vm.addHistoryData(key, historyData)
         // ************** 记录【删除】前的数据状态 end **************
-
         // 开始删除
         for (let i = 0; i < selectedNodes.length; i++) {
           graph.removeItem(selectedNodes[i])
@@ -40,7 +38,6 @@ export default {
         for (let i = 0; i < selectedEdges.length; i++) {
           graph.removeItem(selectedEdges[i])
         }
-
         // ************** 记录【删除】后的数据状态 start **************
         // 如果当前点过【撤销】了，拖拽节点后将取消【重做】功能
         // 重置undoCount，【删除】后的数据状态给(当前所在historyIndex + 1)，且清空这个时间点之后的记录

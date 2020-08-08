@@ -16,17 +16,17 @@ export default {
   sendThis, // 暴露函数
   name: 'drag-event-edit',
   options: {
-    getEvents() {
+    getEvents () {
       return {
         'node:dragstart': 'onNodeDragstart',
         'node:dragend': 'onNodeDragend'
       }
     },
-    onNodeDragstart() {
+    onNodeDragstart () {
       let graph = vm.graph
       this.historyData = JSON.stringify(graph.save())
     },
-    onNodeDragend() {
+    onNodeDragend () {
       if (this.historyData) {
         let graph = this.graph
         // 如果当前点过【撤销】了，拖拽节点后没有【重做】功能

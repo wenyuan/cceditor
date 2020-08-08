@@ -31,10 +31,10 @@ const router = new Router({
       ]
     },
     {
-      path: '/demo_topology',
-      name: 'DemoTopology',
+      path: '/topology',
+      name: 'Topology',
       component: () =>
-        import(/* webpackChunkName: "demo-topology" */ '@/views/demos/demo-topology.vue')
+        import(/* webpackChunkName: "topology" */ '@/views/demos/topology.vue')
     },
     {
       path: '/mobile',
