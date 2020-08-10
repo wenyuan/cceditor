@@ -9,11 +9,8 @@
   <img alt="g6" src="https://img.shields.io/badge/g6-3.5.7-brightgreen.svg?style=flat-square">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square">
   <img alt="release" src="https://img.shields.io/badge/release-v0.1.0-blue.svg?style=flat-square">
-  <a href="https://www.wenyuanblog.com/" style="text-decoration: none;">
-    <img src="https://img.shields.io/badge/about-My%20Blog-46BC99.svg?style=flat-square" alt="wenyuanblog">
-  </a>
-  <a href="https://www.wenyuanblog.com/medias/reward/wechatpay.png"  style="text-decoration: none;">
-    <img src="https://img.shields.io/badge/%24-donate-ff69b4.svg?style=flat-square" alt="donate">
+  <a href="https://www.wenyuanblog.com/gift.html" target="_blank">
+    <img alt="sponsor" src="https://img.shields.io/badge/sponsor-❤-ff69b4.svg?style=flat-square">
   </a>
 </p>
 
