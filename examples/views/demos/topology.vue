@@ -505,10 +505,10 @@ export default {
         ]
       },
       nodeTypeList: [
-        { guid: 'blue', label: '服务器', imgSrc: require('../../assets/images/server.png') },
-        { guid: 'green', label: '数据库', imgSrc: require('@/assets/images/database.png') },
-        { guid: 'purple', label: '防火墙', imgSrc: require('@/assets/images/firewall.png') },
-        { guid: 'purple', label: '客户端', imgSrc: require('@/assets/images/client.png') }
+        { guid: 'server', label: '服务器', imgSrc: require('../../assets/images/server.png') },
+        { guid: 'database', label: '数据库', imgSrc: require('@/assets/images/database.png') },
+        { guid: 'firewall', label: '防火墙', imgSrc: require('@/assets/images/firewall.png') },
+        { guid: 'client', label: '客户端', imgSrc: require('@/assets/images/client.png') }
       ],
       // 节点配置
       nodeAppConfig: {
