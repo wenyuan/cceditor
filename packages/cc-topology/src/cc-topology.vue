@@ -1026,6 +1026,7 @@ export default {
 .graph-container {
   position: relative;
   height: 100%;
+  overflow: hidden;
 
   .collapse-opened {
     position: absolute;
