@@ -6,7 +6,7 @@
 
 <p align="center">
   <img alt="vue" src="https://img.shields.io/badge/vue-2.6.10-brightgreen.svg?style=flat-square">
-  <img alt="g6" src="https://img.shields.io/badge/g6-3.5.7-brightgreen.svg?style=flat-square">
+  <img alt="g6" src="https://img.shields.io/badge/g6-4.0.1-brightgreen.svg?style=flat-square">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square">
   <img alt="release" src="https://img.shields.io/badge/release-v0.1.0-blue.svg?style=flat-square">
   <a href="https://www.wenyuanblog.com/gift.html" target="_blank">
@@ -15,7 +15,7 @@
 </p>
 
 > A visual graph editor component library based on G6 and Vue.js. </br>
-> 基于G6和Vue的可视化图形编辑组件库。
+> 基于 G6 和 Vue 的可视化图形编辑组件库。
 
 ## 一、 版本
 
@@ -31,8 +31,8 @@
 ## 三、项目依赖
 
 * [Vue.js（2.x）](https://cn.vuejs.org/)
-* ~~[Element UI（2.x）](https://element.eleme.cn/2.0/#/zh-CN)~~
-* [AntV G6（3.x）](http://antv.alipay.com/zh-cn/index.html)
+* [Element UI（2.x）](https://element.eleme.cn/2.0/#/zh-CN)
+* [AntV G6（4.x）](http://antv.alipay.com/zh-cn/index.html)
 
 ## 四、项目结构
 
