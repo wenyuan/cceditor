@@ -135,6 +135,7 @@ export default {
   // 分组样式
   comboStyle: {
     default: {
+      fill: 'transparent',
       lineWidth: 1
     },
     hover: {
