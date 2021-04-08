@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/08/20
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: 导入组件，组件必须声明 name
  */
 

@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/07/16
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: register behaviors
  */
 

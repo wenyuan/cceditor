@@ -55,7 +55,7 @@ export default {
       demoList: [
         {
           title: '拓扑图',
-          developer: 'winyuan',
+          developer: 'wenyuan',
           description: '拓扑网络编辑器<br/>',
           imgSrc: require('@/assets/images/topology.png'),
           route: {
@@ -69,7 +69,7 @@ export default {
     clickDemoItem() {
       this.$message({
         dangerouslyUseHTMLString: true,
-        message: '<div style="text-align: center">请使用PC端预览Demo编辑器效果。<br/><br/>—— by winyuan</div></div>',
+        message: '<div style="text-align: center">请使用PC端预览Demo编辑器效果。<br/><br/>—— by wenyuan</div></div>',
         type: 'info',
         center: true,
         duration: 3000,

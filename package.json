@@ -2,7 +2,7 @@
   "name": "@chaincloud/cceditor",
   "version": "0.1.0",
   "description": "A visual graph editor based on G6 and Vue.js.",
-  "author": "winyuan <xuwenyuan2016@163.com>",
+  "author": "wenyuan <xuwenyuan2016@163.com>",
   "main": "lib/cceditor.common.js",
   "keywords": [
     "vue",
@@ -20,7 +20,7 @@
     "lib": "vue-cli-service build --target lib --name cceditor --dest lib packages/index.js"
   },
   "dependencies": {
-    "@antv/g6": "^4.0.1",
+    "@antv/g6": "^4.2.5",
     "core-js": "^2.6.5",
     "element-ui": "^2.14.1",
     "lodash": "^4.17.15",

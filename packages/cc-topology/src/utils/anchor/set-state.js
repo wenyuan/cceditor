@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/08/15
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: set anchor state
  */
 

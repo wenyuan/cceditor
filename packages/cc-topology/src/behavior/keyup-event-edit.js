@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/07/16
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: edit mode: 键盘事件的交互，主要是删除节点和连线(记录删除前后的数据，用于【撤销】和【重做】)
  */
 

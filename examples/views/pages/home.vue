@@ -35,7 +35,7 @@ export default {
       demoList: [
         {
           title: '拓扑图',
-          developer: 'winyuan',
+          developer: 'wenyuan',
           description: '拓扑网络编辑器<br/>',
           imgSrc: require('@/assets/images/topology.png'),
           route: {

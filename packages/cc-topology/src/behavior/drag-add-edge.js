@@ -1,10 +1,12 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/07/16
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: edit mode: 通过拖拽节点上的锚点添加连线
  */
+import { mix } from '@antv/util'
 import utils from '../utils'
+import theme from '../theme'
 
 // 用来获取调用此js的vue组件实例（this）
 let vm = null
@@ -12,9 +14,6 @@ let vm = null
 const sendThis = (_this) => {
   vm = _this
 }
-
-import G6 from '@antv/g6'
-import theme from '../theme'
 
 export default {
   sendThis, // 暴露函数
@@ -102,7 +101,7 @@ export default {
             y: event.y
           },
           type: self.graph.$C.edge.type || 'cc-line',
-          style: G6.Util.mix({}, themeStyle.edgeStyle.default, self.graph.$C.edge.style)
+          style: mix({}, themeStyle.edgeStyle.default, self.graph.$C.edge.style)
         })
         self.drawEdge.isMoving = true
       },

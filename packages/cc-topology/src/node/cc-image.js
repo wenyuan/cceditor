@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/07/05
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: 图片节点
  */
 
@@ -118,7 +118,6 @@ export default {
         })
       } else {
         halos.forEach(halo => {
-          // FIXME: G6 3.x在底层库遗留了bug，导致removeChild()方法报错，等待解决
           group.removeChild(halo)
         })
       }

@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/07/05
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: 图的布局方式/图的初始化
  */
 

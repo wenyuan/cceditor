@@ -3,7 +3,7 @@
     <div class="links">
       <ul>
         <li>
-          <a href="https://github.com/winyuan" target="_blank">
+          <a href="https://github.com/wenyuan" target="_blank">
             <i class="iconfont icon-github"></i>
           </a>
         </li>
@@ -16,7 +16,7 @@
           <a href="javascript:void(0);">更新日志</a>
         </li>
         <li>
-          <a href="https://github.com/winyuan/style-guide" target="_blank">代码规范</a>
+          <a href="https://github.com/wenyuan/style-guide" target="_blank">代码规范</a>
         </li>
       </ul>
     </div>

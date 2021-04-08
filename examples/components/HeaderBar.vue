@@ -42,7 +42,7 @@ export default {
     tutorial() {
       this.$message({
         dangerouslyUseHTMLString: true,
-        message: '<div style="text-align: left">时间原因，暂未编写。<br/><br/>目前【开发方式】和【使用方式】可先参考 README.md。 <br/><br/><div style="text-align: right">—— by winyuan</div></div>',
+        message: '<div style="text-align: left">时间原因，暂未编写。<br/><br/>目前【开发方式】和【使用方式】可先参考 README.md。 <br/><br/><div style="text-align: right">—— by wenyuan</div></div>',
         type: 'info',
         center: true,
         duration: 5000,

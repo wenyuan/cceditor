@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/08/20
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: 整合所有的组件，对外导出，即一个完整的组件库
  */
 

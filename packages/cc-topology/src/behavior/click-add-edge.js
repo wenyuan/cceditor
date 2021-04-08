@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/07/05
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: edit mode: 通过先后点击两个节点来添加连线（容易和节点点击动作交叉，已弃用）
  */
 

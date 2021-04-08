@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/11/14
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: cceditor内部的通用组件
  */
 

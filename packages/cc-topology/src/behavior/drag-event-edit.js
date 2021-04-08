@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/07/16
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: edit mode: 鼠标拖动节点的交互(记录拖拽前后的数据，用于【撤销】和【重做】)
  */
 

@@ -1,7 +1,7 @@
 /**
- * @author: winyuan
+ * @author: wenyuan
  * @data: 2019/08/16
- * @repository: https://github.com/winyuan
+ * @repository: https://github.com/wenyuan
  * @description: 线条的后期设置
  */
 
