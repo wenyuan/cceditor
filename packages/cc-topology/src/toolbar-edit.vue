@@ -19,7 +19,6 @@
         <i class="iconfont icon-fit" title="适应画布" @click="$parent.$parent.autoZoomHandler"></i>
         <i class="iconfont icon-actualsize" title="实际尺寸" @click="$parent.$parent.resetZoomHandler"></i>
         <span class="separator"></span>
-        <i class="iconfont icon-roi-select" id="multi-select" title="框选" @click="$parent.$parent.multiSelectHandler"></i>
         <el-dropdown @command="$parent.$parent.changeEdgeShapeHandler" trigger="click">
           <span class="el-dropdown-link">
             {{$parent.$parent.currentEdgeShape.label}}<i class="el-icon-arrow-down el-icon--right"></i>

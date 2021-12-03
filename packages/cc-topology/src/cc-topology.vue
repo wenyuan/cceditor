@@ -379,7 +379,9 @@ export default {
             formatText (model) {
               return model.description || 'source:' + self.graph.findById(model.source).getModel().label + ' target:' + self.graph.findById(model.target).getModel().label
             }
-          }
+          },
+          // Group Behavior
+          'collapse-expand-combo',
           // 自定义Behavior
           // 'my-collapse-expand'
         ],
@@ -583,10 +585,6 @@ export default {
       if (graph && !graph.destroyed) {
         graph.zoomTo(1)
       }
-    },
-    multiSelectHandler (event) {
-      event.target.style.backgroundColor = '#EEEEEE'
-      this.graph.setMode('multiSelect')
     },
     enableMinimapHandler (enableMinimap) {
       if (enableMinimap) {
