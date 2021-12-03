@@ -20,7 +20,7 @@
     "lib": "vue-cli-service build --target lib --name cceditor --dest lib packages/index.js"
   },
   "dependencies": {
-    "@antv/g6": "^4.2.5",
+    "@antv/g6": "^4.5.0",
     "core-js": "^2.6.5",
     "element-ui": "^2.14.1",
     "lodash": "^4.17.15",
