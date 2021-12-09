@@ -10,10 +10,14 @@ import utils from '../utils'
 export default {
   draw(cfg, group) {
     const { startPoint, endPoint } = cfg
+    let style = cfg.style
+    // combo 收缩后的连线样式
+    style.stroke = '#A3B1BF'
+    style.lineWidth = 2
     const keyShape = group.addShape('path', {
       className: 'edge-shape',
       attrs: {
-        ...cfg.style,
+        ...style,
         path: [
           ['M', startPoint.x, startPoint.y],
           ['L', endPoint.x, endPoint.y]
