@@ -849,6 +849,7 @@ export default {
       let graph = this.graph
       if (graph && !graph.destroyed) {
         graph.changeData(data)
+        graph.refresh()
       }
     },
     changeGraphSize (graphWidth = 0, graphHeight = 0) {
