@@ -23,16 +23,6 @@
             <li @click="removeComboHandler">移除分组</li>
           </ul>
         </div>
-        <div
-          :class="graphPanelShow ? 'collapse-opened' : 'collapse-closed'"
-          v-if="graphMode === 'edit'"
-          @click="toggleCollapse">
-          <div class="collapse-bg"><span></span></div>
-          <div class="collapse">
-            <span class="el-icon-d-arrow-left"></span>
-            <span class="el-icon-d-arrow-right"></span>
-          </div>
-        </div>
       </el-col>
       <!-- graph-pannel -->
       <el-col class="graph-pannel" v-if="graphMode === 'edit' && graphPanelShow === true" :span="5">
@@ -312,9 +302,6 @@ export default {
     this.clearHistoryData()
   },
   methods: {
-    toggleCollapse () {
-      this.graphPanelShow = !this.graphPanelShow
-    },
     openFullScreenLoading () {
       this.loading = true
     },
@@ -946,8 +933,8 @@ export default {
     layoutType () {
       this.initTopo(this.graphData)
     },
-    graphPanelShow () {
-      this.onresizeHandler()
+    graphMode () {
+      this.changeGraphSize()
     },
     selectedNodeParams: {
       deep: true,
@@ -1026,109 +1013,6 @@ export default {
   position: relative;
   height: 100%;
   overflow: hidden;
-
-  .collapse-opened {
-    position: absolute;
-    top: 40%;
-    right: -16px;
-    width: 16px;
-    height: 50px;
-
-    .collapse-bg {
-      height: 50px;
-      border-top: 10px solid transparent;
-      border-bottom: 9px solid transparent;
-      border-left: 13px solid #dae8ee;
-
-      span {
-        position: absolute;
-        top: 0;
-        left: 1px;
-        display: block;
-        width: 0;
-        height: 50px;
-        border-top: 10px solid transparent;
-        border-bottom: 9px solid transparent;
-        border-left: 11px solid #f7fafb;
-      }
-    }
-
-    .collapse {
-      position: relative;
-      top: -50px;
-      left: -2px;
-      height: 50px;
-      text-align: center;
-      cursor: pointer;
-
-      span {
-        display: inline;
-        color: #9bb3bb;
-        font-size: 14px;
-        line-height: 50px;
-      }
-
-      .el-icon-d-arrow-right {
-        display: inline;
-      }
-
-      .el-icon-d-arrow-left {
-        display: none;
-      }
-    }
-  }
-
-  .collapse-closed {
-    position: absolute;
-    top: 40%;
-    right: 0;
-    width: 16px;
-    height: 50px;
-
-    .collapse-bg {
-      height: 50px;
-      border-top: 11px solid transparent;
-      border-right: 13px solid #dae8ee;
-      border-bottom: 11px solid transparent;
-
-      span {
-        position: absolute;
-        display: block;
-        top: 0;
-        right: 0;
-        width: 0;
-        height: 50px;
-        border-top: 11px solid transparent;
-        border-right: 12px solid #f7fafb;
-        border-bottom: 11px solid transparent;
-        border-left: none;
-      }
-    }
-
-    .collapse {
-      position: relative;
-      top: -50px;
-      right: 0;
-      height: 50px;
-      text-align: center;
-      cursor: pointer;
-
-      span {
-        display: inline;
-        color: #9bb3bb;
-        font-size: 14px;
-        line-height: 50px;
-      }
-
-      .el-icon-d-arrow-right {
-        display: none;
-      }
-
-      .el-icon-d-arrow-left {
-        display: inline;
-      }
-    }
-  }
 }
 
 .graph-pannel {
