@@ -8,7 +8,7 @@
 import utils from '../utils'
 
 export default {
-  draw(cfg, group) {
+  drawShape(cfg, group) {
     const { startPoint, endPoint } = cfg
     let style = cfg.style
     // combo 收缩后的连线样式

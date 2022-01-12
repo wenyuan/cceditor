@@ -13,7 +13,7 @@ export default {
   extendName: 'single-edge',
   options: {
     ...base,
-    draw(cfg, group) {
+    drawShape(cfg, group) {
       const { startPoint, endPoint } = cfg
       const controlPoints = this.getControlPoints(cfg)
       let points = [startPoint]
