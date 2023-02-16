@@ -1,7 +1,7 @@
 # CCEditor
 
 <p align="center">
-  <img src="https://www.wenyuanblog.com/medias/logo/cceditor.png" alt="cceditor" width="120" hegiht="120"/>
+  <img src="https://github.com/wenyuan/cceditor/tree/master/public/cceditor.png" alt="cceditor" width="120" hegiht="120"/>
 </p>
 
 <p align="center">
@@ -9,7 +9,7 @@
   <img alt="g6" src="https://img.shields.io/badge/g6-4.5.0-brightgreen.svg?style=flat-square">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square">
   <img alt="release" src="https://img.shields.io/badge/release-v0.1.0-blue.svg?style=flat-square">
-  <a href="https://www.wenyuanblog.com/gift.html" target="_blank">
+  <a href="https://www.fedbook.cn/others/sponsor" target="_blank">
     <img alt="sponsor" src="https://img.shields.io/badge/sponsor-❤-ff69b4.svg?style=flat-square">
   </a>
 </p>
@@ -25,7 +25,6 @@
 
 ## 二、预览
 
-[DEMO演示](http://cceditor.wenyuanblog.com)
 ![](./docs/preview.png)
 
 ## 三、项目依赖
